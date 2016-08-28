@@ -1,0 +1,49 @@
+{
+  "Namespaces": [
+    {
+      "Namespace": "Sample.Repositories",
+      "ConnectionString": {
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperSamples;Integrated Security=true"
+      },      
+      "Types": [
+        {
+          "Name": "Sample.Repositories.CurrencyRepository",          
+          "Commands": {
+            "Create": {
+              "CommandText": "insert into [dbo].[Currencies]([NumericCode],[AlphabeticCode],[Name]) select @NumericCode,@AlphabeticCode,@Name;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "IsolationLevel": 1048576
+            },
+            "Delete": {
+              "CommandText": "delete from [dbo].[Currencies] where [NumericCode] = @NumericCode;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "Update": {
+              "CommandText": "update [dbo].[Currencies] set [AlphabeticCode] = @AlphabeticCode,[Name] = @Name where [NumericCode] = @NumericCode;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "Retrieve": {
+              "CommandText": "select [NumericCode],[AlphabeticCode],[Name] from [dbo].[Currencies] where [NumericCode] = @NumericCode;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "RetrieveAll": {
+              "CommandText": "[dbo].[usp_GetCurrencies]",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

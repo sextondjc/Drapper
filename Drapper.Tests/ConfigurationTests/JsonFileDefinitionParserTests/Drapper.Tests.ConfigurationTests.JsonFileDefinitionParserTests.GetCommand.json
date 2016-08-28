@@ -1,0 +1,44 @@
+﻿{
+  "ExplicitKey": {
+    "CommandText": "select @Id [Result]",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "WithTypeParametersTransactionCancellationTokenAndInferredKey": {
+    "CommandText": "select @Id [Result]",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "WithTypeParametersTransactionAndInferredKey": {
+    "CommandText": "select @Id [Result]",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "WithTypeParametersAndInferredKey": {
+    "CommandText": "select @Id [Result]",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "ExplicitKeyNoParameters": {
+    "CommandText": "select 1",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "WithTypeAndInferredKey": {
+    "CommandText": "select 1",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  },
+  "ReturnsDefintionWithTypeOnly": {
+    "CommandText": "select 1",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0
+  }
+}

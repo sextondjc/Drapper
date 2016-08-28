@@ -1,0 +1,11 @@
+﻿{
+  "SupportsFileFoundOnTypePathSettings": {
+    "ConnectionString": null,
+    "Split": "Id",
+    "CommandText": "select 'TypeC';",
+    "CommandTimeout": 30,
+    "CommandType": 1,
+    "Flags": 0,
+    "IsolationLevel": 1048576
+  }
+}

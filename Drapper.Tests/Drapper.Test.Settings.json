@@ -1,0 +1,60 @@
+﻿{
+  "Namespaces": [
+    {
+      "Namespace": "Drapper.Tests.ConfigurationTests.Fully.Qualified",
+      "ConnectionString": {
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
+      },
+      "Types": [
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts.TypeA",
+          "Commands": {
+            "FallsBackToNamespace": {
+              "CommandText": "select 'TypeA';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC",
+          "Path": {
+            "File": "C:\\Github\\Drapper\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json"
+          }
+        }
+      ]
+    },
+    {
+      "Namespace": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB",
+      "ConnectionString": {
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
+      },
+      "Path": {
+        "Directory": "C:\\Github\\Drapper\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
+      }
+    },
+    {
+      "Namespace": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests",
+      "ConnectionString": {
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
+      },
+      "Types": [
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests.GetCommand",
+          "Commands": {
+            "ExplicitKey": {
+              "CommandText": "select 'TypeA';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

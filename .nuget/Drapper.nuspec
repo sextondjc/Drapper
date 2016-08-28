@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Drapper</id>
+    <version>1.0.0</version>
+    <authors>sextondjc</authors>
+    <owners>sextondjc</owners>
+    <licenseUrl>http://github.com/sextondjc/drapper</licenseUrl>
+    <projectUrl>http://github.com/sextondjc/drapper</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      A simple framework to separate .NET code from SQL code using the Dapper micro ORM.
+      Drapper is a wrapper for Dapper (Dapper + Wrapper = Drapper).
+    </description>
+    <releaseNotes>First release (production ready).</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <dependencies>
+      <dependency id="Drapper.Validation" version="1.0.0" />
+      <dependency id="Dapper" version="1.50.2" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="net452\Drapper.dll" target="lib\net452\Drapper.dll"/>    
+    <file src="net461\Drapper.dll" target="lib\net461\Drapper.dll"/>    
+    <file src="content\Drapper.Settings.json" target="content\Drapper.Settings.json"/>
+  </files>
+</package>
