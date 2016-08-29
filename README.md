@@ -60,7 +60,7 @@ _commander.Execute(country);
 _commander.Execute(() => 
     {
         _commander.Execute(country);
-        _commander.Execute(country.Currency, method:"SaveCountry");
+        _commander.Execute(country.Currency, method:"SaveCurrency");
         _commander.Execute(country.States, method:"SaveStates");
     });
 ```
