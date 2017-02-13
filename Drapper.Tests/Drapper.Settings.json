@@ -1,5 +1,5 @@
 ﻿{
-  "Namespaces": [    
+  "Namespaces": [
     {
       "Namespace": "Drapper.Tests",
       "ConnectionString": {
@@ -1007,7 +1007,7 @@
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
-            }            
+            }
           }
         },
         {
@@ -1061,6 +1061,18 @@
             },
             "CreateTableCreatorProcedure": {
               "CommandText": "create procedure [dbo].[usp_CreateTable](@tableName varchar(max)) as begin declare  @template nvarchar(max),@sql nvarchar(max) select @template = N'if exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'')and type in (N''U'')) begin drop table [dbo].[%tableName];end if not exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'') and type in (N''U'')) begin create table [dbo].[%tableName] ([Id] [int] IDENTITY(1, 1) not null,[Name] [varchar](50) null,[Value] [decimal](18, 2) null,[Modified] [datetime] null); end;' select @sql = REPLACE(@template, '%tableName', @tableName); exec sp_executesql @sql end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IdentityTesterExists": {
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_IdentityTester]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateIdentityTesterProcedure": {
+              "CommandText": "create procedure [dbo].[usp_IdentityTester] @name varchar(50),@value decimal(18, 2) as begin insert into [IdentityTest]([Name],[Value],[Modified])select @name,@value,getutcdate() select scope_identity() end;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5

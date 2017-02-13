@@ -41,6 +41,12 @@ namespace Drapper.Tests.Helpers
                 CreateTableCreatorProcedure();
             }
 
+            if (!IdentityTesterExists())
+            {
+                WriteLine("Identity tester procedure doesn't exist. Attempting to create.");
+                CreateIdentityTesterProcedure();
+            }
+
             if (IsStale())
             {
                 WriteLine("Data in the Poco table is stale. Attempting to refresh.");

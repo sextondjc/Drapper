@@ -59,6 +59,22 @@ namespace Drapper.Tests.Helpers
             }
         }
 
+        public static bool IdentityTesterExists()
+        {
+            using (var commander = CommanderHelper.CreateCommander())
+            {
+                return commander.Query<bool>().SingleOrDefault();
+            }
+        }
+
+        public static void CreateIdentityTesterProcedure()
+        {
+            using (var commander = CommanderHelper.CreateCommander())
+            {
+                commander.Execute(0);
+            }
+        }
+
         public static bool IsStale()
         {
             var modified = DateTime.MinValue;
