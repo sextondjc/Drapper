@@ -1,5 +1,8 @@
+1.1.0 Status: [![Build status](https://ci.appveyor.com/api/projects/status/u0jfhnuc0jm348xj/branch/1.1.0?svg=true)](https://ci.appveyor.com/project/sextondjc/drapper)
+
 # Drapper
 A data access / object composition library built on top of Dapper
+
 
 * Available on nuget: https://www.nuget.org/packages/Drapper/
 * Supports .NET 4.5.2/4.6.1.
