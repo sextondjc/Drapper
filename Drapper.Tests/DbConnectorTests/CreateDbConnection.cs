@@ -3,12 +3,15 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-using Drapper.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Drapper.Configuration;
+using Drapper.Tests.DbCommanderTests.Integration;
+using Drapper.Tests.Fallback.Drapper.Tests.Fallback.Some.Other.Namespace;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Drapper.Tests.DbConnectorTests
 {
@@ -25,7 +28,7 @@ namespace Drapper.Tests.DbConnectorTests
             _settings = TestSettings();            
         }
 
-        private Settings TestSettings()
+        private static Settings TestSettings()
         {
             // settings listed from least filled to most, 
             // kinda like you'd expect to see in a settings file
@@ -42,7 +45,7 @@ namespace Drapper.Tests.DbConnectorTests
                     new NamespaceSetting
                     {
                         Namespace = "Drapper.Tests",
-                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true")
+                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")
                     },
                     // to test fallback to type connection
                     new NamespaceSetting
@@ -53,7 +56,7 @@ namespace Drapper.Tests.DbConnectorTests
                             new TypeSetting
                             {
                                 Name = "Drapper.Tests.DbCommanderTests.Integration.MultipleAsync",
-                                ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true")
+                                ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")
                             },
                             new TypeSetting
                             {
@@ -62,7 +65,7 @@ namespace Drapper.Tests.DbConnectorTests
                                 {
                                     ["WithOneType"] = new CommandSetting
                                     {
-                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"),
+                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
                                     }
                                 }
                             },
@@ -81,8 +84,14 @@ namespace Drapper.Tests.DbConnectorTests
                     new NamespaceSetting
                     {
                         Namespace = "Drapper.Tests.DbConnectorTests",
-                        ConnectionString = new ConnectionStringSetting("InvalidClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"),
+                        ConnectionString = new ConnectionStringSetting("InvalidClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
+                    },
+                    new NamespaceSetting
+                    {
+                        Namespace = "Drapper.Tests.Fallback",
+                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")
                     }
+
                 }
             };
         }
@@ -94,7 +103,7 @@ namespace Drapper.Tests.DbConnectorTests
         public void ValidProviderNameAndConnectionStringReturnsConnection()
         {            
             var connector = new DbConnector(_settings);
-            var connection = connector.CreateDbConnection(typeof(DbCommanderTests.Integration.Query));            
+            var connection = connector.CreateDbConnection(typeof(Query));            
             Assert.IsNotNull(connection);
             Assert.AreEqual(ConnectionState.Closed, connection.State);            
         }
@@ -112,7 +121,7 @@ namespace Drapper.Tests.DbConnectorTests
         public void NullSettingThrowsArgumentException()
         {           
             var connector = new DbConnector(_settings);
-            var connection = connector.CreateDbConnection(typeof(Drapper.Tests.DbCommanderTests.Integration.CollectionPocoA));
+            var connection = connector.CreateDbConnection(typeof(CollectionPocoA));
         }
 
         [TestMethod]
@@ -128,7 +137,7 @@ namespace Drapper.Tests.DbConnectorTests
         [ExpectedException(typeof(SqlException))]
         public void NonExistentDatabaseThrowsException()
         {            
-            var type = typeof(Drapper.Tests.DbCommanderTests.Integration.Query);
+            var type = typeof(Query);
             var connector = new DbConnector(_settings);
             var connection = connector.CreateDbConnection(type);
             Assert.IsNotNull(connection);
@@ -141,7 +150,7 @@ namespace Drapper.Tests.DbConnectorTests
         [ExpectedException(typeof(ArgumentException))]
         public void MissingFallbackConnectionStringThrowsArgumentException()
         {
-            var type = typeof(Drapper.DbCommander);
+            var type = typeof(DbCommander);
             var connector = new DbConnector(_settings);
             var connection = connector.CreateDbConnection(type);
         }
@@ -153,8 +162,7 @@ namespace Drapper.Tests.DbConnectorTests
             IDbConnection connection = null;
             try
             {
-
-                var type = typeof(Drapper.Tests.DbCommanderTests.Integration.CollectionPocoB);
+                var type = typeof(CollectionPocoB);
                 connection = connector.CreateDbConnection(type);
             }
             catch (Exception ex)
@@ -169,7 +177,7 @@ namespace Drapper.Tests.DbConnectorTests
         [TestMethod]
         public void FallsbackToRootNamespaceConnection()
         {
-            var type = typeof(Drapper.Tests.With.Additional.Levels.FallbackConnectionType);
+            var type = typeof(FallbackConnectionType);
             var connector = new DbConnector(_settings);
             var connection = connector.CreateDbConnection(type);
 
@@ -177,9 +185,16 @@ namespace Drapper.Tests.DbConnectorTests
             Assert.AreEqual(ConnectionState.Closed, connection.State);
         }
     }
+
+    
 }
 
-namespace Drapper.Tests.With.Additional.Levels
+namespace Drapper.Tests.Fallback
 {
-    public class FallbackConnectionType { }
+    namespace Drapper.Tests.Fallback.Some.Other.Namespace
+    {
+        public class FallbackConnectionType
+        {
+        }
+    }
 }

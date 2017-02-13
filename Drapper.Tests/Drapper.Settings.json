@@ -4,7 +4,7 @@
       "Namespace": "Drapper.Tests",
       "ConnectionString": {
         "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTesting;Integrated Security=true"
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
       },
       "Types": [
         {
@@ -153,6 +153,42 @@
             },
             "RollbackInDistributedTransactionIsSuccessful.FailedOperation": {
               "CommandText": "update [DistributedRollback] set [Value] = @value * POWER(@value, @value)",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ReturnsIdentity": {
+              "CommandText": "[dbo].[usp_IdentityTester]",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5
+            },
+            "SupportBulkInsertFromFile": {
+              "CommandText": "dbo.usp_BulkInsert",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5
+            },
+            "BulkInsertResult": {
+              "CommandText": "select * from CSVTest",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportBulkInsertFromFileAndReturn": {
+              "CommandText": "dbo.usp_BulkInsertAndReturn",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5
+            },
+            "SupportBulkInsertFromList": {
+              "CommandText": "insert into [dbo].[CsvTest]([Id],[FirstName],[LastName],[BirthDate]) values (@Id,@FirstName,@LastName,@BirthDate);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportBulkInsertFromListResult": {
+              "CommandText": "select * from [dbo].[CsvTest];",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -326,6 +362,13 @@
               "Flags": 5,
               "Split": "PocoA_Id"
             },
+            "ComplexWithTwoParameters": {
+              "CommandText": "select Id,'Parent' + Name [Name],Value,Modified from [Poco];select a.Id [PocoB_Id],'Child' + a.Name [Name],a.Value,a.Modified from [Poco] a cross join [Poco] b;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
             "WithThreeTypes": {
               "CommandText": "select top 3 c.Id,'Multimap: '+c.name[Name],c.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5;",
               "CommandTimeout": 30,
@@ -402,7 +445,7 @@
               "CommandType": 1,
               "Flags": 5,
               "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
-            }            
+            }
           }
         },
         {
@@ -908,6 +951,12 @@
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
+            },
+            "SupportInt": {
+              "CommandText": "select 1 [Result]",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
             }
           }
         },
@@ -939,45 +988,89 @@
               "Flags": 5
             }
           }
-        }
-      ]
-    },
-    {
-      "Namespace": "Drapper.Tests.Common",
-      "ConnectionString": {
-        "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTesting;Integrated Security=true"
-      },
-      "Types": [
+        },
         {
-          "Name": "Drapper.Tests.Common.TableHelper",
+          "Name": "Drapper.Tests.Helpers.DatabaseHelper",
+          "ConnectionString": {
+            "ProviderName": "System.Data.SqlClient",
+            "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=master;Integrated Security=true"
+          },
           "Commands": {
+            "DatabaseExists": {
+              "CommandText": "if exists (select * from master.sys.databases where [name] = @name) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateDatabase": {
+              "CommandText": "create database Drapper;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }            
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Helpers.TableHelper",
+          "ConnectionString": {
+            "ProviderName": "System.Data.SqlClient",
+            "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
+          },
+          "Commands": {
+            "TableExists": {
+              "CommandText": "if exists (select * from information_schema.tables where table_name = @name) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreatePocoTable": {
+              "CommandText": "create table [dbo].[Poco]([Id] [int] identity(1,1) not null,[Name] [varchar](50) null,[Value] [decimal](18, 2) null,[Modified] [datetime] null);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsStale": {
+              "CommandText": "select case when Modified is null then convert(datetime, 0) else Modified end [Modified] from (select max (modified) [Modified] from Poco) a",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsConsistent": {
+              "CommandText": "select count(1) [Result] from Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ClearPocoTable": {
+              "CommandText": "truncate table Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "PopulatePocoTable": {
+              "CommandText": "insert into Poco([Name], [Value], [Modified]) select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "TableCreatorExists": {
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_CreateTable]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateTableCreatorProcedure": {
+              "CommandText": "create procedure [dbo].[usp_CreateTable](@tableName varchar(max)) as begin declare  @template nvarchar(max),@sql nvarchar(max) select @template = N'if exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'')and type in (N''U'')) begin drop table [dbo].[%tableName];end if not exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'') and type in (N''U'')) begin create table [dbo].[%tableName] ([Id] [int] IDENTITY(1, 1) not null,[Name] [varchar](50) null,[Value] [decimal](18, 2) null,[Modified] [datetime] null); end;' select @sql = REPLACE(@template, '%tableName', @tableName); exec sp_executesql @sql end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
             "CreateTable": {
               "CommandText": "dbo.usp_CreateTable",
               "CommandTimeout": 30,
               "CommandType": 4,
               "Flags": 5,
               "IsolationLevel": 65536
-            }
-          }
-        }
-      ]
-    },    
-    {
-      "Namespace": "Drapper.Tests.Examples",
-      "ConnectionString": {
-        "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTesting;Integrated Security=true"
-      },
-      "Types": [
-        {
-          "Name": "Drapper.Tests.Examples.CurrencyRepository",
-          "Commands": {
-            "RetrieveAll": {
-              "CommandText": "[dbo].[usp_GetCurrencies]",
-              "CommandTimeout": 30,
-              "CommandType": 4,
-              "Flags": 5
             }
           }
         }

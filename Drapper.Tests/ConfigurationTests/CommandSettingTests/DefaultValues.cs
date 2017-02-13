@@ -1,14 +1,23 @@
-﻿// ============================================================================================================================= 
-// author           : david sexton (@sextondjc | sextondjc.com)
-// date             : 2015.12.23
-// licence          : licensed under the terms of the MIT license. See LICENSE.txt
-// =============================================================================================================================
+﻿// ----------------------------------------------------------------------------------------------------------
+// author   : David Sexton (sexto)
+// created  : 2016-08-28 (23:44)
+// modified : 2017-01-09 (00:14)
+// 
+// This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of 
+// this source code package.
+//  ----------------------------------------------------------------------------------------------------------
+
+#region
+
+using System.Data;
 using Dapper;
 using Drapper.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace Drapper.Tests.CommandSettingTests
+#endregion
+
+namespace Drapper.Tests.ConfigurationTests.CommandSettingTests
 {
     [TestClass]
     public class DefaultValues
@@ -20,36 +29,36 @@ namespace Drapper.Tests.CommandSettingTests
         [TestMethod]
         public void CommandTextReturnsNullByDefault()
         {
-            var defintionEntry = new CommandSetting();
-            Assert.AreEqual(null, defintionEntry.CommandText);
+            var setting = new CommandSetting();
+            AreEqual(null, setting.CommandText);
         }
 
         [TestMethod]
         public void CommandTimeoutReturnsThirtyByDefault()
         {
-            var defintionEntry = new CommandSetting();
-            Assert.AreEqual(30, defintionEntry.CommandTimeout);
+            var setting = new CommandSetting();
+            AreEqual(30, setting.CommandTimeout);
         }
 
         [TestMethod]
         public void CommandTypeReturnsTextByDefault()
         {
-            var defintionEntry = new CommandSetting();
-            Assert.AreEqual(CommandType.Text, defintionEntry.CommandType);
+            var setting = new CommandSetting();
+            AreEqual(CommandType.Text, setting.CommandType);
         }
 
         [TestMethod]
         public void CommandFlagsReturnsNoneByDefault()
         {
-            var defintionEntry = new CommandSetting();
-            Assert.AreEqual(CommandFlags.None, defintionEntry.Flags);
+            var setting = new CommandSetting();
+            AreEqual(CommandFlags.None, setting.Flags);
         }
 
         [TestMethod]
         public void IsolationLevelDefaultsToSerializable()
         {
-            var commandSetting = new CommandSetting();
-            Assert.AreEqual(IsolationLevel.Serializable, commandSetting.IsolationLevel);
+            var setting = new CommandSetting();
+            AreEqual(IsolationLevel.Serializable, setting.IsolationLevel);
         }
     }
 }

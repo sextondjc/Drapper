@@ -87,11 +87,15 @@
     <Compile Include="DbCommanderTests\Integration\Query.MultipleAsync.cs" />
     <Compile Include="DbCommanderTests\Integration\Query.cs" />
     <Compile Include="DbCommanderTests\Integration\QueryAsync.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="DbCommanderTests\Performance\Query.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\CommanderHelper.cs" />
     <Compile Include="DbConnectorTests\Constructor.cs" />
     <Compile Include="DbConnectorTests\CreateDbConnection.cs" />
     <Compile Include="ConfigurationTests\CommandSettingTests\DefaultValues.cs" />
+    <Compile Include="Helpers\EnvironmentHelper.cs" />
+    <Compile Include="Helpers\ProcedureHelper.cs" />
+    <Compile Include="Helpers\TableHelper.cs" />
+    <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationTests\ConfigurationFileDefinitionParserTests\GetCommand.cs" />
     <Compile Include="ConfigurationTests\JsonFileDefinitionParserTests\GetCommand.cs" />

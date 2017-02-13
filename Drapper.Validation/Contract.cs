@@ -10,7 +10,7 @@ namespace Drapper.Validation
     /// <summary>
     /// A simple precondition checker. Useful for validating method arguments. 
     /// </summary>
-    public static class Contract
+    public class Contract
     {
         public static void Require(bool condition, string message, params object[] args)
         {
@@ -18,6 +18,6 @@ namespace Drapper.Validation
             {
                 throw new ArgumentException(string.Format(message, args));
             }
-        }
-    }
+        }        
+    }        
 }

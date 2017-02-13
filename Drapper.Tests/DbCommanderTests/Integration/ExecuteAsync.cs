@@ -3,7 +3,7 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-using Drapper.Tests.Common;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,31 +11,24 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Drapper.Tests.Common.CommanderHelper;
+using static Drapper.Tests.Helpers.CommanderHelper;
+using static Drapper.Tests.Helpers.TableHelper;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
     [TestClass]
     public class ExecuteAsync
-    {
-        #region / init & cleanup /
-        
-        public void CreateTable(string tableName)
-        {
-            TableHelper.CreateTable(tableName);
-        }
-        
-        #endregion
-
+    {        
         [TestMethod]
         public async Task ReturnsTrueForSuccessfulResult()
         {
             using (var commander = CreateCommander())
             {
                 var response = await commander.ExecuteAsync(new { value = 1 });
-                Assert.IsNotNull(response);
-                Assert.IsInstanceOfType(response, typeof(bool));
-                Assert.IsTrue(response);
+                IsNotNull(response);
+                IsInstanceOfType(response, typeof(bool));
+                IsTrue(response);
             }
         }
 
@@ -61,14 +54,14 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 try
                 {
                     task.Wait(TimeSpan.FromSeconds(5));
-                    Assert.Fail("The cancellation token didn't cancel.");
+                    Fail("The cancellation token didn't cancel.");
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsInstanceOfType(ex, typeof(AggregateException));
+                    IsInstanceOfType(ex, typeof(AggregateException));
                     var innerExceptions = ((AggregateException)ex).InnerExceptions;
-                    Assert.AreEqual(1, innerExceptions.Count());
-                    Assert.IsInstanceOfType(innerExceptions.Single(), typeof(SqlException));
+                    AreEqual(1, innerExceptions.Count());
+                    IsInstanceOfType(innerExceptions.Single(), typeof(SqlException));
                     throw;
                 }
             }
@@ -98,15 +91,15 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             using (var commander = CreateCommander())
             {
                 var result = await commander.ExecuteAsync(models);
-                Assert.IsTrue(result);
+                IsTrue(result);
 
                 // check they were created. 
                 var records = commander.Query<PocoA>(type: typeof(ExecuteAsync), method: "SupportsIEnumberableModelsAsync.Query");                
-                Assert.IsNotNull(records);
-                Assert.IsTrue(records.Any());
-                Assert.AreEqual(2, records.Count());
-                Assert.AreEqual(models.First().Name, records.First().Name);
-                Assert.AreEqual(models.Last().Name, records.Last().Name);
+                IsNotNull(records);
+                IsTrue(records.Any());
+                AreEqual(2, records.Count());
+                AreEqual(models.First().Name, records.First().Name);
+                AreEqual(models.Last().Name, records.Last().Name);
             }
         }
 
@@ -149,11 +142,11 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsInstanceOfType(ex, typeof(SqlException));
+                    IsInstanceOfType(ex, typeof(SqlException));
                     // check if the record has been rolled back.                    
                     var records = commander.Query<PocoA>(new { Name = model.Name },typeof(ExecuteAsync),"SupportsTransactionRollback.Query");
-                    Assert.IsNotNull(records);
-                    Assert.IsFalse(records.Any());
+                    IsNotNull(records);
+                    IsFalse(records.Any());
                 }
             }
         }
@@ -179,21 +172,21 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                     };
                 });
 
-                Assert.ReferenceEquals(pocoA, record.PocoA);
-                Assert.ReferenceEquals(pocoB, record.PocoB);              
+                ReferenceEquals(pocoA, record.PocoA);
+                ReferenceEquals(pocoB, record.PocoB);              
             }
 
             // now query. 
             using (var commander = CreateCommander())
             {
                 var result = commander.Query<MultiMapPocoB>(type: typeof(ExecuteAsync), method: "DistributedTransactionAsync.Query");
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(2, result.Count());
+                IsNotNull(result);
+                IsTrue(result.Any());
+                AreEqual(2, result.Count());
 
                 // confirm the result corresponds to the poco's passed
-                Assert.IsTrue(result.Any(x => x.Name == pocoA.Name));
-                Assert.IsTrue(result.Any(x => x.Name == pocoB.Name));
+                IsTrue(result.Any(x => x.Name == pocoA.Name));
+                IsTrue(result.Any(x => x.Name == pocoB.Name));
             }
 
         }

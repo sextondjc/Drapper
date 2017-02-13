@@ -39,8 +39,8 @@ namespace Drapper
                     }
                 }
             }
-        }
-        
+        }        
+
         public TResult Execute<TResult>(
             Func<TResult> map, 
             Type type = null, 

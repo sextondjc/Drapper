@@ -1,26 +1,19 @@
-﻿namespace Drapper.Tests.ConfigurationTests
+﻿namespace Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts
 {
-    namespace Fully.Qualified.NamespaceA
-    {
-        namespace With.Many.Different.Parts
-        {
-            public class TypeA { }
-        }
-    }
+    public class TypeA { }    
+}
 
-    namespace Fully.Qualified.NamespaceB
-    {
-        namespace With.Many.Different.Parts
-        {
-            public class TypeB { }
-        }
-    }
+namespace Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB.With.Many.Different.Parts
+{
+    public class TypeB { }
+}
 
-    namespace Fully.Qualified.NamespaceC
-    {
-        namespace With.Many.Different.Parts
-        {
-            public class TypeC { }
-        }
-    }
+namespace Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts
+{
+    public class TypeC { }
+}
+
+namespace SingleLevel
+{
+    public class TypeD { }
 }

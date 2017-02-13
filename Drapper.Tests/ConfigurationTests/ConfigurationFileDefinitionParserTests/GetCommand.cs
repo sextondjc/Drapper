@@ -4,10 +4,11 @@
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
 using Drapper.Configuration.Xml;
-using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.ConfigurationTests.ConfigurationFileDefinitionParserTests
 {
@@ -22,8 +23,8 @@ namespace Drapper.Tests.ConfigurationTests.ConfigurationFileDefinitionParserTest
             var result = parser.GetCommand(typeof(TypeA), "FallsBackToNamespace");
             
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual("select 'TypeA';", result.CommandText);
+            IsNotNull(result);
+            AreEqual("select 'TypeA';", result.CommandText);
         }
 
 
@@ -34,11 +35,11 @@ namespace Drapper.Tests.ConfigurationTests.ConfigurationFileDefinitionParserTest
             var result = parser.GetCommand(typeof(GetCommand), "ExplicitKey");
 
             // assert values 
-            Assert.AreEqual("select @Id [Result]", result.CommandText);
-            Assert.AreEqual("TestId", result.Split);
-            Assert.AreEqual(IsolationLevel.ReadCommitted, result.IsolationLevel);
+            AreEqual("select @Id [Result]", result.CommandText);
+            AreEqual("TestId", result.Split);
+            AreEqual(IsolationLevel.ReadCommitted, result.IsolationLevel);
              
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [TestMethod]

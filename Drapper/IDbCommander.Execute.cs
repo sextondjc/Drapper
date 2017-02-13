@@ -21,7 +21,7 @@ namespace Drapper
         /// <param name="type">The type.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        bool Execute<T>(T model, Type type = null, [CallerMemberName] string method = null);
+        bool Execute<T>(T model, Type type = null, [CallerMemberName] string method = null);        
 
         /// <summary>
         /// Executes any number of potentially state changing operations against an underlying data store. 

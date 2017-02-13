@@ -5,13 +5,15 @@
 // =============================================================================================================================
 using Drapper.Configuration;
 using Drapper.Configuration.Json;
-using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
-using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB.With.Many.Different.Parts;
-using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB.With.Many.Different.Parts;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts;
+using SingleLevel;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
 {
@@ -31,8 +33,19 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeA), "FallsBackToNamespace");
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual("select 'TypeA';", result.CommandText);
+            IsNotNull(result);
+            AreEqual("select 'TypeA';", result.CommandText);
+        }
+
+        [TestMethod]
+        public void SupportsSingleLevelNamespace()
+        {
+            var settings = GetFromFile();
+            var parser = new JsonFileCommandReader(settings);
+            var result = parser.GetCommand(typeof(TypeD), "SupportsSingleLevelNamespace");
+
+            IsNotNull(result);
+            AreEqual("select 'TypeD';", result.CommandText);
         }
 
         [TestMethod]
@@ -42,7 +55,7 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeB), "SupportsFileFoundOnNamespacePathSettings");
             
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [TestMethod]
@@ -52,7 +65,7 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeC), "SupportsFileFoundOnTypePathSettings");
 
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
                 
         [TestMethod]
@@ -62,7 +75,7 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(GetCommand), "ExplicitKey");
 
-            Assert.IsNotNull(result);
+            IsNotNull(result);
         }
 
         [TestMethod]

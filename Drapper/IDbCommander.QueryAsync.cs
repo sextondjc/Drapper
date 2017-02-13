@@ -25,9 +25,11 @@ namespace Drapper
         /// <param name="method">The method.</param>
         /// <returns></returns>        
         Task<IEnumerable<T>> QueryAsync<T>(object parameters = null, Type type = null, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
+        //Task<IEnumerable<T>> QueryAsync<T>(Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
+        //Task<IEnumerable<T>> QueryAsync<T>(object parameters, Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
 
         #region / multimap /
-        
+
         Task<IEnumerable<TResult>> QueryAsync<T1, T2, TResult>(Func<T1, T2, TResult> map, object parameters = null, Type type = null, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
         Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, TResult>(Func<T1, T2, T3, TResult> map, object parameters = null, Type type = null, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
         Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, TResult>(Func<T1, T2, T3, T4, TResult> map, object parameters = null, Type type = null, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);

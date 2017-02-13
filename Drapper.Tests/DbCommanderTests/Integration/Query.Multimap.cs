@@ -7,7 +7,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Drapper.Tests.Common.CommanderHelper;
+using static Drapper.Tests.Helpers.CommanderHelper;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
@@ -21,23 +22,34 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithTwoParameters);
                                                 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoA>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoA>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(6, first.Id);
-                Assert.AreEqual("Multimap: 6", first.Name);
-                Assert.AreEqual(20, first.Value);
+                AreEqual(6, first.Id);
+                AreEqual("Multimap: 6", first.Name);
+                AreEqual(20, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+            }
+        }
+
+        [TestMethod]
+        public void ComplexWithTwoParameters()
+        {
+            using(var commander = CreateCommander())
+            {
+                var result = commander.Query(Map.Query.Multimap.ComplexWithTwoParameters2);
+
+                IsNotNull(result);                
             }
         }
                 
@@ -48,30 +60,30 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithThreeParameters);
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoB>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoB>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(11, first.Id);
-                Assert.AreEqual("Multimap: 11", first.Name);
-                Assert.AreEqual(25, first.Value);
+                AreEqual(11, first.Id);
+                AreEqual("Multimap: 11", first.Name);
+                AreEqual(25, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(6, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 6", pocoB.Name);
-                Assert.AreEqual(20, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(6, pocoB.PocoB_Id);
+                AreEqual("POCO B: 6", pocoB.Name);
+                AreEqual(20, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
             }
         }
                 
@@ -82,37 +94,37 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithFourParameters);
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoC>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoC>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(16, first.Id);
-                Assert.AreEqual("Multimap: 16", first.Name);
-                Assert.AreEqual(30, first.Value);
+                AreEqual(16, first.Id);
+                AreEqual("Multimap: 16", first.Name);
+                AreEqual(30, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(6, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 6", pocoB.Name);
-                Assert.AreEqual(20, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(6, pocoB.PocoB_Id);
+                AreEqual("POCO B: 6", pocoB.Name);
+                AreEqual(20, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(11, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 11", pocoC.Name);
-                Assert.AreEqual(25, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(11, pocoC.PocoC_Id);
+                AreEqual("POCO C: 11", pocoC.Name);
+                AreEqual(25, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
 
             }
@@ -125,44 +137,44 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithFiveParameters);
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoD>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoD>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(21, first.Id);
-                Assert.AreEqual("Multimap: 21", first.Name);
-                Assert.AreEqual(35, first.Value);
+                AreEqual(21, first.Id);
+                AreEqual("Multimap: 21", first.Name);
+                AreEqual(35, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(6, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 6", pocoB.Name);
-                Assert.AreEqual(20, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(6, pocoB.PocoB_Id);
+                AreEqual("POCO B: 6", pocoB.Name);
+                AreEqual(20, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(11, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 11", pocoC.Name);
-                Assert.AreEqual(25, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(11, pocoC.PocoC_Id);
+                AreEqual("POCO C: 11", pocoC.Name);
+                AreEqual(25, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(16, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 16", pocoD.Name);
-                Assert.AreEqual(30, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(16, pocoD.PocoD_Id);
+                AreEqual("POCO D: 16", pocoD.Name);
+                AreEqual(30, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
 
             }
         }
@@ -174,51 +186,51 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithSixParameters);
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoE>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoE>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(26, first.Id);
-                Assert.AreEqual("Multimap: 26", first.Name);
-                Assert.AreEqual(40, first.Value);
+                AreEqual(26, first.Id);
+                AreEqual("Multimap: 26", first.Name);
+                AreEqual(40, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(6, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 6", pocoB.Name);
-                Assert.AreEqual(20, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(6, pocoB.PocoB_Id);
+                AreEqual("POCO B: 6", pocoB.Name);
+                AreEqual(20, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(11, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 11", pocoC.Name);
-                Assert.AreEqual(25, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(11, pocoC.PocoC_Id);
+                AreEqual("POCO C: 11", pocoC.Name);
+                AreEqual(25, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(16, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 16", pocoD.Name);
-                Assert.AreEqual(30, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(16, pocoD.PocoD_Id);
+                AreEqual("POCO D: 16", pocoD.Name);
+                AreEqual(30, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
 
                 // poco E: 
                 var pocoE = first.PocoE;
-                Assert.AreEqual(21, pocoE.PocoE_Id);
-                Assert.AreEqual("POCO E: 21", pocoE.Name);
-                Assert.AreEqual(35, pocoE.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
+                AreEqual(21, pocoE.PocoE_Id);
+                AreEqual("POCO E: 21", pocoE.Name);
+                AreEqual(35, pocoE.Value);
+                AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
             }
         }
         
@@ -229,58 +241,58 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithSevenParameters);
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoF>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoF>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(31, first.Id);
-                Assert.AreEqual("Multimap: 31", first.Name);
-                Assert.AreEqual(45, first.Value);
+                AreEqual(31, first.Id);
+                AreEqual("Multimap: 31", first.Name);
+                AreEqual(45, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(1, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 1", pocoA.Name);
-                Assert.AreEqual(15, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(1, pocoA.PocoA_Id);
+                AreEqual("POCO A: 1", pocoA.Name);
+                AreEqual(15, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(6, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 6", pocoB.Name);
-                Assert.AreEqual(20, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(6, pocoB.PocoB_Id);
+                AreEqual("POCO B: 6", pocoB.Name);
+                AreEqual(20, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(11, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 11", pocoC.Name);
-                Assert.AreEqual(25, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(11, pocoC.PocoC_Id);
+                AreEqual("POCO C: 11", pocoC.Name);
+                AreEqual(25, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(16, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 16", pocoD.Name);
-                Assert.AreEqual(30, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(16, pocoD.PocoD_Id);
+                AreEqual("POCO D: 16", pocoD.Name);
+                AreEqual(30, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
 
                 // poco E: 
                 var pocoE = first.PocoE;
-                Assert.AreEqual(21, pocoE.PocoE_Id);
-                Assert.AreEqual("POCO E: 21", pocoE.Name);
-                Assert.AreEqual(35, pocoE.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
+                AreEqual(21, pocoE.PocoE_Id);
+                AreEqual("POCO E: 21", pocoE.Name);
+                AreEqual(35, pocoE.Value);
+                AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
 
                 // poco F:
                 var pocoF = first.PocoF;
-                Assert.AreEqual(26, pocoF.PocoF_Id);
-                Assert.AreEqual("POCO F: 26", pocoF.Name);
-                Assert.AreEqual(40, pocoF.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(5).Date, pocoF.Modified.Date);
+                AreEqual(26, pocoF.PocoF_Id);
+                AreEqual("POCO F: 26", pocoF.Name);
+                AreEqual(40, pocoF.Value);
+                AreEqual(DateTime.UtcNow.AddDays(5).Date, pocoF.Modified.Date);
             }
         }
 
@@ -291,23 +303,23 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithTwoParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoA>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoA>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(13, first.Id);
-                Assert.AreEqual("Multimap: 13", first.Name);
-                Assert.AreEqual(27, first.Value);
+                AreEqual(13, first.Id);
+                AreEqual("Multimap: 13", first.Name);
+                AreEqual(27, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
             }
         }
         
@@ -318,30 +330,30 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithThreeParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoB>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoB>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(18, first.Id);
-                Assert.AreEqual("Multimap: 18", first.Name);
-                Assert.AreEqual(32, first.Value);
+                AreEqual(18, first.Id);
+                AreEqual("Multimap: 18", first.Name);
+                AreEqual(32, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(13, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 13", pocoB.Name);
-                Assert.AreEqual(27, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(13, pocoB.PocoB_Id);
+                AreEqual("POCO B: 13", pocoB.Name);
+                AreEqual(27, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
             }
         }
         
@@ -352,37 +364,37 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithFourParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoC>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoC>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(23, first.Id);
-                Assert.AreEqual("Multimap: 23", first.Name);
-                Assert.AreEqual(37, first.Value);
+                AreEqual(23, first.Id);
+                AreEqual("Multimap: 23", first.Name);
+                AreEqual(37, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(13, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 13", pocoB.Name);
-                Assert.AreEqual(27, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(13, pocoB.PocoB_Id);
+                AreEqual("POCO B: 13", pocoB.Name);
+                AreEqual(27, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(18, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 18", pocoC.Name);
-                Assert.AreEqual(32, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(18, pocoC.PocoC_Id);
+                AreEqual("POCO C: 18", pocoC.Name);
+                AreEqual(32, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
             }
         }
         
@@ -393,44 +405,44 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithFiveParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoD>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoD>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(28, first.Id);
-                Assert.AreEqual("Multimap: 28", first.Name);
-                Assert.AreEqual(42, first.Value);
+                AreEqual(28, first.Id);
+                AreEqual("Multimap: 28", first.Name);
+                AreEqual(42, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(13, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 13", pocoB.Name);
-                Assert.AreEqual(27, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(13, pocoB.PocoB_Id);
+                AreEqual("POCO B: 13", pocoB.Name);
+                AreEqual(27, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(18, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 18", pocoC.Name);
-                Assert.AreEqual(32, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(18, pocoC.PocoC_Id);
+                AreEqual("POCO C: 18", pocoC.Name);
+                AreEqual(32, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(23, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 23", pocoD.Name);
-                Assert.AreEqual(37, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(23, pocoD.PocoD_Id);
+                AreEqual("POCO D: 23", pocoD.Name);
+                AreEqual(37, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
             }
         }
         
@@ -441,51 +453,51 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithSixParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoE>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoE>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(33, first.Id);
-                Assert.AreEqual("Multimap: 33", first.Name);
-                Assert.AreEqual(47, first.Value);
+                AreEqual(33, first.Id);
+                AreEqual("Multimap: 33", first.Name);
+                AreEqual(47, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(13, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 13", pocoB.Name);
-                Assert.AreEqual(27, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(13, pocoB.PocoB_Id);
+                AreEqual("POCO B: 13", pocoB.Name);
+                AreEqual(27, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(18, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 18", pocoC.Name);
-                Assert.AreEqual(32, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(18, pocoC.PocoC_Id);
+                AreEqual("POCO C: 18", pocoC.Name);
+                AreEqual(32, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(23, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 23", pocoD.Name);
-                Assert.AreEqual(37, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(23, pocoD.PocoD_Id);
+                AreEqual("POCO D: 23", pocoD.Name);
+                AreEqual(37, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
 
                 // poco E: 
                 var pocoE = first.PocoE;
-                Assert.AreEqual(28, pocoE.PocoE_Id);
-                Assert.AreEqual("POCO E: 28", pocoE.Name);
-                Assert.AreEqual(42, pocoE.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
+                AreEqual(28, pocoE.PocoE_Id);
+                AreEqual("POCO E: 28", pocoE.Name);
+                AreEqual(42, pocoE.Value);
+                AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
             }
         }
 
@@ -496,58 +508,58 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 var result = commander.Query(Map.Query.Multimap.WithSevenParameters, new { Id = 8 });
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoF>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(1, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<MultiMapPocoF>));
+                IsTrue(result.Any());
+                AreEqual(1, result.Count());
 
                 // first record
                 var first = result.First();
-                Assert.AreEqual(38, first.Id);
-                Assert.AreEqual("Multimap: 38", first.Name);
-                Assert.AreEqual(52, first.Value);
+                AreEqual(38, first.Id);
+                AreEqual("Multimap: 38", first.Name);
+                AreEqual(52, first.Value);
 
                 // poco A:
                 var pocoA = first.PocoA;
-                Assert.AreEqual(8, pocoA.PocoA_Id);
-                Assert.AreEqual("POCO A: 8", pocoA.Name);
-                Assert.AreEqual(22, pocoA.Value);
-                Assert.AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
+                AreEqual(8, pocoA.PocoA_Id);
+                AreEqual("POCO A: 8", pocoA.Name);
+                AreEqual(22, pocoA.Value);
+                AreEqual(DateTime.UtcNow.Date, pocoA.Modified.Date);
 
                 // poco B:
                 var pocoB = first.PocoB;
-                Assert.AreEqual(13, pocoB.PocoB_Id);
-                Assert.AreEqual("POCO B: 13", pocoB.Name);
-                Assert.AreEqual(27, pocoB.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
+                AreEqual(13, pocoB.PocoB_Id);
+                AreEqual("POCO B: 13", pocoB.Name);
+                AreEqual(27, pocoB.Value);
+                AreEqual(DateTime.UtcNow.AddDays(1).Date, pocoB.Modified.Date);
 
                 // poco C:
                 var pocoC = first.PocoC;
-                Assert.AreEqual(18, pocoC.PocoC_Id);
-                Assert.AreEqual("POCO C: 18", pocoC.Name);
-                Assert.AreEqual(32, pocoC.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
+                AreEqual(18, pocoC.PocoC_Id);
+                AreEqual("POCO C: 18", pocoC.Name);
+                AreEqual(32, pocoC.Value);
+                AreEqual(DateTime.UtcNow.AddDays(2).Date, pocoC.Modified.Date);
 
                 // poco D:
                 var pocoD = first.PocoD;
-                Assert.AreEqual(23, pocoD.PocoD_Id);
-                Assert.AreEqual("POCO D: 23", pocoD.Name);
-                Assert.AreEqual(37, pocoD.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
+                AreEqual(23, pocoD.PocoD_Id);
+                AreEqual("POCO D: 23", pocoD.Name);
+                AreEqual(37, pocoD.Value);
+                AreEqual(DateTime.UtcNow.AddDays(3).Date, pocoD.Modified.Date);
 
                 // poco E: 
                 var pocoE = first.PocoE;
-                Assert.AreEqual(28, pocoE.PocoE_Id);
-                Assert.AreEqual("POCO E: 28", pocoE.Name);
-                Assert.AreEqual(42, pocoE.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
+                AreEqual(28, pocoE.PocoE_Id);
+                AreEqual("POCO E: 28", pocoE.Name);
+                AreEqual(42, pocoE.Value);
+                AreEqual(DateTime.UtcNow.AddDays(4).Date, pocoE.Modified.Date);
 
                 // poco F:
                 var pocoF = first.PocoF;
-                Assert.AreEqual(33, pocoF.PocoF_Id);
-                Assert.AreEqual("POCO F: 33", pocoF.Name);
-                Assert.AreEqual(47, pocoF.Value);
-                Assert.AreEqual(DateTime.UtcNow.AddDays(5).Date, pocoF.Modified.Date);
+                AreEqual(33, pocoF.PocoF_Id);
+                AreEqual("POCO F: 33", pocoF.Name);
+                AreEqual(47, pocoF.Value);
+                AreEqual(DateTime.UtcNow.AddDays(5).Date, pocoF.Modified.Date);
             }
         }
     }

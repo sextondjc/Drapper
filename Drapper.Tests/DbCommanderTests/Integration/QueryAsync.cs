@@ -10,7 +10,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Drapper.Tests.Common.CommanderHelper;
+using static Drapper.Tests.Helpers.CommanderHelper;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
@@ -25,10 +26,10 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 var response = await commander.QueryAsync<PocoA>();
                 var result = response.ToList();
 
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(5, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
+                IsTrue(result.Any());
+                AreEqual(5, result.Count());
             }
         }
 
@@ -50,40 +51,38 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             using (var commander = CreateCommander())
             {
                 var result = await commander.QueryAsync<PocoA>(new { modified = date });
-                Assert.IsNotNull(result);
-                Assert.IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
-                Assert.IsTrue(result.Any());
-                Assert.AreEqual(3, result.Count());
+                IsNotNull(result);
+                IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
+                IsTrue(result.Any());
+                AreEqual(3, result.Count());
 
                 // check values 
                 var first = result.First();
-                Assert.AreEqual("Entry 1", first.Name);
-                Assert.AreEqual(5.10M, first.Value);
-                Assert.AreEqual(new DateTime(2016, 4, 24), first.Modified);
+                AreEqual("Entry 1", first.Name);
+                AreEqual(5.10M, first.Value);
+                AreEqual(new DateTime(2016, 4, 24), first.Modified);
             }
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(AggregateException))]
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
         public void SupportsCancellationToken()
-        {
-            // turns out cancellation toekn isn't actually supported here. 
-            // hmph. why did I think it was?
+        {            
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
 
             using (var commander = CreateCommander())
             {
-                var task = commander.QueryAsync<int>(cancellationToken: tokenSource.Token);
+                var task = commander.QueryAsync<int>(type:typeof(QueryAsync), cancellationToken: tokenSource.Token);
                 try
                 {
                     task.Wait(TimeSpan.FromSeconds(5));
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsInstanceOfType(ex, typeof(AggregateException));
+                    IsInstanceOfType(ex, typeof(AggregateException));
                     var innerExceptions = ((AggregateException)ex).InnerExceptions;
-                    Assert.AreEqual(1, innerExceptions.Count());
-                    Assert.IsInstanceOfType(innerExceptions.Single(), typeof(SqlException));
+                    AreEqual(1, innerExceptions.Count());
+                    IsInstanceOfType(innerExceptions.Single(), typeof(SqlException));
                     throw;
                 }
             }

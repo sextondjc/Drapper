@@ -6,6 +6,7 @@
 using Drapper.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.DbConnectorTests
 {
@@ -27,6 +28,7 @@ namespace Drapper.Tests.DbConnectorTests
         {
             var provider = new Settings();
             var connector = new DbConnector(provider);
+            IsNotNull(connector);
         }
     }
 }

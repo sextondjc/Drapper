@@ -3,35 +3,28 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-using Drapper.Tests.Common;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using static Drapper.Tests.Common.CommanderHelper;
+using static Drapper.Tests.Helpers.CommanderHelper;
+using static Drapper.Tests.Helpers.TableHelper;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
     [TestClass]
     public class Execute
-    {
-        #region / init & cleanup /
-        
-        public void CreateTable(string tableName)
-        {
-            TableHelper.CreateTable(tableName);
-        }
-        
-        #endregion
-
+    {        
         [TestMethod]
         public void ReturnsTrueForSuccessfulResult()
         {
             using (var commander = CreateCommander())
             {
                 var result = commander.Execute(new { value = 1 });
-                Assert.IsTrue(result);
+                IsTrue(result);
             }
         }
 
@@ -70,15 +63,15 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             using (var commander = CreateCommander())
             {
                 var result = commander.Execute(models);
-                Assert.IsTrue(result);
+                IsTrue(result);
 
                 // check they were created. 
                 var records = commander.Query<PocoA>(method: "SupportsIEnumberableModels.Query");
-                Assert.IsNotNull(records);
-                Assert.IsTrue(records.Any());
-                Assert.AreEqual(2, records.Count());
-                Assert.AreEqual(models.First().Name, records.First().Name);
-                Assert.AreEqual(models.Last().Name, records.Last().Name);
+                IsNotNull(records);
+                IsTrue(records.Any());
+                AreEqual(2, records.Count());
+                AreEqual(models.First().Name, records.First().Name);
+                AreEqual(models.Last().Name, records.Last().Name);
             }
         }
 
@@ -110,11 +103,11 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsInstanceOfType(ex, typeof(SqlException));
+                    IsInstanceOfType(ex, typeof(SqlException));
                     // check if the record has been rolled back.                    
                     var record = commander.Query<PocoA>(new { Name = model.Name }, method: "SupportsTransactionRollback.Query");
-                    Assert.IsNotNull(record);
-                    Assert.IsFalse(record.Any());
+                    IsNotNull(record);
+                    IsFalse(record.Any());
                 }
             }
         }
@@ -140,9 +133,57 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                     };
                 });
 
-                Assert.ReferenceEquals(pocoA, record.PocoA);
-                Assert.ReferenceEquals(pocoB, record.PocoB);
+                ReferenceEquals(pocoA, record.PocoA);
+                ReferenceEquals(pocoB, record.PocoB);
             }
         }
+
+        [Ignore] // todo: this is actually supported, but need to improve the test automation
+        [TestMethod]
+        public void SupportBulkInsertFromFile()
+        {
+            using (var commander = CreateCommander())
+            {
+                var operation = commander.Execute(new { path = "C:\\Github\\Drapper\\TestData\\CsvTest.txt" });
+                var result = commander.Query<dynamic>(method: "BulkInsertResult");
+                AreEqual(4, result.Count());
+            }
+        }
+
+        [Ignore] // todo: this is actually supported, but need to improve the test automation
+        [TestMethod]
+        public void SupportBulkInsertFromFileAndReturn()
+        {
+            using (var commander = CreateCommander())
+            {                                                
+                var result = commander.Query<dynamic>(new { path = "C:\\Github\\Drapper\\TestData\\CsvTest.txt" });
+                AreEqual(4, result.Count());
+            }
+        }
+
+        [Ignore] // todo: this is actually supported, but need to improve the test automation
+        [TestMethod]
+        public void SupportBulkInsertFromList()
+        {
+            // build a list of 1000 items
+            var list = new List<dynamic>();
+            for (var i = 0; i < 1000; i++)
+            {
+                list.Add(new
+                {
+                    Id = i,
+                    FirstName = $"FirstName {i}",
+                    LastName = $"LastName {i}",
+                    BirthDate = DateTime.UtcNow
+                });
+            }
+
+            using (var commander = CreateCommander())
+            {
+                var operation = commander.Execute(list);
+                var result = commander.Query<dynamic>(method: "SupportBulkInsertFromListResult");
+                AreEqual(1000, result.Count());
+            }
+        }       
     }
 }
