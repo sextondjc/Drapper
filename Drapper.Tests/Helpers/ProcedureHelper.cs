@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ============================================================================================================================= 
+// author       : david sexton (@sextondjc | sextondjc.com)
+// date         : 2017.02.10 (01:53)
+// modified     : 2017-02-19 (22:10)
+// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+// =============================================================================================================================
+
+#region
+
 using System.Threading.Tasks;
+
+#endregion
 
 namespace Drapper.Tests.Helpers
 {
     public static class ProcedureHelper
     {
-        public static void Build()
-        {
-            
-        }
-
-
-
         private static async Task CreateTableCreatorProcedure()
         {
             using (var commander = CommanderHelper.CreateCommander())
             {
-                await commander.ExecuteAsync(0, typeof(ProcedureHelper));
+                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
             }
         }
 
@@ -27,7 +27,7 @@ namespace Drapper.Tests.Helpers
         {
             using (var commander = CommanderHelper.CreateCommander())
             {
-                await commander.ExecuteAsync(0, typeof(ProcedureHelper));
+                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
             }
         }
 
@@ -35,7 +35,7 @@ namespace Drapper.Tests.Helpers
         {
             using (var commander = CommanderHelper.CreateCommander())
             {
-                await commander.ExecuteAsync(0, typeof(ProcedureHelper));
+                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
             }
         }
     }

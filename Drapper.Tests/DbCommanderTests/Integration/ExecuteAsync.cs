@@ -19,13 +19,32 @@ namespace Drapper.Tests.DbCommanderTests.Integration
 {
     [TestClass]
     public class ExecuteAsync
-    {        
+    {
+        [TestMethod]
+        public async Task SupportParameterlessCalls()
+        {
+            using (var commander = CreateCommander())
+            {
+                var result = await commander.ExecuteAsync(typeof(ExecuteAsync));
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
+        public async Task ExceptionsAreReturnedToParameterlessCaller()
+        {
+            using (var commander = CreateCommander())
+            {
+                var result = await commander.ExecuteAsync(typeof(ExecuteAsync));
+            }
+        }
+
         [TestMethod]
         public async Task ReturnsTrueForSuccessfulResult()
         {
             using (var commander = CreateCommander())
             {
-                var response = await commander.ExecuteAsync(new { value = 1 });
+                var response = await commander.ExecuteAsync(new { value = 1 }, typeof(ExecuteAsync));
                 IsNotNull(response);
                 IsInstanceOfType(response, typeof(bool));
                 IsTrue(response);
@@ -38,7 +57,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
         {
             using (var commander = CreateCommander())
             {
-                var result = await commander.ExecuteAsync(new { value = 1 });
+                var result = await commander.ExecuteAsync(new { value = 1 }, typeof(ExecuteAsync));
             }
         }
 
@@ -90,7 +109,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             };
             using (var commander = CreateCommander())
             {
-                var result = await commander.ExecuteAsync(models);
+                var result = await commander.ExecuteAsync(models, typeof(ExecuteAsync));
                 IsTrue(result);
 
                 // check they were created. 
@@ -126,7 +145,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             };
             using (var commander = CreateCommander())
             {
-                var result = await commander.ExecuteAsync(models);
+                var result = await commander.ExecuteAsync(models, typeof(ExecuteAsync));
             }
         }
 
@@ -138,7 +157,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             {
                 try
                 {
-                    var result = await commander.ExecuteAsync(model);
+                    var result = await commander.ExecuteAsync(model, typeof(ExecuteAsync));
                 }
                 catch (Exception ex)
                 {

@@ -98,7 +98,7 @@
     <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationTests\ConfigurationFileDefinitionParserTests\GetCommand.cs" />
-    <Compile Include="ConfigurationTests\JsonFileDefinitionParserTests\GetCommand.cs" />
+    <Compile Include="ConfigurationTests\JsonFileCommandReaderTests\GetCommand.cs" />
     <None Include="Drapper.Settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -112,7 +112,7 @@
     <None Include="QueryDefinitions\Json\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ConfigurationTests\JsonFileDefinitionParserTests\Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests.GetCommand.json">
+    <None Include="ConfigurationTests\JsonFileCommandReaderTests\Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests.GetCommand.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

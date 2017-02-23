@@ -12,8 +12,8 @@
       A simple framework to separate .NET code from SQL code using the Dapper micro ORM.
       Drapper is a wrapper for Dapper (Dapper + Wrapper = Drapper).
     </description>
-    <releaseNotes>First release (production ready).</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>1.1.0 release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <dependencies>
       <dependency id="Drapper.Validation" version="1.0.0" />
       <dependency id="Dapper" version="1.50.2" />

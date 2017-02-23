@@ -6,6 +6,9 @@
         "ProviderName": "System.Data.SqlClient",
         "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
       },
+      "Path": {
+        "Directory": "C:\\Github\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
+      },
       "Types": [
         {
           "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts.TypeA",
@@ -27,24 +30,14 @@
       ]
     },
     {
-      "Namespace": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB",
-      "ConnectionString": {
-        "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
-      },
-      "Path": {
-        "Directory": "C:\\Github\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
-      }
-    },
-    {
-      "Namespace": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests",
+      "Namespace": "Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests",
       "ConnectionString": {
         "ProviderName": "System.Data.SqlClient",
         "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
       },
       "Types": [
         {
-          "Name": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests.GetCommand",
+          "Name": "Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests.GetCommand",
           "Commands": {
             "ExplicitKey": {
               "CommandText": "select 'TypeA';",

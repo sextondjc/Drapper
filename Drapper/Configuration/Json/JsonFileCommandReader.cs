@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Drapper.Validation;
 using Newtonsoft.Json;
 using static Drapper.Validation.Contract;
 
@@ -37,7 +36,7 @@ namespace Drapper.Configuration.Json
             _settings = settings;
         }
 
-        public CommandSetting GetCommand(Type type, string key)
+        public virtual CommandSetting GetCommand(Type type, string key)
         {            
             Require(type != null, ErrorMessages.NullTypePassed);
             Require(!string.IsNullOrWhiteSpace(key),
@@ -58,20 +57,22 @@ namespace Drapper.Configuration.Json
              *                  no file found: terminate and throw exception
              *                  file found: deserialize & check for matching keys
              *                      no matching keys: terminate and throw exception. 
-             *                      matched key: return definition entry. 
+             *                      matched key: return command setting. 
              *          matched type
              *              check definition path
              *                  null: check for definitions
              *                      not null: check for matching keys
              *                          no matching key: terminate and throw exception
-             *                          matched key: return definition entry.
+             *                          matched key: return command setting.
              *                      null: terminate and throw exception.
              *                  not null: search file matching name
              *                      no file found: terminate and throw exception
              *                      file found: deserialize and check for matching keys
              *                          no matching keys: terminate and throw exception
-             *                          matched key: return definition entry.
+             *                          matched key: return command setting.
              */
+
+            // pull in settingsfrom all sources first? 
 
             // start from most specific and work your way down. 
             var namespaceSetting = GetNamespaceSetting(type);
@@ -96,21 +97,17 @@ namespace Drapper.Configuration.Json
 
             // loop backwards till we find a match
             foreach (var setting in _settings.Namespaces)
-            {
-                var @namespace = type.Namespace;
-                var periods = @namespace.Count(x => x == '.');
+            {                
+                var typeNamespace = type.Namespace;
+                var periods = typeNamespace.Count(x => x == '.');
+                
                 for (var i = periods; i > 0; i--)
                 {
-                    var entry =
-                        _settings.Namespaces.SingleOrDefault(
-                            x => x.Namespace == @namespace);
-                    if (entry != null)
+                    if (setting.Namespace == typeNamespace)
                     {
-                        // we have a match. 
-                        return entry;
-                    }
-
-                    @namespace = @namespace.Substring(0, @namespace.LastIndexOf('.'));
+                        return setting;
+                    }                    
+                    typeNamespace = typeNamespace.Substring(0, typeNamespace.LastIndexOf('.'));
                 }
             }
 

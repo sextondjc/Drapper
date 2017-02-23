@@ -3,19 +3,19 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-using Drapper.Configuration;
-using Drapper.Configuration.Json;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
+
 using System;
 using System.IO;
+using Drapper.Configuration;
+using Drapper.Configuration.Json;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB.With.Many.Different.Parts;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using SingleLevel;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
+namespace Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests
 {
     [TestClass]
     public class GetCommand
@@ -33,8 +33,8 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeA), "FallsBackToNamespace");
 
-            IsNotNull(result);
-            AreEqual("select 'TypeA';", result.CommandText);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("select 'TypeA';", result.CommandText);
         }
 
         [TestMethod]
@@ -44,11 +44,11 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeD), "SupportsSingleLevelNamespace");
 
-            IsNotNull(result);
-            AreEqual("select 'TypeD';", result.CommandText);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("select 'TypeD';", result.CommandText);
         }
 
-        [Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
+        //[Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
         [TestMethod]
         public void SupportsFileFoundOnNamespacePathSettings()
         {            
@@ -56,10 +56,10 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeB), "SupportsFileFoundOnNamespacePathSettings");
             
-            IsNotNull(result);
+            Assert.IsNotNull(result);
         }
 
-        [Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
+        //[Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
         [TestMethod]
         public void SupportsFileFoundOnTypePathSetting()
         {
@@ -67,7 +67,7 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(TypeC), "SupportsFileFoundOnTypePathSettings");
 
-            IsNotNull(result);
+            Assert.IsNotNull(result);
         }
                 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests
             var parser = new JsonFileCommandReader(settings);
             var result = parser.GetCommand(typeof(GetCommand), "ExplicitKey");
 
-            IsNotNull(result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]

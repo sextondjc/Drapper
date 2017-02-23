@@ -7,7 +7,7 @@ namespace Drapper.Tests
 {
     [TestClass]
     public class Initialize
-    {
+    {        
         [AssemblyInitialize]
         public static void InitializeAssembly(TestContext context)
         {

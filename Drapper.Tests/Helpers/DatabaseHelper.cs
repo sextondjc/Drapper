@@ -8,6 +8,7 @@
 
 using System.Linq;
 using static System.Console;
+using static Drapper.Tests.Helpers.CommanderHelper;
 
 #endregion
 
@@ -15,42 +16,30 @@ namespace Drapper.Tests.Helpers
 {
     public static class DatabaseHelper
     {
+        private static IDbCommander _commander = CreateCommander();
+
         // create a new database called "Drapper"
         public static void CreateDatabase(string name = "Drapper")
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                // using Query to skip transactionality. 
-                commander.Query<string>(new {name});
-            }
-
+            // using Query to skip transactionality. 
+            _commander.Query<string>(new { name });
             WriteLine($"{name} created!");
         }
 
         public static void DropDatabase(string name = "Drapper")
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                commander.Execute(new {name});
-            }
-
+            _commander.Execute(new { name });
             WriteLine($"{name} dropped!");
         }
 
         public static bool DatabaseExists(string name = "Drapper")
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                return commander.Query<bool>(new {name}).SingleOrDefault();
-            }
+            return _commander.Query<bool>(new { name }).SingleOrDefault();
         }
 
         public static void DropAllTables(string name)
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                commander.Execute(new {name});
-            }
+            _commander.Execute(new { name });
         }
     }
 }

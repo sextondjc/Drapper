@@ -8,7 +8,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using static Drapper.Tests.Helpers.CommanderHelper;
 
@@ -19,80 +18,52 @@ namespace Drapper.Tests.Helpers
     public static class TableHelper
     {
         private static object _lock = new object();
+        private static IDbCommander _commander = CreateCommander();
         public static void CreateTable(string tableName)
         {
-            using (var commander = CreateCommander())
-            {
-                commander.Execute(new {tableName});
-            }
+            _commander.Execute(new { tableName });
         }
 
         public static void CreatePocoTable()
         {
-            using (var commander = CreateCommander())
-            {
-                commander.Execute(0);
-            }
+            _commander.Execute();
         }
 
         public static bool TableExists(string name)
         {
-            using (var commander = CreateCommander())
-            {
-                return commander.Query<bool>(new {name}).SingleOrDefault();
-            }
+            return _commander.Query<bool>(new { name }).SingleOrDefault();
         }
 
         public static bool TableCreatorExists()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                return commander.Query<bool>().SingleOrDefault();
-            }
+            return _commander.Query<bool>().SingleOrDefault();
         }
 
         public static void CreateTableCreatorProcedure()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                commander.Execute(0);
-            }
+            _commander.Execute();
         }
 
         public static bool IdentityTesterExists()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                return commander.Query<bool>().SingleOrDefault();
-            }
+            return _commander.Query<bool>().SingleOrDefault();
         }
 
         public static void CreateIdentityTesterProcedure()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                commander.Execute(0);
-            }
+            _commander.Execute();
         }
 
         public static bool IsStale()
         {
-            var modified = DateTime.MinValue;
-            using (var commander = CreateCommander())
-            {
-                modified = commander.Query<DateTime>().SingleOrDefault();
-            }
-
+            var modified = _commander.Query<DateTime>().SingleOrDefault();
             return modified.Date != DateTime.UtcNow.Date;
         }
 
         public static bool IsConsistent()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                var result = commander.Query<int>().SingleOrDefault();
-                return result == 42;
-            }
+            var result = _commander.Query<int>().SingleOrDefault();
+            return result == 42;
         }
 
         public static void ClearAndPopulate()
@@ -105,33 +76,27 @@ namespace Drapper.Tests.Helpers
             }
         }
 
-        public static void ClearPocoTable()
+        private static void ClearPocoTable()
         {
-            using (var commander = CreateCommander())
-            {
-                commander.Execute(0);
-            }
+            _commander.Execute();
         }
 
-        public static void PopulatePocoTable()
-        {
-            var list = new List<dynamic>();
-
+        private static void PopulatePocoTable()
+        {            
             // 42 entries, 
             for (var i = 1; i < 43; i++)
-            {
-                list.Add(new
+            {    
+                var entry = new
                 {
                     Name = i,
                     Value = i + 14,
                     Modified = DateTime.UtcNow
-                });
+                };
+
+                _commander.Execute(entry);
             }
 
-            using (var commander = CreateCommander())
-            {
-                commander.Execute(list);
-            }
+            
         }
     }
 }

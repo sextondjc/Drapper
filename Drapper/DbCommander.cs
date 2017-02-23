@@ -1,15 +1,21 @@
 ﻿// ============================================================================================================================= 
-// author           : david sexton (@sextondjc | sextondjc.com)
-// date             : 2015.12.23
-// licence          : licensed under the terms of the MIT license. See LICENSE.txt
+// author       : david sexton (@sextondjc | sextondjc.com)
+// date         : 2015.12.23 (23:44)
+// modified     : 2017-02-19 (22:58)
+// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 // =============================================================================================================================
+
 using Dapper;
 using Drapper.Configuration;
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Drapper
 {
@@ -47,12 +53,12 @@ namespace Drapper
                 commandType: definition.CommandType,
                 flags: definition.Flags,
                 cancellationToken: cancellationToken);
-
+        
         [Browsable(false)]
         private Type GetCallerType()
-        {
+        {            
             var frame = new StackFrame(2);
-            var caller = frame.GetMethod();
+            var caller = frame.GetMethod();           
             return caller.DeclaringType;
         }
         
@@ -65,7 +71,7 @@ namespace Drapper
             // the sync version above which itself relies on System.Diagnostics. 
             // not ideal to have that namespace in production code. 
             var frame = new StackFrame(6);
-            var caller = frame.GetMethod();
+            var caller = frame.GetMethod();            
             return caller.DeclaringType;
         }
 

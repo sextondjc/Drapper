@@ -1,8 +1,10 @@
 ﻿// ============================================================================================================================= 
-// author           : david sexton (@sextondjc | sextondjc.com)
-// date             : 2015.12.23
-// licence          : licensed under the terms of the MIT license. See LICENSE.txt
+// author       : david sexton (@sextondjc | sextondjc.com)
+// date         : 2015.12.23 (23:44)
+// modified     : 2017-02-19 (22:58)
+// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 // =============================================================================================================================
+
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,8 @@ using System.Runtime.CompilerServices;
 namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
-    {        
+    {
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<T> Query<T>(
             object parameters = null, 
             Type type = null, 
@@ -28,7 +31,8 @@ namespace Drapper
         }
 
         #region / multimap /
-        
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, TResult>(
             Func<T1, T2, TResult> map, 
             object parameters = null, 
@@ -51,6 +55,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, TResult>(
             Func<T1, T2, T3, TResult> map, 
             object parameters = null, 
@@ -73,6 +78,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, TResult>(
             Func<T1, T2, T3, T4, TResult> map, 
             object parameters = null, 
@@ -95,6 +101,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, TResult>(
             Func<T1, T2, T3, T4, T5, TResult> map, 
             object parameters = null, 
@@ -117,6 +124,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, TResult>(
             Func<T1, T2, T3, T4, T5, T6, TResult> map, 
             object parameters = null, 
@@ -139,6 +147,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<T1, T2, T3, T4, T5, T6, T7, TResult> map, 
             object parameters = null, 
@@ -162,9 +171,10 @@ namespace Drapper
         }
 
         #endregion
-        
+
         #region / multiple /
-                
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, TResult>(
             Func<IEnumerable<T1>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -183,6 +193,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -202,6 +213,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -222,6 +234,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<T4>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -243,6 +256,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -270,6 +284,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -299,6 +314,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -330,6 +346,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -363,6 +380,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -398,6 +416,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -435,6 +454,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -474,6 +494,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -515,6 +536,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -558,6 +580,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -603,6 +626,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -650,6 +674,7 @@ namespace Drapper
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 

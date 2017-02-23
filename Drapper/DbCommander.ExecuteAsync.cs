@@ -1,23 +1,61 @@
 ﻿// ============================================================================================================================= 
-// author           : david sexton (@sextondjc | sextondjc.com)
-// date             : 2015.12.23
-// licence          : licensed under the terms of the MIT license. See LICENSE.txt
+// author       : david sexton (@sextondjc | sextondjc.com)
+// date         : 2015.12.23 (23:44)
+// modified     : 2017-02-19 (22:58)
+// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 // =============================================================================================================================
-using Dapper;
+
+#region
+
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Dapper;
+using Drapper.Validation;
+
+#endregion
 
 namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
     {
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public async Task<bool> ExecuteAsync(
+            Type type,
+            CancellationToken cancellationToken = default(CancellationToken),
+            [CallerMemberName] string method = null)
+        {
+            // type is required. 
+            Contract.Require(type != null, "A type argument must be supplied to an asynchronus method. Failure in method '{0}'", method);
+            var definition = _reader.GetCommand(type, method);
+            using (var connection = _connector.CreateDbConnection(type, definition))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction(definition.IsolationLevel))
+                {
+                    try
+                    {
+                        var command = GetCommandDefinition(definition, transaction: transaction, cancellationToken: cancellationToken);
+                        var result = (await connection.ExecuteAsync(command) > 0);
+                        transaction.Commit();
+                        return result;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<bool> ExecuteAsync<T>(
-            T model, 
-            Type type = null, 
-            CancellationToken cancellationToken = default(CancellationToken), 
+            T model,
+            Type type, // = null, 
+            CancellationToken cancellationToken = default(CancellationToken),
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
@@ -25,7 +63,8 @@ namespace Drapper
             using (var connection = _connector.CreateDbConnection(type, definition))
             {
                 connection.Open();
-                using (var transaction = connection.BeginTransaction(definition.IsolationLevel))
+                using (
+                    var transaction = connection.BeginTransaction(definition.IsolationLevel))
                 {
                     try
                     {
@@ -42,10 +81,11 @@ namespace Drapper
                 }
             }
         }
-        
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<TResult> ExecuteAsync<TResult>(
-            Func<TResult> map, 
-            CancellationToken cancellationToken = default(CancellationToken), 
+            Func<TResult> map,
+            CancellationToken cancellationToken = default(CancellationToken),
             [CallerMemberName] string method = null)
         {
             // i'm honestly not lovin this method. looks like it could cause

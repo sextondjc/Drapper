@@ -12,7 +12,7 @@
       A validation helper library. Includes a simple pre-condition checker and a handful of additonal validation attributes derived from the System.ComponentModel.DataAnnotations namespace. 
     </description>
     <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright 2016</copyright>    
+    <copyright>Copyright 2017</copyright>    
   </metadata>
   <files>    
     <file src="net452\Drapper.Validation.dll" target="lib\net452\Drapper.Validation.dll"/>    

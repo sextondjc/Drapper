@@ -10,8 +10,8 @@
         {
           "Name": "Drapper.Tests.DbCommanderTests.Integration.Execute",
           "Commands": {
-            "Cleanup": {
-              "CommandText": "declare @command nvarchar(125); select @command = N'delete from ?';exec sp_MSforeachtable @command;",
+            "SupportParameterlessCalls": {
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select 1;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -200,6 +200,18 @@
           "Commands": {
             "Cleanup": {
               "CommandText": "declare @command nvarchar(125); select @command = N'delete from ?';exec sp_MSforeachtable @command;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportParameterlessCalls": {
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToParameterlessCaller": {
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select 1 + (1/0);",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5

@@ -17,7 +17,17 @@ namespace Drapper.Tests.DbCommanderTests.Integration
 {
     [TestClass]
     public class Execute
-    {        
+    {
+
+        [TestMethod]
+        public void SupportParameterlessCalls()
+        {
+            using (var commander = CreateCommander())
+            {
+                var result = commander.Execute();
+            }
+        }
+
         [TestMethod]
         public void ReturnsTrueForSuccessfulResult()
         {
