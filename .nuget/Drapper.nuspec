@@ -12,7 +12,13 @@
       A simple framework to separate .NET code from SQL code using the Dapper micro ORM.
       Drapper is a wrapper for Dapper (Dapper + Wrapper = Drapper).
     </description>
-    <releaseNotes>1.1.0 release</releaseNotes>
+    <releaseNotes>1.1.0 release.
+	- Correct single level namespace bug.
+	- Improved JsonFileCommandReader CommandSetting resolution.
+	- Provided relative path support for JsonFileCommandReader
+	- Added parameterless Execute overload.
+	- Unsealed command readers.
+	</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <dependencies>
       <dependency id="Drapper.Validation" version="1.1.0" />
