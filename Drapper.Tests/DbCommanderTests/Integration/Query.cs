@@ -3,73 +3,84 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using static Drapper.Tests.Helpers.CommanderHelper;
 using static Drapper.Tests.Helpers.TableHelper;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
-    [TestClass]
+    [Collection("Integration")]
     public class Query
     {
 
-        [TestMethod]
+        [Fact]
         public void SupportsParameterlessCalls()
         {
             using (var commander = CreateCommander())
             {                
                 var result = commander.Query<PocoA>();
                                 
-                IsNotNull(result);
-                IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
-                IsTrue(result.Any());
-                AreEqual(5, result.Count());
+                NotNull(result);
+                IsAssignableFrom<IEnumerable<PocoA>>(result);
+                True(result.Any());
+                Equal(5, result.Count());
 
                 // check values 
                 var first = result.First();
-                AreEqual(1, first.PocoA_Id);
-                AreEqual("A11", first.Name);
-                AreEqual(1, first.Value);
-                AreEqual(DateTime.UtcNow.Date, first.Modified.Date);
+                Equal(1, first.PocoA_Id);
+                Equal("A11", first.Name);
+                Equal(1, first.Value);
+                Equal(DateTime.UtcNow.Date, first.Modified.Date);
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [Fact]        
         public void ExceptionsAreReturnedToCaller()
         {
             using (var commander = CreateCommander())
             {
-                var result = commander.Query<int>();
+                try
+                {
+                    var result = commander.Query<int>();
+                }
+                catch (SqlException exception)
+                {
+                    IsType<SqlException>(exception);                    
+                }
+                catch(Exception ex)
+                {
+                    True(false, "SqlException was expected.");
+                }
+                
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SupportsParameterizedCalls()
         {
             using (var commander = CreateCommander())
             {
                 var result = commander.Query<PocoA>(new { Id = 3 });
-                IsNotNull(result);
-                IsInstanceOfType(result, typeof(IEnumerable<PocoA>));
-                IsTrue(result.Any());
-                AreEqual(1, result.Count());
+                NotNull(result);
+                IsAssignableFrom<IEnumerable<PocoA>>(result);
+                True(result.Any());
+                Equal(1, result.Count());
 
                 // check values 
                 var first = result.First();
-                AreEqual(3, first.PocoA_Id);
-                AreEqual("A13", first.Name);
-                AreEqual(3, first.Value);
-                AreEqual(DateTime.UtcNow.Date, first.Modified.Date);
+                Equal(3, first.PocoA_Id);
+                Equal("A13", first.Name);
+                Equal(3, first.Value);
+                Equal(DateTime.UtcNow.Date, first.Modified.Date);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ReturnsIdentity()
         {
             // not really an "execute" method, but:
@@ -85,11 +96,11 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 commander.Execute(() =>
                 {
                     var result = commander.Query<int>(new { model.Name, model.Value }, typeof(Execute), "ReturnsIdentity");
-                    AreEqual(1, result.Single());
+                    Equal(1, result.Single());
                     result = commander.Query<int>(new { model.Name, model.Value }, typeof(Execute), "ReturnsIdentity");
-                    AreEqual(2, result.Single());
+                    Equal(2, result.Single());
                     result = commander.Query<int>(new { model.Name, model.Value }, typeof(Execute), "ReturnsIdentity");
-                    AreEqual(3, result.Single());
+                    Equal(3, result.Single());
                     return result;
                 });
             }

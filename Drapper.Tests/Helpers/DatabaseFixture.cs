@@ -15,12 +15,14 @@ using static System.Console;
 
 namespace Drapper.Tests.Helpers
 {
-    /// <summary>
-    ///     Establishes that the environment is set up to allow tests to run.
-    /// </summary>
-    public static class EnvironmentHelper
+    public class DatabaseFixture
     {
-        public static void Setup(string name = "Drapper")
+        public DatabaseFixture()
+        {
+            Setup();
+        }
+
+        public void Setup(string name = "Drapper")
         {
             WriteLine($"Running environment setup checks against databse '{name}'.");
             if (!DatabaseExists(name))
@@ -60,7 +62,7 @@ namespace Drapper.Tests.Helpers
             }
         }
 
-        public static void Teardown(string name = "Drapper")
+        public void Teardown(string name = "Drapper")
         {
             if (DatabaseExists(name))
             {
@@ -68,4 +70,6 @@ namespace Drapper.Tests.Helpers
             }
         }
     }
+
+
 }

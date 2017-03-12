@@ -31,7 +31,7 @@ namespace Drapper.Configuration
         /// The connection string.
         /// </value>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public ConnectionStringSetting ConnectionString { get; set; }
+        public ConnectionStringSetting ConnectionString { get; set; } 
         
         /// <summary>
         /// (Optional) Gets or sets the path settings. These paths

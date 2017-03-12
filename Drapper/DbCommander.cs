@@ -42,24 +42,22 @@ namespace Drapper
 
         [Browsable(false)]
         private CommandDefinition GetCommandDefinition(
-            CommandSetting definition,
+            CommandSetting setting,
             object parameters = null,
             IDbTransaction transaction = null,
             CancellationToken cancellationToken = default(CancellationToken)) => new CommandDefinition(
-                commandText: definition.CommandText,
+                commandText: setting.CommandText,
                 parameters: parameters,
                 transaction: transaction,
-                commandTimeout: definition.CommandTimeout,
-                commandType: definition.CommandType,
-                flags: definition.Flags,
+                commandTimeout: setting.CommandTimeout,
+                commandType: setting.CommandType,
+                flags: setting.Flags,
                 cancellationToken: cancellationToken);
         
         [Browsable(false)]
         private Type GetCallerType()
         {            
-            var frame = new StackFrame(2);
-            var caller = frame.GetMethod();           
-            return caller.DeclaringType;
+            return (new StackFrame(2)).GetMethod().DeclaringType;
         }
         
         [Browsable(false)]
@@ -70,9 +68,7 @@ namespace Drapper
             // code does. aside from that, this is really a bastardization of 
             // the sync version above which itself relies on System.Diagnostics. 
             // not ideal to have that namespace in production code. 
-            var frame = new StackFrame(6);
-            var caller = frame.GetMethod();            
-            return caller.DeclaringType;
+            return (new StackFrame(6)).GetMethod().DeclaringType;
         }
 
         public void Dispose()

@@ -49,7 +49,7 @@ namespace Drapper.Configuration
         public ConnectionStringSetting ConnectionString { get; set; }
 
         /// <summary>
-        ///     Gets or sets the definitions for this type.
+        ///     Gets or sets the command settings for this type.
         /// </summary>
         /// <value>
         ///     The definitions.

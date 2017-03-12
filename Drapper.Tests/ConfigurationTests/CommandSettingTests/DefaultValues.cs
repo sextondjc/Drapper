@@ -12,53 +12,52 @@
 using System.Data;
 using Dapper;
 using Drapper.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Xunit;
+using static Xunit.Assert;
 
 #endregion
 
 namespace Drapper.Tests.ConfigurationTests.CommandSettingTests
-{
-    [TestClass]
+{    
     public class DefaultValues
     {
         // these tests are really just to:
         //   1. test the defaults are as expected. 
         //   2. get my unit test coverage metric up to 100% for this class (yes, I am that shallow). 
 
-        [TestMethod]
+        [Fact]
         public void CommandTextReturnsNullByDefault()
         {
             var setting = new CommandSetting();
-            AreEqual(null, setting.CommandText);
+            Equal(null, setting.CommandText);
         }
 
-        [TestMethod]
+        [Fact]
         public void CommandTimeoutReturnsThirtyByDefault()
         {
             var setting = new CommandSetting();
-            AreEqual(30, setting.CommandTimeout);
+            Equal(30, setting.CommandTimeout);
         }
 
-        [TestMethod]
+        [Fact]
         public void CommandTypeReturnsTextByDefault()
         {
             var setting = new CommandSetting();
-            AreEqual(CommandType.Text, setting.CommandType);
+            Equal(CommandType.Text, setting.CommandType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CommandFlagsReturnsNoneByDefault()
         {
             var setting = new CommandSetting();
-            AreEqual(CommandFlags.None, setting.Flags);
+            Equal(CommandFlags.None, setting.Flags);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsolationLevelDefaultsToSerializable()
         {
             var setting = new CommandSetting();
-            AreEqual(IsolationLevel.Serializable, setting.IsolationLevel);
+            Equal(IsolationLevel.Serializable, setting.IsolationLevel);
         }
     }
 }

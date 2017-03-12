@@ -16,21 +16,19 @@ namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
     {
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<T>> QueryAsync<T>(
             object parameters = null,
             Type type = null,
             CancellationToken cancellationToken = default(CancellationToken),
             [CallerMemberName] string method = null)
-        {
+        {            
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync<T>(command);
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+       
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, TResult>(
             Func<T1, T2, TResult> map,
             object parameters = null,
@@ -39,20 +37,19 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, TResult>(
             Func<T1, T2, T3, TResult> map,
             object parameters = null,
@@ -61,20 +58,19 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, TResult>(
             Func<T1, T2, T3, T4, TResult> map,
             object parameters = null,
@@ -83,42 +79,40 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, TResult>(
-            Func<T1, T2, T3, T4, T5, TResult> map,
-            object parameters = null,
-            Type type = null,
-            CancellationToken cancellationToken = default(CancellationToken),
-            [CallerMemberName] string method = null)
+                    Func<T1, T2, T3, T4, T5, TResult> map,
+                    object parameters = null,
+                    Type type = null,
+                    CancellationToken cancellationToken = default(CancellationToken),
+                    [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, TResult>(
             Func<T1, T2, T3, T4, T5, T6, TResult> map,
             object parameters = null, Type type = null,
@@ -126,20 +120,19 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<T1, T2, T3, T4, T5, T6, T7, TResult> map,
             object parameters = null,
@@ -148,20 +141,19 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            var connection = _connector.CreateDbConnection(type, definition);
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            var connection = _connector.CreateDbConnection(type, setting);
             return await connection.QueryAsync(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
-                    commandTimeout: definition.CommandTimeout,
-                    commandType: definition.CommandType);
+                    splitOn: setting.Split,
+                    commandTimeout: setting.CommandTimeout,
+                    commandType: setting.CommandType);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, TResult>(
             Func<IEnumerable<T1>, IEnumerable<TResult>> map,
             object parameters = null,
@@ -170,9 +162,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -182,7 +174,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<TResult>> map,
             object parameters = null,
@@ -191,9 +182,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -204,7 +195,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<TResult>> map,
             object parameters = null,
@@ -213,9 +203,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -227,7 +217,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<T4>, IEnumerable<TResult>> map,
             object parameters = null,
@@ -236,9 +225,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -251,13 +240,12 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, TResult>(
-            Func<IEnumerable<T1>, 
-                 IEnumerable<T2>, 
-                 IEnumerable<T3>, 
-                 IEnumerable<T4>, 
-                 IEnumerable<T5>, 
+            Func<IEnumerable<T1>,
+                 IEnumerable<T2>,
+                 IEnumerable<T3>,
+                 IEnumerable<T4>,
+                 IEnumerable<T5>,
                  IEnumerable<TResult>> map,
             object parameters = null,
             Type type = null,
@@ -265,9 +253,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -281,7 +269,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -296,9 +283,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -312,8 +299,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -329,9 +315,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -347,7 +333,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -364,9 +349,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -383,7 +368,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -401,9 +385,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -420,8 +404,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -440,9 +423,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -460,8 +443,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -481,9 +463,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -502,8 +484,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -524,9 +505,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -547,7 +528,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -569,9 +549,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -593,7 +573,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -616,9 +595,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -641,7 +620,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -665,9 +643,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();
@@ -690,8 +668,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public async Task<IEnumerable<TResult>> QueryAsync<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(
             Func<IEnumerable<T1>,
                 IEnumerable<T2>,
@@ -716,9 +693,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetAsyncCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters, cancellationToken: cancellationToken);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters, cancellationToken: cancellationToken);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = await connection.QueryMultipleAsync(command);
                 var t1 = await reader.ReadAsync<T1>();

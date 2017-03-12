@@ -24,6 +24,7 @@ namespace Drapper
     public class DbConnector : IDbConnector
     {
         private readonly ISettings _settings;
+        private readonly CommandReaderUtilities _utilities;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="DbConnector" /> class.
@@ -31,8 +32,9 @@ namespace Drapper
         /// <param name="settings">The settings.</param>
         public DbConnector(ISettings settings)
         {
-            Require(settings != null, ErrorMessages.NullSettingsPassed);
+            Require<ArgumentNullException>(settings != null, ErrorMessages.NullSettingsPassed);
             _settings = settings;
+            _utilities = new CommandReaderUtilities(_settings);
         }
 
         /// <summary>
@@ -41,10 +43,10 @@ namespace Drapper
         /// <param name="type"></param>
         public IDbConnection CreateDbConnection(Type type)
         {
-            Require(type != null, ErrorMessages.NullTypeError);
+            Require<ArgumentNullException>(type != null, ErrorMessages.NullTypeError);
             var connection = GetFromSettings(type);
 
-            Require(connection != null,
+            Require<ArgumentNullException>(connection != null,
                     ErrorMessages.NullConnectionString,
                     type.FullName);
 
@@ -59,13 +61,15 @@ namespace Drapper
         /// <returns></returns>
         public IDbConnection CreateDbConnection(Type type, CommandSetting commandSetting)
         {
-            var connection = commandSetting.ConnectionString;
-            if (connection == null)
+            var connectionString = commandSetting.ConnectionString;
+            if (connectionString == null)
             {
                 return CreateDbConnection(type);
-            }
+            }            
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString.ProviderName), "The providerName from the command setting cannot be null.");
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString.ConnectionString), "The connectionString from the command setting cannot be null.");
 
-            return CreateDbConnection(connection.ProviderName, connection.ConnectionString);
+            return CreateDbConnection(connectionString.ProviderName, connectionString.ConnectionString);
         }
 
         /// <summary>
@@ -77,10 +81,7 @@ namespace Drapper
         private IDbConnection CreateDbConnection(
             string providerName,
             string connectionString)
-        {
-            // todo: this method can be better. 
-            // the connection string should be checked for null on the way in. 
-                        
+        {                                    
             // Assume failure.
             DbConnection connection = null;
 
@@ -116,63 +117,22 @@ namespace Drapper
         /// <returns></returns>
         private ConnectionStringSetting GetFromSettings(Type type)
         {
-            var namespaceSetting = GetNamespaceSetting(type);
-            Require(namespaceSetting != null,
+            var namespaceSetting = _utilities.GetNamespaceSetting(type);
+            Require<ArgumentNullException>(namespaceSetting != null,
                     "NamespaceSetting not configured for {0}",
                     type.FullName);
 
             // check if it has a definition.
-            var typeSetting =
-                namespaceSetting.Types?.SingleOrDefault(
-                    x => x.Name == type.FullName);
-
-            if (typeSetting != null && typeSetting.ConnectionString != null)
+            var typeSetting = namespaceSetting.Types?.SingleOrDefault(x => x.Name == type.FullName);
+            
+            if (typeSetting != null && typeSetting?.ConnectionString != null)
             {
                 return typeSetting.ConnectionString;
             }
 
             return namespaceSetting.ConnectionString;
         }
-
-        /// <summary>
-        ///     Gets the namespace setting.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        private NamespaceSetting GetNamespaceSetting(Type type)
-        {
-            var result =
-                _settings.Namespaces.SingleOrDefault(
-                    x => x.Namespace == type.Namespace);
-            if (result != null)
-            {
-                return result;
-            }
-
-            // it ain't here. loop backwards till we find one that matches
-            foreach (var setting in _settings.Namespaces.OrderByDescending(x => x.Namespace.Length))
-            {
-                var @namespace = type.Namespace;
-                var periods = @namespace.Count(x => x == '.');
-                for (var i = periods; i > 0; i--)
-                {
-                    var entry =
-                        _settings.Namespaces.SingleOrDefault(
-                            x => x.Namespace == @namespace);
-                    if (entry != null)
-                    {
-                        // we have a match. 
-                        return entry;
-                    }
-
-                    @namespace = @namespace.Substring(0, @namespace.LastIndexOf('.'));
-                }
-            }
-
-            // this should always be null. 
-            return result;
-        }
-
+        
         private static class ErrorMessages
         {
             internal const string NullConnectionString = "No connection string settings could be found for '{0}'. Please check configuration.";

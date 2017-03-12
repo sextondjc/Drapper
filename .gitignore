@@ -45,12 +45,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-/.vs
-/Drapper/bin/Release
-/Drapper/obj
-/Drapper/Drapper.v2.ncrunchproject
-/packages
-/_NCrunch_Drapper
-/Drapper.v2.ncrunchsolution
-/Drapper.ncrunchsolution.user
-/sonar.cmd

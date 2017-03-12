@@ -3,23 +3,29 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using static Drapper.Tests.Helpers.CommanderHelper;
 using static Drapper.Tests.Helpers.TableHelper;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Xunit;
+using static Xunit.Assert;
+using Drapper.Tests.Helpers;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
-    [TestClass]
+    [Collection("Integration")]
     public class Execute
     {
+        DatabaseFixture _fixture;
 
-        [TestMethod]
+        public Execute(DatabaseFixture fixture)
+        {            
+            _fixture = fixture;
+        }
+
+        [Fact]
         public void SupportParameterlessCalls()
         {
             using (var commander = CreateCommander())
@@ -28,27 +34,51 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             }
         }
 
-        [TestMethod]
+        [Fact]        
+        public void ParameterlessCallReturnsException()
+        {
+            using (var commander = CreateCommander())
+            {
+                // not the preferred way of testing exceptions
+                // in xUnit, but because the parameterless calls
+                // depend - for the moment - on a StackFrame, 
+                // calling this method from within a Throws<T>
+                // alters the stack & thus, the lookup. 
+                try
+                {
+                    var result = commander.Execute();
+                }
+                catch (SqlException exception)
+                {
+                    IsType<SqlException>(exception);                    
+                }
+                catch (Exception ex)
+                {
+                    True(false, "SqlException was expected.");
+                }
+            }
+        }
+
+        [Fact]
         public void ReturnsTrueForSuccessfulResult()
         {
             using (var commander = CreateCommander())
             {
                 var result = commander.Execute(new { value = 1 });
-                IsTrue(result);
+                True(result);
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [Fact]        
         public void ExceptionsAreReturnedToCaller()
         {
             using (var commander = CreateCommander())
             {
-                var result = commander.Execute(new { value = 1 });
+                var result = Throws<SqlException>(() => commander.Execute(new { value = 1 }, typeof(Execute)));
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SupportsIEnumberableModels()
         {
             CreateTable("EnumerableModels");
@@ -73,20 +103,19 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             using (var commander = CreateCommander())
             {
                 var result = commander.Execute(models);
-                IsTrue(result);
+                True(result);
 
                 // check they were created. 
                 var records = commander.Query<PocoA>(method: "SupportsIEnumberableModels.Query");
-                IsNotNull(records);
-                IsTrue(records.Any());
-                AreEqual(2, records.Count());
-                AreEqual(models.First().Name, records.First().Name);
-                AreEqual(models.Last().Name, records.Last().Name);
+                NotNull(records);
+                True(records.Any());
+                Equal(2, records.Count());
+                Equal(models.First().Name, records.First().Name);
+                Equal(models.Last().Name, records.Last().Name);
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [Fact]        
         public void IEnumerableExecuteExceptionsAreReturnedToCaller()
         {
             var models = new List<dynamic>
@@ -97,32 +126,26 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             };
             using (var commander = CreateCommander())
             {
-                var result = commander.Execute((IEnumerable<dynamic>)models);
+                var result = Throws<SqlException>(() => commander.Execute((IEnumerable<dynamic>)models, type:typeof(Execute)));
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SupportsTransactionRollback()
         {
             var model = new PocoA { Name = Guid.NewGuid().ToString(), Value = int.MaxValue };
             using (var commander = CreateCommander())
             {
-                try
-                {
-                    var result = commander.Execute(model);
-                }
-                catch (Exception ex)
-                {
-                    IsInstanceOfType(ex, typeof(SqlException));
-                    // check if the record has been rolled back.                    
-                    var record = commander.Query<PocoA>(new { Name = model.Name }, method: "SupportsTransactionRollback.Query");
-                    IsNotNull(record);
-                    IsFalse(record.Any());
-                }
+                var result = Throws<SqlException>(() => commander.Execute(model, typeof(Execute)));
+
+                // check if the record has been rolled back.
+                var record = commander.Query<PocoA>(new { Name = model.Name }, method: "SupportsTransactionRollback.Query");
+                NotNull(record);
+                False(record.Any());                
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DistributedTransactionIsSuccessfulAndReturnsResult()
         {
             const string tableName = "DistributedTransaction";
@@ -143,36 +166,37 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                     };
                 });
 
-                ReferenceEquals(pocoA, record.PocoA);
-                ReferenceEquals(pocoB, record.PocoB);
+                Same(pocoA, record.PocoA);
+                Same(pocoB, record.PocoB);
             }
         }
-
-        [Ignore] // todo: this is actually supported, but need to improve the test automation
-        [TestMethod]
+        
+        [Fact]
         public void SupportBulkInsertFromFile()
         {
+            var path = BulkFileCreator.CreateBulkFile();
             using (var commander = CreateCommander())
             {
-                var operation = commander.Execute(new { path = "C:\\Github\\Drapper\\TestData\\CsvTest.txt" });
+                commander.Execute(method: "TruncateBulkInsertTable");
+                var operation = commander.Execute(new { path });
                 var result = commander.Query<dynamic>(method: "BulkInsertResult");
-                AreEqual(4, result.Count());
+                Equal(1000, result.Count());
             }
         }
-
-        [Ignore] // todo: this is actually supported, but need to improve the test automation
-        [TestMethod]
+        
+        [Fact]
         public void SupportBulkInsertFromFileAndReturn()
         {
+            var path = BulkFileCreator.CreateBulkFile();
             using (var commander = CreateCommander())
-            {                                                
-                var result = commander.Query<dynamic>(new { path = "C:\\Github\\Drapper\\TestData\\CsvTest.txt" });
-                AreEqual(4, result.Count());
+            {
+                commander.Execute(method: "TruncateBulkInsertTable");
+                var result = commander.Query<dynamic>(new { path });
+                Equal(1000, result.Count());
             }
         }
-
-        [Ignore] // todo: this is actually supported, but need to improve the test automation
-        [TestMethod]
+        
+        [Fact]
         public void SupportBulkInsertFromList()
         {
             // build a list of 1000 items
@@ -183,16 +207,16 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 {
                     Id = i,
                     FirstName = $"FirstName {i}",
-                    LastName = $"LastName {i}",
-                    BirthDate = DateTime.UtcNow
+                    LastName = $"LastName {i}"
                 });
             }
 
             using (var commander = CreateCommander())
             {
+                commander.Execute(method: "TruncateBulkInsertTable");
                 var operation = commander.Execute(list);
                 var result = commander.Query<dynamic>(method: "SupportBulkInsertFromListResult");
-                AreEqual(1000, result.Count());
+                Equal(1000, result.Count());
             }
         }       
     }

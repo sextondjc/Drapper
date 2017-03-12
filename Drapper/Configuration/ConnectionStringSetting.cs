@@ -38,6 +38,5 @@ namespace Drapper.Configuration
             this.ProviderName = providerName;
             this.ConnectionString = connectionString;
         }
-
     }
 }

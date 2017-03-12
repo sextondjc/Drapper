@@ -28,23 +28,23 @@ namespace Drapper.Configuration.Xml
         /// <param name="key">The key.</param>
         public CommandSetting GetCommand(Type type, string key)
         {
-            Require(type != null, ErrorMessages.NullTypePassed);
-            Require(!string.IsNullOrWhiteSpace(key), ErrorMessages.NullKeyPassed);
+            Require<ArgumentNullException>(type != null, ErrorMessages.NullTypePassed);
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(key), ErrorMessages.NullKeyPassed);
 
             var section = DrapperConfigurationSection.GetConfiguration();
 
-            Require(section != null, ErrorMessages.NoSectionDefinition);
+            Require<ArgumentNullException>(section != null, ErrorMessages.NoSectionDefinition);
 
             var @namespace = GetNamespaceSettingElement(section, type);
-            Require(@namespace != null,
+            Require<ArgumentNullException>(@namespace != null,
                     ErrorMessages.NoNamespaceEntry,
                     type.Namespace);
 
             var typeSetting = GetTypeSettingElement(@namespace, type);
-            Require(typeSetting != null, ErrorMessages.UnknownType, type);
+            Require<ArgumentNullException>(typeSetting != null, ErrorMessages.UnknownType, type);
 
             var entry = GetCommandSetting(typeSetting, key);
-            Require(entry != null, ErrorMessages.NoCommandSetting, type, key);
+            Require<ArgumentNullException>(entry != null, ErrorMessages.NoCommandSetting, type, key);
 
             var result = new CommandSetting
             {

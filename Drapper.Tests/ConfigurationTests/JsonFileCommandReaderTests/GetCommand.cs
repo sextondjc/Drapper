@@ -11,109 +11,158 @@ using Drapper.Configuration.Json;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB.With.Many.Different.Parts;
 using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using SingleLevel;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts;
+using Drapper.Tests.Relative.Path.Tests;
+using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests
-{
-    [TestClass]
+{    
     public class GetCommand
     {
         #region / init /
         
-        private Settings GetFromFile() => JsonConvert.DeserializeObject<Settings>(File.ReadAllText("Drapper.Test.Settings.json"));
+        private ISettings GetFromFile() => JsonConvert.DeserializeObject<Settings>(File.ReadAllText("Drapper.Test.Settings.json"));
 
         #endregion
 
-        [TestMethod]
+        [Fact]        
+        public void NullSettingsThrowsArgumentNullException()
+        {
+            var reader = Throws<ArgumentNullException>(() => new JsonFileCommandReader(null));
+        }
+
+        [Fact]
         public void FallsBackToNamespaceForTypeSettings()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(TypeA), "FallsBackToNamespace");
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeA), "FallsBackToNamespace");
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual("select 'TypeA';", result.CommandText);
+            NotNull(result);
+            Equal("select 'TypeA';", result.CommandText);
         }
 
-        [TestMethod]
+        [Fact]
         public void SupportsSingleLevelNamespace()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(TypeD), "SupportsSingleLevelNamespace");
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeD), "SupportsSingleLevelNamespace");
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual("select 'TypeD';", result.CommandText);
+            NotNull(result);
+            Equal("select 'TypeD';", result.CommandText);
         }
-
-        [Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
-        [TestMethod]
-        public void SupportsFileFoundOnNamespacePathSettings()
-        {            
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(TypeB), "SupportsFileFoundOnNamespacePathSettings");
-            
-            Assert.IsNotNull(result);
-        }
-
-        [Ignore] // only ignored temporarily while 1.1.0 is under development. failing CI build. Hmmmm...
-        [TestMethod]
-        public void SupportsFileFoundOnTypePathSetting()
-        {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(TypeC), "SupportsFileFoundOnTypePathSettings");
-
-            Assert.IsNotNull(result);
-        }
-                
-        [TestMethod]
+                        
+        [Fact]
         public void Successfully()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(GetCommand), "ExplicitKey");
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(GetCommand), "ExplicitKey");
 
-            Assert.IsNotNull(result);
+            NotNull(result);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NullTypeArgumentThrowsArgumentException()
+        [Fact]        
+        public void NullTypeArgumentThrowsArgumentNullException()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(null, "ExplicitKey");
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = Throws<ArgumentNullException>(() => reader.GetCommand(null, "ExplicitKey"));
         }
         
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void UnknownTypeThrowsArgumentException()
+        [Fact]        
+        public void UnknownTypeThrowsArgumentNullException()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(JsonFileCommandReader), "ExplicitKey");
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(JsonFileCommandReader), "ExplicitKey"));
         }
         
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NullKeyArgumentThrowsArgumentException()
+        [Fact]        
+        public void NullKeyArgumentThrowsArgumentNullException()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(GetCommand), null);
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(GetCommand), null));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void UnknownKeyThrowsArgumentException()
+        [Fact]        
+        public void UnknownKeyThrowsArgumentNullException()
         {
-            var settings = GetFromFile();
-            var parser = new JsonFileCommandReader(settings);
-            var result = parser.GetCommand(typeof(GetCommand), "Unknown");            
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(GetCommand), "Unknown"));
         }
+
+        #region / path tests /
+
+        [Fact]
+        public void SupportsFileFoundOnNamespacePathSettings()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeB), "SupportsFileFoundOnNamespacePathSettings");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnTypePathSetting()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeC), "SupportsFileFoundOnTypePathSettings");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnRelativePathWithNamespaceSettingPath()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeE), "SupportsFileFoundOnRelativePath");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnRelativeUpPathWithNamespaceSettingPath()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeF), "SupportsFileFoundOnRelativeUpPath");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnRelativeDownPathWithNamespaceSettingPath()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeG), "SupportsFileFoundOnRelativeDownPath");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnRelativePathWithoutNamespaceSettingPath()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeH), "SupportsFileFoundOnRelativePath");
+
+            NotNull(result);
+        }
+
+        [Fact]
+        public void SupportsFileFoundOnRelativeDownPathWithoutNamespaceSettingPath()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = reader.GetCommand(typeof(TypeJ), "SupportsFileFoundOnRelativeDownPath");
+
+            NotNull(result);
+        }
+
+        [Fact]        
+        public void LeadingCharactersThrowsFileNotFoundException()
+        {
+            var reader = new JsonFileCommandReader(GetFromFile());
+            var result = Throws<FileNotFoundException>(() => reader.GetCommand(typeof(TypeK), "LeadingCharactersThrowsException"));
+        }
+
+        #endregion
     }
 }

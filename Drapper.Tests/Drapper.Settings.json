@@ -16,6 +16,12 @@
               "CommandType": 1,
               "Flags": 5
             },
+            "ParameterlessCallReturnsException": {
+              "CommandText": "select 1/0;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
             "ReturnsTrueForSuccessfulResult": {
               "CommandText": "declare @result table([Value] int) insert into @result([Value])select @value;",
               "CommandTimeout": 30,
@@ -163,6 +169,12 @@
               "CommandType": 4,
               "Flags": 5
             },
+            "TruncateBulkInsertTable": {
+              "CommandText": "truncate table BulkInsert",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
             "SupportBulkInsertFromFile": {
               "CommandText": "dbo.usp_BulkInsert",
               "CommandTimeout": 30,
@@ -170,7 +182,7 @@
               "Flags": 5
             },
             "BulkInsertResult": {
-              "CommandText": "select * from CSVTest",
+              "CommandText": "select * from [dbo].[BulkInsert];",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -182,13 +194,13 @@
               "Flags": 5
             },
             "SupportBulkInsertFromList": {
-              "CommandText": "insert into [dbo].[CsvTest]([Id],[FirstName],[LastName],[BirthDate]) values (@Id,@FirstName,@LastName,@BirthDate);",
+              "CommandText": "insert into [dbo].[BulkInsert]([Id],[FirstName],[LastName]) values (@Id,@FirstName,@LastName);",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
             },
             "SupportBulkInsertFromListResult": {
-              "CommandText": "select * from [dbo].[CsvTest];",
+              "CommandText": "select * from [dbo].[BulkInsert];",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5

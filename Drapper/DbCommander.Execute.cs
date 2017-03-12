@@ -13,23 +13,22 @@ using System.Transactions;
 namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
-    {
-        [MethodImpl(MethodImplOptions.NoInlining)]
+    {        
         public bool Execute(
             Type type = null,
             [CallerMemberName] string method = null)
-        {
+        {                        
             // get the caller type if it hasn't been passed in. 
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 connection.Open();
-                using (var transaction = connection.BeginTransaction(definition.IsolationLevel))
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
                 {
                     try
                     {
-                        var command = GetCommandDefinition(definition, transaction: transaction);
+                        var command = GetCommandDefinition(setting, transaction: transaction);
                         var result = (connection.Execute(command) > 0);
                         transaction.Commit();
                         return result;
@@ -42,8 +41,7 @@ namespace Drapper
                 }
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+                
         public bool Execute<T>(
             T model, 
             Type type = null, 
@@ -51,15 +49,15 @@ namespace Drapper
         {
             // get the caller type if it hasn't been passed in. 
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);            
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);            
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 connection.Open();
-                using (var transaction = connection.BeginTransaction(definition.IsolationLevel))
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
                 {
                     try
                     {
-                        var command = GetCommandDefinition(definition, model, transaction);
+                        var command = GetCommandDefinition(setting, model, transaction);
                         var result = (connection.Execute(command) > 0);
                         transaction.Commit();
                         return result;
@@ -72,8 +70,7 @@ namespace Drapper
                 }
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public TResult Execute<TResult>(
             Func<TResult> map, 
             Type type = null, 

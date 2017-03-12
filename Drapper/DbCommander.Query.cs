@@ -14,25 +14,23 @@ using System.Runtime.CompilerServices;
 namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
-    {
-        [MethodImpl(MethodImplOptions.NoInlining)]
+    {        
         public IEnumerable<T> Query<T>(
             object parameters = null, 
             Type type = null, 
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query<T>(command).ToList();
             }
         }
-
+        
         #region / multimap /
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+                
         public IEnumerable<TResult> Query<T1, T2, TResult>(
             Func<T1, T2, TResult> map, 
             object parameters = null, 
@@ -40,22 +38,21 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, TResult>(
             Func<T1, T2, T3, TResult> map, 
             object parameters = null, 
@@ -63,22 +60,21 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, TResult>(
             Func<T1, T2, T3, T4, TResult> map, 
             object parameters = null, 
@@ -86,22 +82,21 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, TResult>(
             Func<T1, T2, T3, T4, T5, TResult> map, 
             object parameters = null, 
@@ -109,22 +104,21 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, TResult>(
             Func<T1, T2, T3, T4, T5, T6, TResult> map, 
             object parameters = null, 
@@ -132,22 +126,21 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<T1, T2, T3, T4, T5, T6, T7, TResult> map, 
             object parameters = null, 
@@ -155,16 +148,16 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 return connection.Query(
                     command.CommandText,
                     map,
                     buffered: command.Buffered,
                     param: command.Parameters,
-                    splitOn: definition.Split,
+                    splitOn: setting.Split,
                     commandTimeout: command.CommandTimeout,
                     commandType: command.CommandType);
             }
@@ -173,8 +166,7 @@ namespace Drapper
         #endregion
 
         #region / multiple /
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, TResult>(
             Func<IEnumerable<T1>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -182,9 +174,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -192,8 +184,7 @@ namespace Drapper
                 return map(t1);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -201,9 +192,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -212,8 +203,7 @@ namespace Drapper
                 return map(t1, t2);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -221,9 +211,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -233,8 +223,7 @@ namespace Drapper
                 return map(t1, t2, t3);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, TResult>(
             Func<IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>, IEnumerable<T4>, IEnumerable<TResult>> map, 
             object parameters = null, 
@@ -242,9 +231,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -255,8 +244,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -269,9 +257,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -283,8 +271,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -298,9 +285,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -314,7 +301,6 @@ namespace Drapper
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -329,9 +315,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -345,8 +331,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -362,9 +347,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -379,8 +364,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -397,9 +381,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -415,8 +399,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -434,9 +417,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -453,8 +436,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -473,9 +455,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -493,8 +475,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -514,9 +495,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -535,8 +516,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -557,9 +537,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -579,8 +559,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -602,9 +581,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -625,8 +604,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -649,9 +627,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -673,8 +651,7 @@ namespace Drapper
                 return map(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
             }
         }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        
         public IEnumerable<TResult> Query<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(
             Func<IEnumerable<T1>, 
                 IEnumerable<T2>, 
@@ -698,9 +675,9 @@ namespace Drapper
             [CallerMemberName] string method = null)
         {
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);
-            var command = GetCommandDefinition(definition, parameters);
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);
+            var command = GetCommandDefinition(setting, parameters);
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 var reader = connection.QueryMultiple(command);
                 var t1 = reader.Read<T1>();
@@ -724,7 +701,6 @@ namespace Drapper
             }
         }
 
-        #endregion
-        
+        #endregion        
     }
 }

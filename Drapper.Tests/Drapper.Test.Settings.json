@@ -7,7 +7,7 @@
         "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
       },
       "Path": {
-        "Directory": "C:\\Github\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
+        "Directory": "C:\\Projects\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
       },
       "Types": [
         {
@@ -24,7 +24,50 @@
         {
           "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC",
           "Path": {
-            "File": "C:\\Github\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json"
+            "File": "C:\\Projects\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE",
+          "Path": {
+            "File": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE.json"
+          }
+
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeF",
+          "Path": {
+            "File": "..\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeF.json"
+          }
+
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeG",
+          "Path": {
+            "File": "DownPath\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE.json"
+          }
+        }        
+      ]
+    },
+    {
+      "Namespace": "Drapper.Tests.Relative.Path.Tests",
+      "Types": [
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeH",
+          "Path": {
+            "File": "Drapper.Tests.Relative.Path.Tests.TypeH.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeJ",
+          "Path": {
+            "File": "QueryDefinitions\\Json\\DownPath\\Drapper.Tests.Relative.Path.Tests.TypeJ.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeK",
+          "Path": {
+            "File": "\\Json\\DownPath\\Drapper.Tests.Relative.Path.Tests.Typek.json"
           }
         }
       ]

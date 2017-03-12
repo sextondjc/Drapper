@@ -4,31 +4,29 @@
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
 using Drapper.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Tests.DbConnectorTests
 {
     /// <summary>
     /// Tests the <see cref="DbConnector"/> constructor.
-    /// </summary>
-    [TestClass]
+    /// </summary>    
     public class Constructor
     {
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NullConnectionStringSettingsProviderThrowsArgumentException()
+        [Fact]
+        public void NullConnectionStringSettingsProviderThrowsArgumentNullException()
         {
-            var connector = new DbConnector(null);
+            var connector = Throws<ArgumentNullException>(() => new DbConnector(null));
         }
 
-        [TestMethod]
+        [Fact]
         public void SupportsConnectionStringsSettingsFromSettingsProvider()
         {
             var provider = new Settings();
             var connector = new DbConnector(provider);
-            IsNotNull(connector);
+            NotNull(connector);
         }
     }
 }
