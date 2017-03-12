@@ -8,14 +8,10 @@
 using Dapper;
 using Drapper.Configuration;
 using System;
-using System.Linq;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Drapper
 {

@@ -56,8 +56,8 @@ namespace Drapper
             Type type, 
             CancellationToken cancellationToken = default(CancellationToken),
             [CallerMemberName] string method = null)
-        {
-            type = type ?? GetAsyncCallerType();
+        {            
+            Contract.Require<ArgumentNullException>(type != null, "A type argument must be supplied to an asynchronus method. Failure in method '{0}'", method);
             var setting = _reader.GetCommand(type, method);
             using (var connection = _connector.CreateDbConnection(type, setting))
             {

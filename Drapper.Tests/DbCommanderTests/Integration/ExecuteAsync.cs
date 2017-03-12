@@ -58,8 +58,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             }
         }
 
-        [Fact]
-        ////[ExpectedException(typeof(AggregateException))]
+        [Fact]        
         public void SupportsCancellationToken()
         {
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
@@ -69,17 +68,16 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 var task = commander.ExecuteAsync(new { value = 1 }, typeof(ExecuteAsync), cancellationToken: tokenSource.Token);
                 try
                 {
-                    task.Wait(TimeSpan.FromSeconds(5));
-                    //Fail("The cancellation token didn't cancel.");
-                    True(false, "Revisit this test");
+                    task.Wait(TimeSpan.FromSeconds(5));                    
+                    True(false, "The cancellation token didn't cancel.");
                 }
                 catch (Exception ex)
                 {
-                    //IsType(ex, typeof(AggregateException));
-                    //var innerExceptions = ((AggregateException)ex).InnerExceptions;
-                    //Equal(1, innerExceptions.Count());
-                    //IsType(innerExceptions.Single(), typeof(SqlException));
-                    //throw;
+                    IsType<AggregateException>(ex);
+                    var innerExceptions = ((AggregateException)ex).InnerExceptions;
+                    Equal(1, innerExceptions.Count());
+                    IsType<SqlException>(innerExceptions.Single());
+                    Equal("A severe error occurred on the current command.  The results, if any, should be discarded.\r\nOperation cancelled by user.", innerExceptions.Single().Message);                    
                 }
             }
         }

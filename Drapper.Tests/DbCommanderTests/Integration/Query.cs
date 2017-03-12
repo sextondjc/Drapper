@@ -54,7 +54,8 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 }
                 catch(Exception ex)
                 {
-                    True(false, "SqlException was expected.");
+                    True(false, $"SqlException was expected. '{ex.GetType().FullName}' was returned.");
+                    throw;
                 }
                 
             }

@@ -19,7 +19,7 @@ namespace Drapper.Configuration.Xml
     /// <summary>
     ///     Concrete implementaion of the <see cref="ICommandReader" /> to support .config files.
     /// </summary>
-    public sealed class ConfigurationFileCommandReader : ICommandReader
+    public class ConfigurationFileCommandReader : ICommandReader
     {
         /// <summary>
         ///     Gets the command setting

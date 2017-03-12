@@ -29,6 +29,6 @@ namespace Drapper.Commands
         /// <param name="model">The model. This can be a POCO or primitive types</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        Task<T> CreateAsync<T>(T model, CancellationToken cancellationToken = default(CancellationToken));
+        Task<T> CreateAsync(T model, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drapper", "Drapper\Drapper.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drapper.Tests", "Drapper.Tests\Drapper.Tests.csproj", "{102FFC5F-331D-4741-ABDB-1692C8363F53}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{02C2FF4E-F345-41FD-AA60-6BCAE1E2D107}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\Drapper.nuspec = .nuget\Drapper.nuspec
+		.nuget\nuget.exe = .nuget\nuget.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
