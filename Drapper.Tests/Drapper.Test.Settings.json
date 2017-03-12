@@ -4,7 +4,10 @@
       "Namespace": "Drapper.Tests.ConfigurationTests.Fully.Qualified",
       "ConnectionString": {
         "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
+      },
+      "Path": {
+        "Directory": "C:\\Projects\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
       },
       "Types": [
         {
@@ -21,33 +24,86 @@
         {
           "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC",
           "Path": {
-            "File": "C:\\Github\\Drapper\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json"
+            "File": "C:\\Projects\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceC.With.Many.Different.Parts.TypeC.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE",
+          "Path": {
+            "File": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE.json"
+          }
+
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeF",
+          "Path": {
+            "File": "..\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeF.json"
+          }
+
+        },
+        {
+          "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeG",
+          "Path": {
+            "File": "DownPath\\Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceE.With.Many.Different.Parts.TypeE.json"
+          }
+        }        
+      ]
+    },
+    {
+      "Namespace": "Drapper.Tests.Relative.Path.Tests",
+      "Types": [
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeH",
+          "Path": {
+            "File": "Drapper.Tests.Relative.Path.Tests.TypeH.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeJ",
+          "Path": {
+            "File": "QueryDefinitions\\Json\\DownPath\\Drapper.Tests.Relative.Path.Tests.TypeJ.json"
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Relative.Path.Tests.TypeK",
+          "Path": {
+            "File": "\\Json\\DownPath\\Drapper.Tests.Relative.Path.Tests.Typek.json"
           }
         }
       ]
     },
     {
-      "Namespace": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceB",
+      "Namespace": "Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests",
       "ConnectionString": {
         "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
-      },
-      "Path": {
-        "Directory": "C:\\Github\\Drapper\\Drapper\\Drapper.Tests\\QueryDefinitions\\Json\\"
-      }
-    },
-    {
-      "Namespace": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests",
-      "ConnectionString": {
-        "ProviderName": "System.Data.SqlClient",
-        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
       },
       "Types": [
         {
-          "Name": "Drapper.Tests.ConfigurationTests.JsonFileDefinitionParserTests.GetCommand",
+          "Name": "Drapper.Tests.ConfigurationTests.JsonFileCommandReaderTests.GetCommand",
           "Commands": {
             "ExplicitKey": {
               "CommandText": "select 'TypeA';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Namespace": "SingleLevel",
+      "ConnectionString": {
+        "ProviderName": "System.Data.SqlClient",
+        "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"
+      },
+      "Types": [
+        {
+          "Name": "SingleLevel.TypeD",
+          "Commands": {
+            "SupportsSingleLevelNamespace": {
+              "CommandText": "select 'TypeD';",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5

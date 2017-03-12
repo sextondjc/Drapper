@@ -1,8 +1,10 @@
 ﻿// ============================================================================================================================= 
-// author           : david sexton (@sextondjc | sextondjc.com)
-// date             : 2015.12.23
-// licence          : licensed under the terms of the MIT license. See LICENSE.txt
+// author       : david sexton (@sextondjc | sextondjc.com)
+// date         : 2015.12.23 (23:44)
+// modified     : 2017-02-19 (22:58)
+// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 // =============================================================================================================================
+
 using Dapper;
 using System;
 using System.Runtime.CompilerServices;
@@ -11,7 +13,35 @@ using System.Transactions;
 namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
-    {
+    {        
+        public bool Execute(
+            Type type = null,
+            [CallerMemberName] string method = null)
+        {                        
+            // get the caller type if it hasn't been passed in. 
+            type = type ?? GetCallerType();
+            var setting = _reader.GetCommand(type, method);
+            using (var connection = _connector.CreateDbConnection(type, setting))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
+                {
+                    try
+                    {
+                        var command = GetCommandDefinition(setting, transaction: transaction);
+                        var result = (connection.Execute(command) > 0);
+                        transaction.Commit();
+                        return result;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+                
         public bool Execute<T>(
             T model, 
             Type type = null, 
@@ -19,15 +49,15 @@ namespace Drapper
         {
             // get the caller type if it hasn't been passed in. 
             type = type ?? GetCallerType();
-            var definition = _reader.GetCommand(type, method);            
-            using (var connection = _connector.CreateDbConnection(type, definition))
+            var setting = _reader.GetCommand(type, method);            
+            using (var connection = _connector.CreateDbConnection(type, setting))
             {
                 connection.Open();
-                using (var transaction = connection.BeginTransaction(definition.IsolationLevel))
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
                 {
                     try
                     {
-                        var command = GetCommandDefinition(definition, model, transaction);
+                        var command = GetCommandDefinition(setting, model, transaction);
                         var result = (connection.Execute(command) > 0);
                         transaction.Commit();
                         return result;
