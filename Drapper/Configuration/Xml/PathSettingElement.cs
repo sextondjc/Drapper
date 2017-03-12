@@ -1,11 +1,9 @@
-﻿// ============================================================================================================================= 
-// author       : david sexton (@sextondjc | sextondjc.com)
-// date         : 2015.12.23 (23:44)
-// modified     : 2017-02-19 (22:58)
-// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
-// =============================================================================================================================
-
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Drapper.Configuration.Xml
 {

@@ -1,10 +1,8 @@
 ﻿// ============================================================================================================================= 
-// author       : david sexton (@sextondjc | sextondjc.com)
-// date         : 2015.12.23 (23:44)
-// modified     : 2017-02-19 (22:58)
-// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+// author           : david sexton (@sextondjc | sextondjc.com)
+// date             : 2015.12.23
+// licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -31,7 +29,7 @@ namespace Drapper.Configuration
         /// The connection string.
         /// </value>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public ConnectionStringSetting ConnectionString { get; set; } 
+        public ConnectionStringSetting ConnectionString { get; set; }
         
         /// <summary>
         /// (Optional) Gets or sets the path settings. These paths

@@ -1,63 +1,55 @@
-﻿// ----------------------------------------------------------------------------------------------------------
-// author   : David Sexton (sexto)
-// created  : 2016-08-28 (23:44)
-// modified : 2017-01-09 (00:14)
-// 
-// This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of 
-// this source code package.
-//  ----------------------------------------------------------------------------------------------------------
-
-#region
-
-using System.Data;
+﻿// ============================================================================================================================= 
+// author           : david sexton (@sextondjc | sextondjc.com)
+// date             : 2015.12.23
+// licence          : licensed under the terms of the MIT license. See LICENSE.txt
+// =============================================================================================================================
 using Dapper;
 using Drapper.Configuration;
-using Xunit;
-using static Xunit.Assert;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data;
 
-#endregion
-
-namespace Drapper.Tests.ConfigurationTests.CommandSettingTests
-{    
+namespace Drapper.Tests.CommandSettingTests
+{
+    [TestClass]
     public class DefaultValues
     {
         // these tests are really just to:
         //   1. test the defaults are as expected. 
         //   2. get my unit test coverage metric up to 100% for this class (yes, I am that shallow). 
 
-        [Fact]
+        [TestMethod]
         public void CommandTextReturnsNullByDefault()
         {
-            var setting = new CommandSetting();
-            Equal(null, setting.CommandText);
+            var defintionEntry = new CommandSetting();
+            Assert.AreEqual(null, defintionEntry.CommandText);
         }
 
-        [Fact]
+        [TestMethod]
         public void CommandTimeoutReturnsThirtyByDefault()
         {
-            var setting = new CommandSetting();
-            Equal(30, setting.CommandTimeout);
+            var defintionEntry = new CommandSetting();
+            Assert.AreEqual(30, defintionEntry.CommandTimeout);
         }
 
-        [Fact]
+        [TestMethod]
         public void CommandTypeReturnsTextByDefault()
         {
-            var setting = new CommandSetting();
-            Equal(CommandType.Text, setting.CommandType);
+            var defintionEntry = new CommandSetting();
+            Assert.AreEqual(CommandType.Text, defintionEntry.CommandType);
         }
 
-        [Fact]
+        [TestMethod]
         public void CommandFlagsReturnsNoneByDefault()
         {
-            var setting = new CommandSetting();
-            Equal(CommandFlags.None, setting.Flags);
+            var defintionEntry = new CommandSetting();
+            Assert.AreEqual(CommandFlags.None, defintionEntry.Flags);
         }
 
-        [Fact]
+        [TestMethod]
         public void IsolationLevelDefaultsToSerializable()
         {
-            var setting = new CommandSetting();
-            Equal(IsolationLevel.Serializable, setting.IsolationLevel);
+            var commandSetting = new CommandSetting();
+            Assert.AreEqual(IsolationLevel.Serializable, commandSetting.IsolationLevel);
         }
     }
 }

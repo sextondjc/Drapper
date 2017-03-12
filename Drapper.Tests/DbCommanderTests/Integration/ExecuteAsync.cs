@@ -3,63 +3,54 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
+using Drapper.Tests.Common;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Drapper.Tests.Helpers.CommanderHelper;
-using static Drapper.Tests.Helpers.TableHelper;
-using Xunit;
-using static Xunit.Assert;
+using static Drapper.Tests.Common.CommanderHelper;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
-    [Collection("Integration")]
+    [TestClass]
     public class ExecuteAsync
     {
-        [Fact]
-        public async Task SupportParameterlessCalls()
+        #region / init & cleanup /
+        
+        public void CreateTable(string tableName)
         {
-            using (var commander = CreateCommander())
-            {
-                var result = await commander.ExecuteAsync(typeof(ExecuteAsync));
-            }
+            TableHelper.CreateTable(tableName);
         }
+        
+        #endregion
 
-        [Fact]        
-        public async Task ExceptionsAreReturnedToParameterlessCaller()
-        {
-            using (var commander = CreateCommander())
-            {
-                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync(typeof(ExecuteAsync)));
-            }
-        }
-
-        [Fact]
+        [TestMethod]
         public async Task ReturnsTrueForSuccessfulResult()
         {
             using (var commander = CreateCommander())
             {
-                var response = await commander.ExecuteAsync(new { value = 1 }, typeof(ExecuteAsync));
-                NotNull(response);
-                IsType<bool>(response);
-                True(response);
+                var response = await commander.ExecuteAsync(new { value = 1 });
+                Assert.IsNotNull(response);
+                Assert.IsInstanceOfType(response, typeof(bool));
+                Assert.IsTrue(response);
             }
         }
 
-        [Fact]        
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
         public async Task ExceptionsAreReturnedToCaller()
         {
             using (var commander = CreateCommander())
             {
-                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync(new { value = 1 }, typeof(ExecuteAsync)));
+                var result = await commander.ExecuteAsync(new { value = 1 });
             }
         }
 
-        [Fact]
-        ////[ExpectedException(typeof(AggregateException))]
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
         public void SupportsCancellationToken()
         {
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
@@ -70,21 +61,20 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 try
                 {
                     task.Wait(TimeSpan.FromSeconds(5));
-                    //Fail("The cancellation token didn't cancel.");
-                    True(false, "Revisit this test");
+                    Assert.Fail("The cancellation token didn't cancel.");
                 }
                 catch (Exception ex)
                 {
-                    //IsType(ex, typeof(AggregateException));
-                    //var innerExceptions = ((AggregateException)ex).InnerExceptions;
-                    //Equal(1, innerExceptions.Count());
-                    //IsType(innerExceptions.Single(), typeof(SqlException));
-                    //throw;
+                    Assert.IsInstanceOfType(ex, typeof(AggregateException));
+                    var innerExceptions = ((AggregateException)ex).InnerExceptions;
+                    Assert.AreEqual(1, innerExceptions.Count());
+                    Assert.IsInstanceOfType(innerExceptions.Single(), typeof(SqlException));
+                    throw;
                 }
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task SupportsIEnumberableModels()
         {
             CreateTable("EnumerableModelsAsync");
@@ -107,20 +97,21 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             };
             using (var commander = CreateCommander())
             {
-                var result = await commander.ExecuteAsync(models, typeof(ExecuteAsync));
-                True(result);
+                var result = await commander.ExecuteAsync(models);
+                Assert.IsTrue(result);
 
                 // check they were created. 
                 var records = commander.Query<PocoA>(type: typeof(ExecuteAsync), method: "SupportsIEnumberableModelsAsync.Query");                
-                NotNull(records);
-                True(records.Any());
-                Equal(2, records.Count());
-                Equal(models.First().Name, records.First().Name);
-                Equal(models.Last().Name, records.Last().Name);
+                Assert.IsNotNull(records);
+                Assert.IsTrue(records.Any());
+                Assert.AreEqual(2, records.Count());
+                Assert.AreEqual(models.First().Name, records.First().Name);
+                Assert.AreEqual(models.Last().Name, records.Last().Name);
             }
         }
 
-        [Fact]        
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
         public async Task IEnumerableExecuteExceptionsAreReturnedToCaller()
         {
             var models = new List<PocoA>
@@ -142,25 +133,32 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             };
             using (var commander = CreateCommander())
             {
-                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync(models, typeof(ExecuteAsync)));
+                var result = await commander.ExecuteAsync(models);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task SupportsTransactionRollback()
         {
             var model = new PocoA { Name = Guid.NewGuid().ToString(), Value = int.MaxValue };
             using (var commander = CreateCommander())
             {
-                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync(model, typeof(ExecuteAsync)));
-                // check if the record has been rolled back.                    
-                var records = commander.Query<PocoA>(new { Name = model.Name }, typeof(ExecuteAsync), "SupportsTransactionRollback.Query");
-                NotNull(records);
-                False(records.Any());
+                try
+                {
+                    var result = await commander.ExecuteAsync(model);
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsInstanceOfType(ex, typeof(SqlException));
+                    // check if the record has been rolled back.                    
+                    var records = commander.Query<PocoA>(new { Name = model.Name },typeof(ExecuteAsync),"SupportsTransactionRollback.Query");
+                    Assert.IsNotNull(records);
+                    Assert.IsFalse(records.Any());
+                }
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task AsynchronousDistributedTransactionIsSuccessfulAndReturnsResult()
         {
             const string tableName = "DistributedTransactionAsync";
@@ -181,21 +179,21 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                     };
                 });
 
-                ReferenceEquals(pocoA, record.PocoA);
-                ReferenceEquals(pocoB, record.PocoB);              
+                Assert.ReferenceEquals(pocoA, record.PocoA);
+                Assert.ReferenceEquals(pocoB, record.PocoB);              
             }
 
             // now query. 
             using (var commander = CreateCommander())
             {
                 var result = commander.Query<MultiMapPocoB>(type: typeof(ExecuteAsync), method: "DistributedTransactionAsync.Query");
-                NotNull(result);
-                True(result.Any());
-                Equal(2, result.Count());
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Any());
+                Assert.AreEqual(2, result.Count());
 
                 // confirm the result corresponds to the poco's passed
-                True(result.Any(x => x.Name == pocoA.Name));
-                True(result.Any(x => x.Name == pocoB.Name));
+                Assert.IsTrue(result.Any(x => x.Name == pocoA.Name));
+                Assert.IsTrue(result.Any(x => x.Name == pocoB.Name));
             }
 
         }

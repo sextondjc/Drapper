@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Drapper.Validation</id>
+    <version>1.0.0</version>
+    <authors>sextondjc</authors>
+    <owners>sextondjc</owners>
+    <licenseUrl>http://github.com/sextondjc/drapper</licenseUrl>
+    <projectUrl>http://github.com/sextondjc/drapper</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      A validation helper library. Includes a simple pre-condition checker and a handful of additonal validation attributes derived from the System.ComponentModel.DataAnnotations namespace. 
+    </description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2016</copyright>    
+  </metadata>
+  <files>    
+    <file src="net452\Drapper.Validation.dll" target="lib\net452\Drapper.Validation.dll"/>    
+    <file src="net461\Drapper.Validation.dll" target="lib\net461\Drapper.Validation.dll"/>   
+  </files>
+</package>

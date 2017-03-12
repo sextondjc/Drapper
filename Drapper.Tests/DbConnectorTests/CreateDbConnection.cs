@@ -3,33 +3,29 @@
 // date             : 2015.12.23
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
-
+using Drapper.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using Drapper.Configuration;
-using Drapper.Tests.DbCommanderTests.Integration;
-using Drapper.Tests.Fallback.Drapper.Tests.Fallback.Some.Other.Namespace;
-using Drapper.Tests.Relative.Path.Tests;
-using Xunit;
-using static Xunit.Assert;
 using System.Data.SqlClient;
 
 namespace Drapper.Tests.DbConnectorTests
-{    
+{
+    [TestClass]
     public class CreateDbConnection
     {
         #region / mocks /
 
         private ISettings _settings;
-
-        public CreateDbConnection()
+        
+        [TestInitialize]
+        public void Initialize()
         {
-            _settings = TestSettings();
+            _settings = TestSettings();            
         }
 
-        private static Settings TestSettings()
+        private Settings TestSettings()
         {
             // settings listed from least filled to most, 
             // kinda like you'd expect to see in a settings file
@@ -46,7 +42,7 @@ namespace Drapper.Tests.DbConnectorTests
                     new NamespaceSetting
                     {
                         Namespace = "Drapper.Tests",
-                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")
+                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true")
                     },
                     // to test fallback to type connection
                     new NamespaceSetting
@@ -57,7 +53,7 @@ namespace Drapper.Tests.DbConnectorTests
                             new TypeSetting
                             {
                                 Name = "Drapper.Tests.DbCommanderTests.Integration.MultipleAsync",
-                                ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")
+                                ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true")
                             },
                             new TypeSetting
                             {
@@ -66,7 +62,7 @@ namespace Drapper.Tests.DbConnectorTests
                                 {
                                     ["WithOneType"] = new CommandSetting
                                     {
-                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
+                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"),
                                     }
                                 }
                             },
@@ -85,40 +81,8 @@ namespace Drapper.Tests.DbConnectorTests
                     new NamespaceSetting
                     {
                         Namespace = "Drapper.Tests.DbConnectorTests",
-                        ConnectionString = new ConnectionStringSetting("InvalidClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
-                    },
-                    new NamespaceSetting
-                    {
-                        Namespace = "Drapper.Tests.Fallback",
-                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true")                        
-                    },
-                    new NamespaceSetting
-                    {
-                        Namespace = "Drapper.Tests.Relative.Path.Tests",
-                        Types = new List<TypeSetting>
-                        {
-                            new TypeSetting
-                            {
-                                Name = typeof(TypeH).FullName,
-                                Commands = new Dictionary<string, CommandSetting>
-                                {
-                                    ["Valid"] = new CommandSetting
-                                    {
-                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
-                                    },
-                                    ["WithoutProvider"] = new CommandSetting
-                                    {
-                                        ConnectionString = new ConnectionStringSetting(null, "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true"),
-                                    },
-                                    ["WithoutConnectionString"] = new CommandSetting
-                                    {
-                                        ConnectionString = new ConnectionStringSetting("System.Data.SqlClient", null),
-                                    },
-                                }
-                            }
-                        }
+                        ConnectionString = new ConnectionStringSetting("InvalidClient", "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=DrapperTests;Integrated Security=true"),
                     }
-
                 }
             };
         }
@@ -126,132 +90,96 @@ namespace Drapper.Tests.DbConnectorTests
 
         #endregion
 
-        [Fact]
+        [TestMethod]
         public void ValidProviderNameAndConnectionStringReturnsConnection()
         {            
             var connector = new DbConnector(_settings);
-            var connection = connector.CreateDbConnection(typeof(Query));            
-            NotNull(connection);
-            Equal(ConnectionState.Closed, connection.State);            
+            var connection = connector.CreateDbConnection(typeof(DbCommanderTests.Integration.Query));            
+            Assert.IsNotNull(connection);
+            Assert.AreEqual(ConnectionState.Closed, connection.State);            
         }
 
-        [Fact]
-        public void ConnectionFromCommandSettings()
-        {
-            var setting = _settings.Namespaces.Single(
-                x => x.Namespace == "Drapper.Tests.Relative.Path.Tests").Types.Single(
-                x => x.Name == "Drapper.Tests.Relative.Path.Tests.TypeH").Commands.Single(
-                x => x.Key == "Valid");
-            var connector = new DbConnector(_settings);
-            var connection = connector.CreateDbConnection(typeof(TypeH), setting.Value);
-        }
-
-        [Fact]        
-        public void ConnectionFromCommandSettingWithoutProviderThrowsArgumentNullException()
-        {
-            var setting = _settings.Namespaces.Single(
-                x => x.Namespace == "Drapper.Tests.Relative.Path.Tests").Types.Single(
-                x => x.Name == "Drapper.Tests.Relative.Path.Tests.TypeH").Commands.Single(
-                x => x.Key == "WithoutProvider");
-            var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(TypeH), setting.Value));
-            Equal("Value cannot be null.\r\nParameter name: The providerName from the command setting cannot be null.", exception.Message);
-        }
-
-        [Fact]        
-        public void ConnectionFromCommandSettingWithoutConnectionStringThrowsArgumentNullException()
-        {
-            var setting = _settings.Namespaces.Single(
-                x => x.Namespace == "Drapper.Tests.Relative.Path.Tests").Types.Single(
-                x => x.Name == "Drapper.Tests.Relative.Path.Tests.TypeH").Commands.Single(
-                x => x.Key == "WithoutConnectionString");
-            
-            var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(TypeH), setting.Value));
-            Equal("Value cannot be null.\r\nParameter name: The connectionString from the command setting cannot be null.", exception.Message);
-        }
-
-        [Fact]        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void InvalidProviderNameThrowsArgumentException()
         {            
             var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentException>(() => connector.CreateDbConnection(typeof(CreateDbConnection)));
-            Equal("Unable to find the requested .Net Framework Data Provider.  It may not be installed.", exception.Message);
+            var connection = connector.CreateDbConnection(typeof(CreateDbConnection));
         }
         
-        [Fact]        
-        public void NullSettingThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NullSettingThrowsArgumentException()
         {           
             var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(CollectionPocoA)));
-            Equal($"Value cannot be null.\r\nParameter name: No connection string settings could be found for '{typeof(CollectionPocoA).FullName}'. Please check configuration.", exception.Message);
+            var connection = connector.CreateDbConnection(typeof(Drapper.Tests.DbCommanderTests.Integration.CollectionPocoA));
         }
 
-        [Fact]        
-        public void NullTypePassedThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NullTypePassedThrowsArgumentException()
         {
             Type type = null;
             var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(type));
-            Equal("Value cannot be null.\r\nParameter name: The 'type' variable passed to CreateDbConnection was null.", exception.Message);
+            var connection = connector.CreateDbConnection(type);
         }
         
-        [Fact]        
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
         public void NonExistentDatabaseThrowsException()
         {            
-            var type = typeof(Query);
+            var type = typeof(Drapper.Tests.DbCommanderTests.Integration.Query);
             var connector = new DbConnector(_settings);
-            var connection = connector.CreateDbConnection(type);            
-            var exception = Throws<SqlException>(() => connection.Open());            
+            var connection = connector.CreateDbConnection(type);
+            Assert.IsNotNull(connection);
+            Assert.AreEqual(ConnectionState.Closed, connection.State);
+
+            connection.Open();            
         }
         
-        [Fact]        
-        public void MissingFallbackConnectionStringThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MissingFallbackConnectionStringThrowsArgumentException()
         {
+            var type = typeof(Drapper.DbCommander);
             var connector = new DbConnector(_settings);
-            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(DbCommander)));
-            Equal("Value cannot be null.\r\nParameter name: No connection string settings could be found for 'Drapper.DbCommander'. Please check configuration.", exception.Message);
+            var connection = connector.CreateDbConnection(type);
         }
 
-        [Fact]
+        [TestMethod]
         public void InvalidConnectionStringThrowsArgumentException()
         {
             var connector = new DbConnector(_settings);
             IDbConnection connection = null;
             try
             {
-                var type = typeof(CollectionPocoB);
+
+                var type = typeof(Drapper.Tests.DbCommanderTests.Integration.CollectionPocoB);
                 connection = connector.CreateDbConnection(type);
             }
             catch (Exception ex)
-            {                
-                IsType<ArgumentException>(ex);
+            {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+
                 // check that it's still null.
-                Null(connection);
+                Assert.IsNull(connection);
             }            
         }
 
-        [Fact]
+        [TestMethod]
         public void FallsbackToRootNamespaceConnection()
         {
-            var type = typeof(FallbackConnectionType);
+            var type = typeof(Drapper.Tests.With.Additional.Levels.FallbackConnectionType);
             var connector = new DbConnector(_settings);
             var connection = connector.CreateDbConnection(type);
 
-            NotNull(connection);
-            Equal(ConnectionState.Closed, connection.State);
+            Assert.IsNotNull(connection);
+            Assert.AreEqual(ConnectionState.Closed, connection.State);
         }
     }
-
-    
 }
 
-namespace Drapper.Tests.Fallback
+namespace Drapper.Tests.With.Additional.Levels
 {
-    namespace Drapper.Tests.Fallback.Some.Other.Namespace
-    {
-        public class FallbackConnectionType
-        {
-        }
-    }
+    public class FallbackConnectionType { }
 }

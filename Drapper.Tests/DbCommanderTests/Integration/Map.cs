@@ -5,7 +5,6 @@
 // =============================================================================================================================
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Drapper.Tests.DbCommanderTests.Integration
 {
@@ -34,17 +33,6 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 {
                     multi.PocoA = pocoA;
                     return multi;
-                };
-
-                public static Func<IEnumerable<ComplexPocoB>, IEnumerable<PocoB>, IEnumerable<ComplexPocoB>> ComplexWithTwoParameters2 = (complex, collection) =>
-                {                   
-
-                    foreach (var item in complex)
-                    {
-                        item.CollectionB = collection.Where(x => x.PocoB_Id == item.Id);
-                    }
-                    
-                    return complex;
                 };
 
                 public static Func<PocoA, PocoB, MultiMapPocoB> WithTwoDistinctParameters = (pocoA, pocoB) =>

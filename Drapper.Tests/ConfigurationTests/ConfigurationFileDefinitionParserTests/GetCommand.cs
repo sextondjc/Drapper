@@ -4,67 +4,73 @@
 // licence          : licensed under the terms of the MIT license. See LICENSE.txt
 // =============================================================================================================================
 using Drapper.Configuration.Xml;
+using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
-using Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts;
-using Xunit;
-using static Xunit.Assert;
 
 namespace Drapper.Tests.ConfigurationTests.ConfigurationFileDefinitionParserTests
-{    
+{
+    [TestClass]
     public class GetCommand
     {
-        [Fact]
+        [TestMethod]
         public void FallsBackToNamespaceForTypeSettings()
         {
             //var settings = GetFromFile();
-            var reader = new ConfigurationFileCommandReader();
-            var result = reader.GetCommand(typeof(TypeA), "FallsBackToNamespace");
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(typeof(TypeA), "FallsBackToNamespace");
             
-            NotNull(result);
-            Equal("select 'TypeA';", result.CommandText);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("select 'TypeA';", result.CommandText);
         }
-        
-        [Fact]
+
+
+        [TestMethod]
         public void Successfully()
         {
-            var reader = new ConfigurationFileCommandReader();
-            var result = reader.GetCommand(typeof(GetCommand), "ExplicitKey");
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(typeof(GetCommand), "ExplicitKey");
 
             // assert values 
-            Equal("select @Id [Result]", result.CommandText);
-            Equal("TestId", result.Split);
-            Equal(IsolationLevel.ReadCommitted, result.IsolationLevel);
+            Assert.AreEqual("select @Id [Result]", result.CommandText);
+            Assert.AreEqual("TestId", result.Split);
+            Assert.AreEqual(IsolationLevel.ReadCommitted, result.IsolationLevel);
              
-            NotNull(result);
+            Assert.IsNotNull(result);
         }
 
-        [Fact]        
-        public void NullTypeArgumentThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NullTypeArgumentThrowsArgumentException()
         {
-            var reader = new ConfigurationFileCommandReader();
-            var result = Throws<ArgumentNullException>(() => reader.GetCommand(null, "ExplicitKey"));
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(null, "ExplicitKey");
         }
 
-        [Fact]        
-        public void UnknownTypeThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UnknownTypeThrowsArgumentException()
         {
-            var reader = new ConfigurationFileCommandReader();
-            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(ConfigurationFileCommandReader), "ExplicitKey"));
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(typeof(ConfigurationFileCommandReader), "ExplicitKey");
         }
 
-        [Fact]        
-        public void NullKeyArgumentThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NullKeyArgumentThrowsArgumentException()
         {
-            var reader = new ConfigurationFileCommandReader();
-            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(GetCommand), null));
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(typeof(GetCommand), null);
         }
 
-        [Fact]        
-        public void UnknownKeyThrowsArgumentNullException()
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UnknownKeyThrowsArgumentException()
         {
-            var reader = new ConfigurationFileCommandReader();
-            var result = Throws<ArgumentNullException>(() => reader.GetCommand(typeof(GetCommand), "Unknown"));
+            var parser = new ConfigurationFileCommandReader();
+            var result = parser.GetCommand(typeof(GetCommand), "Unknown");
         }
     }
 }
