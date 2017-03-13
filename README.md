@@ -1,4 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/u0jfhnuc0jm348xj?svg=true)](https://ci.appveyor.com/project/sextondjc/drapper)
+[![Build status](https://travis-ci.org/sextondjc/Drapper.svg?branch=master)](https://travis-ci.org/sextondjc/Drapper)
+
 [![Nuget status](https://buildstats.info/nuget/drapper)](https://www.nuget.org/packages/Drapper.Validation/)
 
 # Drapper
