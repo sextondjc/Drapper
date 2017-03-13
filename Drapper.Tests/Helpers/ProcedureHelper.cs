@@ -7,7 +7,9 @@
 
 #region
 
+using System.Linq;
 using System.Threading.Tasks;
+using static Drapper.Tests.Helpers.CommanderHelper;
 
 #endregion
 
@@ -15,28 +17,47 @@ namespace Drapper.Tests.Helpers
 {
     public static class ProcedureHelper
     {
-        private static async Task CreateTableCreatorProcedure()
+        private static object _lock = new object();
+        private static IDbCommander _commander = CreateCommander();
+
+        public static bool TableCreatorExists()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
-            }
+            return _commander.Query<bool>().SingleOrDefault();
         }
 
-        private static async Task CreateIdentityTesterProcedure()
+        public static void CreateTableCreatorProcedure()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
-            }
+            _commander.Execute();
         }
 
-        private static async Task CreateBulkInsertProcedure()
+        public static bool IdentityTesterExists()
         {
-            using (var commander = CommanderHelper.CreateCommander())
-            {
-                await commander.ExecuteAsync(0, typeof (ProcedureHelper));
-            }
+            return _commander.Query<bool>().SingleOrDefault();
         }
+
+        public static void CreateIdentityTesterProcedure()
+        {
+            _commander.Execute();
+        }
+
+        public static bool BulkInsertProcedureExists()
+        {
+            return _commander.Query<bool>().SingleOrDefault();
+        }
+
+        public static bool BulkInsertAndReturnProcedureExists()
+        {
+            return _commander.Query<bool>().SingleOrDefault();
+        }
+
+        public static void CreateBulkInsertProcedure()
+        {
+            _commander.Execute(type:typeof(ProcedureHelper));
+        }
+
+        public static void CreateBulkInsertAndReturnProcedure()
+        {
+            _commander.Execute(type: typeof(ProcedureHelper));
+        }        
     }
 }

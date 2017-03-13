@@ -29,31 +29,16 @@ namespace Drapper.Tests.Helpers
             _commander.Execute();
         }
 
+        public static void CreateBulkInsertTable()
+        {
+            _commander.Execute();
+        }
+
         public static bool TableExists(string name)
         {
             return _commander.Query<bool>(new { name }).SingleOrDefault();
         }
-
-        public static bool TableCreatorExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        public static void CreateTableCreatorProcedure()
-        {
-            _commander.Execute();
-        }
-
-        public static bool IdentityTesterExists()
-        {
-            return _commander.Query<bool>().SingleOrDefault();
-        }
-
-        public static void CreateIdentityTesterProcedure()
-        {
-            _commander.Execute();
-        }
-
+        
         public static bool IsStale()
         {
             var modified = _commander.Query<DateTime>().SingleOrDefault();

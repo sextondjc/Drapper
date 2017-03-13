@@ -9,6 +9,7 @@
 
 using static Drapper.Tests.Helpers.DatabaseHelper;
 using static Drapper.Tests.Helpers.TableHelper;
+using static Drapper.Tests.Helpers.ProcedureHelper;
 using static System.Console;
 
 #endregion
@@ -17,6 +18,7 @@ namespace Drapper.Tests.Helpers
 {
     public class DatabaseFixture
     {
+
         public DatabaseFixture()
         {
             Setup();
@@ -37,6 +39,12 @@ namespace Drapper.Tests.Helpers
                 CreatePocoTable();
             }
 
+            if (!TableExists("BulkInsert"))
+            {
+                WriteLine("BulkInsert table doesn't exist. Attempting to create.");
+                CreateBulkInsertTable();
+            }
+
             if (!TableCreatorExists())
             {
                 WriteLine("Table creator procedure doesn't exist. Attempting to create.");
@@ -47,6 +55,18 @@ namespace Drapper.Tests.Helpers
             {
                 WriteLine("Identity tester procedure doesn't exist. Attempting to create.");
                 CreateIdentityTesterProcedure();
+            }
+
+            if(!BulkInsertProcedureExists())
+            {
+                WriteLine("Bulk insert tester procedure doesn't exist. Attempting to create.");
+                CreateBulkInsertProcedure();
+            }
+
+            if(!BulkInsertAndReturnProcedureExists())
+            {
+                WriteLine("Bulk insert and return tester procedure doesn't exist. Attempting to create.");
+                CreateBulkInsertAndReturnProcedure();
             }
 
             if (IsStale())
