@@ -80,6 +80,8 @@ namespace Drapper.Tests.Helpers
                 WriteLine("Data in the Poco table is stale. Attempting to refresh.");
                 ClearAndPopulate();
             }
+
+            WriteLine("Finished setting database up. Let the games begin!");
         }
 
         public void Teardown(string name = "Drapper")

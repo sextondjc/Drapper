@@ -69,7 +69,6 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 try
                 {
                     task.Wait(TimeSpan.FromSeconds(5));                    
-                    True(false, "The cancellation token didn't cancel.");
                 }
                 catch (Exception ex)
                 {
