@@ -27,7 +27,7 @@ namespace Drapper.Tests.Helpers
 
         public static void CreateTableCreatorProcedure()
         {
-            _commander.Execute();
+            _commander.Execute<bool>();
         }
 
         public static bool IdentityTesterExists()
@@ -37,7 +37,7 @@ namespace Drapper.Tests.Helpers
 
         public static void CreateIdentityTesterProcedure()
         {
-            _commander.Execute();
+            _commander.Execute<bool>();
         }
 
         public static bool BulkInsertProcedureExists()
@@ -52,12 +52,12 @@ namespace Drapper.Tests.Helpers
 
         public static void CreateBulkInsertProcedure()
         {
-            _commander.Execute(type:typeof(ProcedureHelper));
+            _commander.Execute<bool>(type:typeof(ProcedureHelper));
         }
 
         public static void CreateBulkInsertAndReturnProcedure()
         {
-            _commander.Execute(type: typeof(ProcedureHelper));
+            _commander.Execute<bool>(type: typeof(ProcedureHelper));
         }        
     }
 }

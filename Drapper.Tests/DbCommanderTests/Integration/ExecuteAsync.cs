@@ -24,7 +24,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
         {
             using (var commander = CreateCommander())
             {
-                var result = await commander.ExecuteAsync(typeof(ExecuteAsync));
+                var result = await commander.ExecuteAsync<bool>(typeof(ExecuteAsync));
             }
         }
 
@@ -33,7 +33,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
         {
             using (var commander = CreateCommander())
             {
-                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync(typeof(ExecuteAsync)));
+                var result = await ThrowsAsync<SqlException>(() => commander.ExecuteAsync<bool>(typeof(ExecuteAsync)));
             }
         }
 

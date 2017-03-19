@@ -26,12 +26,12 @@ namespace Drapper.Tests.Helpers
 
         public static void CreatePocoTable()
         {
-            _commander.Execute();
+            _commander.Execute<bool>();
         }
 
         public static void CreateBulkInsertTable()
-        {
-            _commander.Execute();
+        {            
+            _commander.Execute<bool>();
         }
 
         public static bool TableExists(string name)
@@ -63,7 +63,7 @@ namespace Drapper.Tests.Helpers
 
         private static void ClearPocoTable()
         {
-            _commander.Execute();
+            _commander.Execute<bool>();
         }
 
         private static void PopulatePocoTable()

@@ -26,7 +26,7 @@ namespace Drapper
         /// <param name="type">The type.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        bool Execute(Type type = null, [CallerMemberName] string method = null);
+        bool Execute<T>(Type type = null, [CallerMemberName] string method = null);
 
         /// <summary>
         ///     Executes a potentially state changing operation against the underlying data store (create/update/delete)
@@ -48,6 +48,6 @@ namespace Drapper
         /// <param name="type">The type.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        TResult Execute<TResult>(Func<TResult> map, Type type = null, [CallerMemberName] string method = null);
+        TResult Execute<TResult>(Func<TResult> map, [CallerMemberName] string method = null);
     }
 }
