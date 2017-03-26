@@ -29,8 +29,8 @@ namespace Drapper.Tests.DbCommanderTests.Integration
         public void SupportParameterlessCalls()
         {
             using (var commander = CreateCommander())
-            {
-                var result = commander.Execute();
+            {                 
+                var result = commander.Execute<bool>();
             }
         }
 
@@ -46,7 +46,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
                 // alters the stack & thus, the lookup. 
                 try
                 {
-                    var result = commander.Execute();
+                    var result = commander.Execute<bool>();
                 }
                 catch (SqlException exception)
                 {
@@ -155,7 +155,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             var pocoB = new PocoB { Name = Guid.NewGuid().ToString(), Value = 2 };
 
             using (var commander = CreateCommander())
-            {
+            {                
                 var record = commander.Execute(() =>
                 {
                     var t1 = commander.Execute(pocoA, typeof(Execute), tableName) ? pocoA : null;
@@ -178,7 +178,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             var path = BulkFileCreator.CreateBulkFile();
             using (var commander = CreateCommander())
             {
-                commander.Execute(method: "TruncateBulkInsertTable");
+                commander.Execute<bool>(method: "TruncateBulkInsertTable");
                 var operation = commander.Execute(new { path });
                 var result = commander.Query<dynamic>(method: "BulkInsertResult");
                 Equal(1000, result.Count());
@@ -191,7 +191,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
             var path = BulkFileCreator.CreateBulkFile();
             using (var commander = CreateCommander())
             {
-                commander.Execute(method: "TruncateBulkInsertTable");
+                commander.Execute<bool>(method: "TruncateBulkInsertTable");
                 var result = commander.Query<dynamic>(new { path });
                 Equal(1000, result.Count());
             }
@@ -214,7 +214,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
 
             using (var commander = CreateCommander())
             {
-                commander.Execute(method: "TruncateBulkInsertTable");
+                commander.Execute<bool>(method: "TruncateBulkInsertTable");
                 var operation = commander.Execute(list);
                 var result = commander.Query<dynamic>(method: "SupportBulkInsertFromListResult");
                 Equal(1000, result.Count());

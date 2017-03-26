@@ -16,9 +16,10 @@ namespace Drapper.Tests.DbConnectorTests
     public class Constructor
     {
         [Fact]
-        public void NullConnectionStringSettingsProviderThrowsArgumentNullException()
+        public void NullSettingsThrowsArgumentNullException()
         {
             var connector = Throws<ArgumentNullException>(() => new DbConnector(null));
+            Equal("Value cannot be null.\r\nParameter name: The ISettings object passed to the constructor was null. ", connector.Message);            
         }
 
         [Fact]
@@ -27,6 +28,6 @@ namespace Drapper.Tests.DbConnectorTests
             var provider = new Settings();
             var connector = new DbConnector(provider);
             NotNull(connector);
-        }
+        }        
     }
 }

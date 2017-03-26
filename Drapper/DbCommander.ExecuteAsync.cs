@@ -22,7 +22,7 @@ namespace Drapper
     public sealed partial class DbCommander : IDbCommander
     {
         
-        public async Task<bool> ExecuteAsync(
+        public async Task<bool> ExecuteAsync<T>(
             Type type,
             CancellationToken cancellationToken = default(CancellationToken),
             [CallerMemberName] string method = null)

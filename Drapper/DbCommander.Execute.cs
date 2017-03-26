@@ -14,7 +14,7 @@ namespace Drapper
 {
     public sealed partial class DbCommander : IDbCommander
     {        
-        public bool Execute(
+        public bool Execute<T>(
             Type type = null,
             [CallerMemberName] string method = null)
         {                        
@@ -72,8 +72,7 @@ namespace Drapper
         }
         
         public TResult Execute<TResult>(
-            Func<TResult> map, 
-            Type type = null, 
+            Func<TResult> map,             
             [CallerMemberName] string method = null)
         {
             // thought: should we support passing in the transaction scope option?

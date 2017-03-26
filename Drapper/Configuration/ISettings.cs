@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Drapper.Configuration
 {
     /// <summary>
-    /// Provides configuration options for Drapper. 
+    /// Provides configuration options for Drapper.
     /// </summary>
     public interface ISettings
     {

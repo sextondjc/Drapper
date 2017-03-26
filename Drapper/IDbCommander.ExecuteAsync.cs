@@ -28,7 +28,7 @@ namespace Drapper
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        Task<bool> ExecuteAsync(Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
+        Task<bool> ExecuteAsync<T>(Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
 
         /// <summary>
         ///     Executes a potentially state changing operation asynchronously.

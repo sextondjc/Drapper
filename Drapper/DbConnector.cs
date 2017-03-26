@@ -61,6 +61,9 @@ namespace Drapper
         /// <returns></returns>
         public IDbConnection CreateDbConnection(Type type, CommandSetting commandSetting)
         {
+            Require<ArgumentNullException>(type != null, ErrorMessages.NullTypeError);
+            Require<ArgumentNullException>(commandSetting != null, $"The command setting passed was null. Check configuration for type '{type.FullName}'.");
+
             var connectionString = commandSetting.ConnectionString;
             if (connectionString == null)
             {

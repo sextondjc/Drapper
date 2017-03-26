@@ -45,3 +45,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/.nuget/nuget.exe
+/.vs
+/Drapper/bin/Debug
+/Drapper/bin/Debug/Dapper.dll
+/packages
+*.ncrunchproject
+*.ncrunchproject
+*.ncrunchsolution
+*.user
+/_NCrunch_Drapper
+/Drapper/bin/Release
+/Drapper/obj
