@@ -54,3 +54,6 @@ Temporary Items
 *.ncrunchproject
 *.ncrunchsolution
 *.user
+/_NCrunch_Drapper
+/Drapper/bin/Release
+/Drapper/obj
