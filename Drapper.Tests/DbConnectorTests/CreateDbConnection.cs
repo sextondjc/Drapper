@@ -123,7 +123,6 @@ namespace Drapper.Tests.DbConnectorTests
             };
         }
 
-
         #endregion
 
         [Fact]
@@ -144,6 +143,7 @@ namespace Drapper.Tests.DbConnectorTests
                 x => x.Key == "Valid");
             var connector = new DbConnector(_settings);
             var connection = connector.CreateDbConnection(typeof(TypeH), setting.Value);
+            NotNull(connection);
         }
 
         [Fact]        
@@ -158,6 +158,18 @@ namespace Drapper.Tests.DbConnectorTests
             Equal("Value cannot be null.\r\nParameter name: The providerName from the command setting cannot be null.", exception.Message);
         }
 
+        [Fact]
+        public void ConnectionFromCommandSettingNullProviderThrowsArgumentNullException()
+        {
+            var setting = _settings.Namespaces.Single(
+                x => x.Namespace == "Drapper.Tests.Relative.Path.Tests").Types.Single(
+                x => x.Name == "Drapper.Tests.Relative.Path.Tests.TypeH").Commands.Single(
+                x => x.Key == "WithoutProvider");
+            var connector = new DbConnector(_settings);
+            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(null, setting.Value));
+            Equal("Value cannot be null.\r\nParameter name: The 'type' variable passed to CreateDbConnection was null.", exception.Message);
+        }
+
         [Fact]        
         public void ConnectionFromCommandSettingWithoutConnectionStringThrowsArgumentNullException()
         {
@@ -169,6 +181,19 @@ namespace Drapper.Tests.DbConnectorTests
             var connector = new DbConnector(_settings);
             var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(TypeH), setting.Value));
             Equal("Value cannot be null.\r\nParameter name: The connectionString from the command setting cannot be null.", exception.Message);
+        }
+
+        [Fact]
+        public void ConnectionFromCommandSettingNullConnectionStringThrowsArgumentNullException()
+        {
+            var setting = _settings.Namespaces.Single(
+                x => x.Namespace == "Drapper.Tests.Relative.Path.Tests").Types.Single(
+                x => x.Name == "Drapper.Tests.Relative.Path.Tests.TypeH").Commands.Single(
+                x => x.Key == "WithoutConnectionString");
+
+            var connector = new DbConnector(_settings);
+            var exception = Throws<ArgumentNullException>(() => connector.CreateDbConnection(typeof(TypeH), null));
+            Equal($"Value cannot be null.\r\nParameter name: The command setting passed was null. Check configuration for type '{typeof(TypeH).FullName}'.", exception.Message);
         }
 
         [Fact]        
@@ -228,6 +253,7 @@ namespace Drapper.Tests.DbConnectorTests
                 IsType<ArgumentException>(ex);
                 // check that it's still null.
                 Null(connection);
+                Equal("Format of the initialization string does not conform to specification starting at index 0.", ex.Message);
             }            
         }
 

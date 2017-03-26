@@ -1,0 +1,12 @@
+C:\Projects\Drapper\Drapper\bin\Debug\Drapper.dll
+C:\Projects\Drapper\Drapper\bin\Debug\Drapper.pdb
+C:\Projects\Drapper\Drapper\bin\Debug\Dapper.dll
+C:\Projects\Drapper\Drapper\bin\Debug\Drapper.Validation.dll
+C:\Projects\Drapper\Drapper\bin\Debug\Newtonsoft.Json.dll
+C:\Projects\Drapper\Drapper\bin\Debug\Dapper.xml
+C:\Projects\Drapper\Drapper\bin\Debug\Newtonsoft.Json.xml
+C:\Projects\Drapper\Drapper\obj\Debug\Drapper.csprojResolveAssemblyReference.cache
+C:\Projects\Drapper\Drapper\obj\Debug\Drapper.dll
+C:\Projects\Drapper\Drapper\obj\Debug\Drapper.pdb
+C:\Projects\Drapper\Drapper\bin\Debug\Drapper.dll.CodeAnalysisLog.xml
+C:\Projects\Drapper\Drapper\bin\Debug\Drapper.dll.lastcodeanalysissucceeded

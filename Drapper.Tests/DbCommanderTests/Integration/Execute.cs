@@ -29,7 +29,7 @@ namespace Drapper.Tests.DbCommanderTests.Integration
         public void SupportParameterlessCalls()
         {
             using (var commander = CreateCommander())
-            {
+            {                 
                 var result = commander.Execute<bool>();
             }
         }

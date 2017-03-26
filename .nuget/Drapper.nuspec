@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Drapper</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <authors>sextondjc</authors>
     <owners>sextondjc</owners>
     <licenseUrl>http://github.com/sextondjc/drapper</licenseUrl>
@@ -10,14 +10,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       A simple framework to separate .NET code from SQL code using the Dapper micro ORM.
-      Drapper is a wrapper for Dapper (Dapper + Wrapper = Drapper).
+      Drapper is a data wrapper inspired by, and built on Dapper, (Data/Dapper + Wrapper = Drapper).
     </description>
-    <releaseNotes>1.1.0 release.
-	- Correct single level namespace bug.
-	- Improved JsonFileCommandReader CommandSetting resolution.
-	- Provided relative path support for JsonFileCommandReader
-	- Added parameterless Execute overload.
-	- Unsealed command readers.
+    <releaseNotes>1.2.0 release.
+	- Consistency in Execute overloads.
 	</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <dependencies>
@@ -27,7 +23,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\net452\Drapper.dll" target="lib\net452\Drapper.dll"/>    
+    <file src="lib\net452\Drapper.dll" target="lib\net452\Drapper.dll"/>
+    <file src="lib\net46\Drapper.dll" target="lib\net46\Drapper.dll"/>
     <file src="lib\net461\Drapper.dll" target="lib\net461\Drapper.dll"/>    
     <file src="content\Drapper.Settings.json" target="content\Drapper.Settings.json"/>
   </files>

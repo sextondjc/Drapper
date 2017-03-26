@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drapper", "Drapper\Drapper.csproj", "{8BAF70B7-628F-4590-B4DA-E350A7E80A2B}"
 EndProject
@@ -11,6 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{02C2FF
 	ProjectSection(SolutionItems) = preProject
 		.nuget\Drapper.nuspec = .nuget\Drapper.nuspec
 		.nuget\nuget.exe = .nuget\nuget.exe
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{40492027-6797-417F-AEB8-EACC1CB658FF}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Configuration.md = docs\Configuration.md
+		docs\DrapperSettingsFile.md = docs\DrapperSettingsFile.md
+		docs\Index.md = docs\Index.md
+		docs\Installation.md = docs\Installation.md
+		docs\Overview.md = docs\Overview.md
 	EndProjectSection
 EndProject
 Global

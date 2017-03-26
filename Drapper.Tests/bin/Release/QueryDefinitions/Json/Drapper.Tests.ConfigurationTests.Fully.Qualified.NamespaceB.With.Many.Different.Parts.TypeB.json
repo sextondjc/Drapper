@@ -1,0 +1,14 @@
+﻿{
+  "Name": "Drapper.Tests.ConfigurationTests.Fully.Qualified.NamespaceA.With.Many.Different.Parts.TypeB",
+  "Commands": {
+    "SupportsFileFoundOnNamespacePathSettings": {
+      "ConnectionString": null,
+      "Split": "Id",
+      "CommandText": "select 'TypeB';",
+      "CommandTimeout": 30,
+      "CommandType": 1,
+      "Flags": 0,
+      "IsolationLevel": 1048576
+    }    
+  }
+}

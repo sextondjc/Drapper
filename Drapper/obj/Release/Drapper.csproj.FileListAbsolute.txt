@@ -1,0 +1,8 @@
+C:\Projects\Drapper\Drapper\bin\Release\Drapper.dll
+C:\Projects\Drapper\Drapper\bin\Release\Dapper.dll
+C:\Projects\Drapper\Drapper\bin\Release\Drapper.Validation.dll
+C:\Projects\Drapper\Drapper\bin\Release\Newtonsoft.Json.dll
+C:\Projects\Drapper\Drapper\bin\Release\Dapper.xml
+C:\Projects\Drapper\Drapper\bin\Release\Newtonsoft.Json.xml
+C:\Projects\Drapper\Drapper\obj\Release\Drapper.csprojResolveAssemblyReference.cache
+C:\Projects\Drapper\Drapper\obj\Release\Drapper.dll

@@ -16,8 +16,7 @@ namespace Drapper.Tests.ConfigurationTests.ConfigurationFileDefinitionParserTest
     {
         [Fact]
         public void FallsBackToNamespaceForTypeSettings()
-        {
-            //var settings = GetFromFile();
+        {            
             var reader = new ConfigurationFileCommandReader();
             var result = reader.GetCommand(typeof(TypeA), "FallsBackToNamespace");
             

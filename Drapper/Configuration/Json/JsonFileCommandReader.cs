@@ -147,7 +147,7 @@ namespace Drapper.Configuration.Json
                     typeSetting.Name);
 
             // parse...
-            var definitions =JsonConvert.DeserializeObject<IDictionary<string, CommandSetting>>(File.ReadAllText(path));
+            var definitions = JsonConvert.DeserializeObject<IDictionary<string, CommandSetting>>(File.ReadAllText(path));
             Require<ArgumentNullException>(definitions != null,
                     ErrorMessages.CommandSettingsDictionaryIsNull,
                     typeSetting.Name);
