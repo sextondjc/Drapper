@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Drapper.Validation" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Drapper.Readers\Drapper.Readers.csproj" />
+    <ProjectReference Include="..\Drapper.Settings\Drapper.Settings.csproj" />
+    <ProjectReference Include="..\Drapper.Settings.Databases\Drapper.Settings.Databases.csproj" />    
+  </ItemGroup>
+
+</Project>

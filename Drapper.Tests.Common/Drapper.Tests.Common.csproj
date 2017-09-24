@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Drapper.Connectors.Databases.SqlServer\Drapper.Connectors.Databases.SqlServer.csproj" />
+    <ProjectReference Include="..\Drapper.Databases\Drapper.Databases.csproj" />
+    <ProjectReference Include="..\Drapper.Readers.Databases\Drapper.Readers.Databases.csproj" />
+    <ProjectReference Include="..\Drapper.Settings.Databases\Drapper.Settings.Databases.csproj" />
+    <ProjectReference Include="..\Drapper\Drapper.csproj" />
+  </ItemGroup>
+
+</Project>
