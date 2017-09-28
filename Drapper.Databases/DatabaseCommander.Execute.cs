@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Transactions;
 using Dapper;
@@ -54,9 +61,11 @@ namespace Drapper.Databases
                 }
             }
         }
-        
-        public TResult Execute<TResult>(Func<TResult> map, TransactionScopeOption scopeOption = TransactionScopeOption.Suppress, [CallerMemberName] string method = null)
-        {            
+
+        public TResult Execute<TResult>(Func<TResult> map,
+            TransactionScopeOption scopeOption = TransactionScopeOption.Suppress,
+            [CallerMemberName] string method = null)
+        {
             // thought: should we support passing in the transaction scope option?
             //          i.e. let it be overridden by query definition?
             using (var scope = new TransactionScope(scopeOption))

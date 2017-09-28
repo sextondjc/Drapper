@@ -1,4 +1,11 @@
-﻿using System.ComponentModel;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System.ComponentModel;
 using System.Data;
 using System.Threading;
 using Dapper;
@@ -10,13 +17,17 @@ namespace Drapper.Databases
 {
     public partial class DatabaseCommander<TRepository> : ICommander<TRepository>
     {
-        private readonly IDatabaseCommandReader _reader;
         private readonly IDatabaseConnector _connector;
+        private readonly IDatabaseCommandReader _reader;
 
         public DatabaseCommander(IDatabaseCommandReader reader, IDatabaseConnector connector)
-        {            
+        {
             _reader = reader;
             _connector = connector;
+        }
+
+        public void Dispose()
+        {
         }
 
         [Browsable(false)]
@@ -25,18 +36,12 @@ namespace Drapper.Databases
             object parameters = null,
             IDbTransaction transaction = null,
             CancellationToken cancellationToken = default(CancellationToken)) => new CommandDefinition(
-                commandText: setting.CommandText,
-                parameters: parameters,
-                transaction: transaction,
-                commandTimeout: setting.CommandTimeout,
-                commandType: setting.CommandType,
-                flags: (CommandFlags)setting.Flags,
-                cancellationToken: cancellationToken);
-        
-        public void Dispose()
-        {
-            
-        }
-
+            commandText: setting.CommandText,
+            parameters: parameters,
+            transaction: transaction,
+            commandTimeout: setting.CommandTimeout,
+            commandType: setting.CommandType,
+            flags: (CommandFlags) setting.Flags,
+            cancellationToken: cancellationToken);
     }
 }

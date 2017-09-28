@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -7,8 +14,6 @@ namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommandNamespaceSettingT
 {
     public class Constructor
     {
-        private readonly IEnumerable<DatabaseCommandTypeSetting> _types;
-
         public Constructor()
         {
             _types = new List<DatabaseCommandTypeSetting>
@@ -20,14 +25,29 @@ namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommandNamespaceSettingT
             };
         }
 
+        private readonly IEnumerable<DatabaseCommandTypeSetting> _types;
+
+        [Fact]
+        public void EmptyTypesListThrowsArgumentException()
+        {
+            var result = Assert.Throws<ArgumentException>(() =>
+                new DatabaseCommandNamespaceSetting("test_namespace", new List<DatabaseCommandTypeSetting>()));
+            const string expect =
+                "'test_namespace' must have at least 1 Type setting to be valid. Please check settings.";
+            Assert.Equal(expect, result.Message);
+        }
+
         [Fact]
         public void NullEmptyWhitespaceNameThrowsArgumentNullException()
         {
             var nulled = Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting(null, _types));
-            var empty = Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting(string.Empty, _types));
-            var whitespace = Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting("", _types));
+            var empty = Assert.Throws<ArgumentNullException>(() =>
+                new DatabaseCommandNamespaceSetting(string.Empty, _types));
+            var whitespace =
+                Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting("", _types));
 
-            const string expect = "Value cannot be null.\r\nParameter name: namespace. All namespace entries must have a name to be valid. Please check settings for an empty namespace namespace.";
+            const string expect =
+                "Value cannot be null.\r\nParameter name: namespace. All namespace entries must have a name to be valid. Please check settings for an empty namespace namespace.";
             Assert.Equal(expect, nulled.Message);
             Assert.Equal(expect, empty.Message);
             Assert.Equal(expect, whitespace.Message);
@@ -36,16 +56,10 @@ namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommandNamespaceSettingT
         [Fact]
         public void NullTypesListThrowsArgumentNullException()
         {
-            var result = Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting("test_namespace", null));
-            const string expect = "Value cannot be null.\r\nParameter name: types. The types collection for 'test_namespace' is null. Please check settings.";
-            Assert.Equal(expect, result.Message);
-        }
-
-        [Fact]
-        public void EmptyTypesListThrowsArgumentException()
-        {
-            var result = Assert.Throws<ArgumentException>(() => new DatabaseCommandNamespaceSetting("test_namespace", new List<DatabaseCommandTypeSetting>()));
-            const string expect = "'test_namespace' must have at least 1 Type setting to be valid. Please check settings.";
+            var result =
+                Assert.Throws<ArgumentNullException>(() => new DatabaseCommandNamespaceSetting("test_namespace", null));
+            const string expect =
+                "Value cannot be null.\r\nParameter name: types. The types collection for 'test_namespace' is null. Please check settings.";
             Assert.Equal(expect, result.Message);
         }
 

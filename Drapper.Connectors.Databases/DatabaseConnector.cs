@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -8,35 +15,38 @@ using Drapper.Validation;
 namespace Drapper.Connectors.Databases
 {
     public class DatabaseConnector : IDatabaseConnector
-    {        
-        private readonly IDatabaseCommanderSettings _settings;
+    {
         private readonly Func<DbProviderFactory> _providerPredicate;
+        private readonly IDatabaseCommanderSettings _settings;
 
-        public DatabaseConnector(            
+        public DatabaseConnector(
             IDatabaseCommanderSettings settings,
             Func<DbProviderFactory> providerPredicate
-            )
-        {            
+        )
+        {
             Contract.Require<ArgumentNullException>(settings != null, nameof(settings));
             Contract.Require<ArgumentNullException>(providerPredicate != null, nameof(providerPredicate));
 
             _settings = settings;
             _providerPredicate = providerPredicate;
         }
-        
+
         public IDbConnection CreateConnection(DatabaseCommandSetting commandSetting)
         {
             // pre-conditions. 
-            Contract.Require<ArgumentNullException>(commandSetting != null, nameof(commandSetting));            
+            Contract.Require<ArgumentNullException>(commandSetting != null, nameof(commandSetting));
 
             // get the connection string setting from the root connections. 
-            var connectionStringSetting = _settings.Connections.SingleOrDefault(x => x.Alias == commandSetting.ConnectionAlias);
-            Contract.Require<NullReferenceException>(connectionStringSetting != null, Messages.NoAliasedConnection, commandSetting.ConnectionAlias);
+            var connectionStringSetting =
+                _settings.Connections.SingleOrDefault(x => x.Alias == commandSetting.ConnectionAlias);
+            Contract.Require<NullReferenceException>(connectionStringSetting != null, Messages.NoAliasedConnection,
+                commandSetting.ConnectionAlias);
 
             // invoke the provider predicate to return a connection. 
             var connection = _providerPredicate.Invoke().CreateConnection();
-            Contract.Require<NullReferenceException>(connection != null, Messages.NoConnectionCreated, commandSetting.ConnectionAlias);
-            
+            Contract.Require<NullReferenceException>(connection != null, Messages.NoConnectionCreated,
+                commandSetting.ConnectionAlias);
+
             // assign the connection and return
             connection.ConnectionString = connectionStringSetting.ConnectionString;
             return connection;

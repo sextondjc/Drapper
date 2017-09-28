@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using Drapper.Settings.Databases;
@@ -9,12 +16,11 @@ namespace Drapper.Connectors.Databases.Unit.Tests.DatabaseConnectorTests
 {
     public class CreateConnection
     {
-        private readonly IDatabaseCommanderSettings _settings;
-        
         public CreateConnection()
-        {           
+        {
             _settings = new DatabaseCommanderSettings(
-                new List<DatabaseCommandNamespaceSetting> {
+                new List<DatabaseCommandNamespaceSetting>
+                {
                     new DatabaseCommandNamespaceSetting(
                         typeof(DatabaseCommandNamespaceSetting).Namespace,
                         new List<DatabaseCommandTypeSetting>
@@ -23,14 +29,30 @@ namespace Drapper.Connectors.Databases.Unit.Tests.DatabaseConnectorTests
                                 typeof(DatabaseCommandTypeSetting).FullName,
                                 new Dictionary<string, DatabaseCommandSetting>
                                 {
-                                    ["Retrieve"] = new DatabaseCommandSetting("test.alias", "select 'Readers.Test.Settings'")
+                                    ["Retrieve"] =
+                                    new DatabaseCommandSetting("test.alias", "select 'Readers.Test.Settings'")
                                 })
                         })
                 }
                 , new List<ConnectionStringSetting>
                 {
                     new ConnectionStringSetting("test.alias", "providerName", "connectionString")
-                });            
+                });
+        }
+
+        private readonly IDatabaseCommanderSettings _settings;
+
+        [Fact]
+        public void NoAliasedConnectionThrowsNullReferenceException()
+        {
+            var providerMock = new Mock<DbProviderFactory>();
+            var connector = new DatabaseConnector(_settings, () => providerMock.Object);
+            var setting = new DatabaseCommandSetting("Does.Not.Exist", "test");
+
+            var result = Assert.Throws<NullReferenceException>(() => connector.CreateConnection(setting));
+            Assert.Equal(
+                $"There is no connection with the alias '{setting.ConnectionAlias}' in the settings. Please check settings.",
+                result.Message);
         }
 
         [Fact]
@@ -43,14 +65,14 @@ namespace Drapper.Connectors.Databases.Unit.Tests.DatabaseConnectorTests
         }
 
         [Fact]
-        public void NoAliasedConnectionThrowsNullReferenceException()
+        public void ProviderExceptionReturnedToCaller()
         {
             var providerMock = new Mock<DbProviderFactory>();
+            providerMock.Setup(x => x.CreateConnection()).Throws(new NotImplementedException("Unit test"));
             var connector = new DatabaseConnector(_settings, () => providerMock.Object);
-            var setting = new DatabaseCommandSetting("Does.Not.Exist", "test");
-
-            var result = Assert.Throws<NullReferenceException>(() => connector.CreateConnection(setting));
-            Assert.Equal( $"There is no connection with the alias '{setting.ConnectionAlias}' in the settings. Please check settings.", result.Message);
+            var setting = new DatabaseCommandSetting("test.alias", "select 1");
+            var result = Assert.Throws<NotImplementedException>(() => connector.CreateConnection(setting));
+            Assert.Equal("Unit test", result.Message);
         }
 
         [Fact]
@@ -63,18 +85,7 @@ namespace Drapper.Connectors.Databases.Unit.Tests.DatabaseConnectorTests
             var result = Assert.Throws<NullReferenceException>(() => connector.CreateConnection(setting));
             Assert.Equal(
                 $"The provider predicate did not return a connection for the aliased connection '{setting.ConnectionAlias}'.",
-                result.Message);            
-        }
-
-        [Fact]
-        public void ProviderExceptionReturnedToCaller()
-        {
-            var providerMock = new Mock<DbProviderFactory>();
-            providerMock.Setup(x => x.CreateConnection()).Throws(new NotImplementedException("Unit test"));
-            var connector = new DatabaseConnector(_settings, () => providerMock.Object);
-            var setting = new DatabaseCommandSetting("test.alias", "select 1");
-            var result = Assert.Throws<NotImplementedException>(() => connector.CreateConnection(setting));
-            Assert.Equal("Unit test", result.Message);            
+                result.Message);
         }
 
         [Fact]
@@ -89,5 +100,5 @@ namespace Drapper.Connectors.Databases.Unit.Tests.DatabaseConnectorTests
             Assert.NotNull(result);
             Assert.Equal(System.Data.ConnectionState.Closed, result.State);
         }
-    }    
+    }
 }

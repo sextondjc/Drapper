@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Linq;
 using Drapper.Settings;
 using Drapper.Settings.Databases;
@@ -12,7 +19,8 @@ namespace Drapper.Readers.Databases
 
         public DatabaseCommandReader(IDatabaseCommanderSettings settings)
         {
-            Require<ArgumentNullException>(settings != null, "{0}. No settings were passed to DatabaseCommandReader.",nameof(settings));
+            Require<ArgumentNullException>(settings != null, "{0}. No settings were passed to DatabaseCommandReader.",
+                nameof(settings));
             _settings = settings;
         }
 
@@ -23,18 +31,18 @@ namespace Drapper.Readers.Databases
 
             var namespaceSetting = GetNamespaceSetting(type);
             Require<NullReferenceException>(
-                namespaceSetting != null, 
-                ErrorMessages.NoNamespaceSettingForType, 
+                namespaceSetting != null,
+                ErrorMessages.NoNamespaceSettingForType,
                 type.FullName);
 
             var typeSetting = GetTypeSetting(namespaceSetting, type);
-            Require<NullReferenceException>(typeSetting != null, 
+            Require<NullReferenceException>(typeSetting != null,
                 ErrorMessages.NoTypeSettingAndNoPathInNamespace,
                 type.FullName,
                 namespaceSetting.Namespace);
 
             var commandSetting = GetCommandSetting(namespaceSetting, typeSetting, key);
-            Require<NullReferenceException>(commandSetting != null, 
+            Require<NullReferenceException>(commandSetting != null,
                 ErrorMessages.NoCommandSetting,
                 key,
                 typeSetting.Name);
@@ -43,7 +51,7 @@ namespace Drapper.Readers.Databases
         }
 
         private INamespaceSetting<DatabaseCommandSetting> GetNamespaceSetting(Type type)
-        {            
+        {
             //return _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
             var result = _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
 
@@ -77,7 +85,7 @@ namespace Drapper.Readers.Databases
             Type type)
         {
             // check if it has a type setting.
-            return namespaceSetting.Types?.SingleOrDefault(x => x.Name == type.FullName);            
+            return namespaceSetting.Types?.SingleOrDefault(x => x.Name == type.FullName);
         }
 
         private DatabaseCommandSetting GetCommandSetting(
@@ -111,10 +119,12 @@ namespace Drapper.Readers.Databases
 Please check settings.";
 
             internal const string NoTypeSettingAndNoPathInNamespace =
-                @"The type '{0}' has no entry in the type settings of namespace '{1}'. Please add a type setting entry to the namespace setting.";
+                    @"The type '{0}' has no entry in the type settings of namespace '{1}'. Please add a type setting entry to the namespace setting."
+                ;
 
             internal const string NoCommandSetting =
-                @"The command setting '{0}' has no entry for the type setting '{1}'. Please add a command setting entry to the type setting.";
+                    @"The command setting '{0}' has no entry for the type setting '{1}'. Please add a command setting entry to the type setting."
+                ;
         }
-    }        
+    }
 }

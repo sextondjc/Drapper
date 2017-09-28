@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.28 (19:23)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +16,8 @@ namespace Drapper.SqlServer.Tests.Setup
 {
     public class DatabaseSetup
     {
-        private object _lock = new object();
         private readonly ICommander<DatabaseSetup> _commander;
+        private object _lock = new object();
 
         public DatabaseSetup()
         {
@@ -84,24 +91,24 @@ namespace Drapper.SqlServer.Tests.Setup
         private void CreateDatabase(string name = "Drapper")
         {
             // using Query to skip transactionality. 
-            _commander.Query<string>(new { name });
+            _commander.Query<string>(new {name});
             WriteLine($"{name} created!");
         }
 
         private void DropDatabase(string name = "Drapper")
         {
-            _commander.Execute(new { name });
+            _commander.Execute(new {name});
             WriteLine($"{name} dropped!");
         }
 
         private bool DatabaseExists(string name = "Drapper")
         {
-            return _commander.Query<bool>(new { name }).SingleOrDefault();
+            return _commander.Query<bool>(new {name}).SingleOrDefault();
         }
 
         private void DropAllTables(string name)
         {
-            _commander.Execute(new { name });
+            _commander.Execute(new {name});
         }
 
         #endregion
@@ -117,7 +124,7 @@ namespace Drapper.SqlServer.Tests.Setup
 
         private void CreateTable(string tableName)
         {
-            _commander.Execute(new { tableName });
+            _commander.Execute(new {tableName});
         }
 
         private void CreatePocoTable()
@@ -132,7 +139,7 @@ namespace Drapper.SqlServer.Tests.Setup
 
         private bool TableExists(string name)
         {
-            return _commander.Query<bool>(new { name }).SingleOrDefault();
+            return _commander.Query<bool>(new {name}).SingleOrDefault();
         }
 
         private bool IsStale()
@@ -177,7 +184,7 @@ namespace Drapper.SqlServer.Tests.Setup
                 _commander.Execute(entry);
             }
         }
-        
+
         #endregion
 
         #region / procedures / 
@@ -221,6 +228,7 @@ namespace Drapper.SqlServer.Tests.Setup
         {
             _commander.Execute<bool>();
         }
+
         #endregion
     }
 }

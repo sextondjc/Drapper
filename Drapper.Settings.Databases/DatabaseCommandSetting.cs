@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Data;
 using static Drapper.Validation.Contract;
 
@@ -11,14 +18,9 @@ namespace Drapper.Settings.Databases
     public class DatabaseCommandSetting : ICommandSetting
     {
         /// <summary>
-        /// Used for aliasing connections
-        /// </summary>
-        public string ConnectionAlias { get; }
-
-        /// <summary>
         /// Used for Dapper multimap splits. 
         /// </summary>
-        public string Split { get; } 
+        public string Split { get; }
 
         /// <summary>
         /// The command text to be executed against the SQL database.
@@ -44,17 +46,17 @@ namespace Drapper.Settings.Databases
         /// Gets or sets the isolation level used by a transaction. 
         /// Defaults to <see><cref>IsolationLevel.Serializable</cref></see>
         /// </summary>        
-        public IsolationLevel IsolationLevel { get; } 
+        public IsolationLevel IsolationLevel { get; }
 
         public DatabaseCommandSetting(
             string connectionAlias,
-            string commandText,            
+            string commandText,
             CommandType commandType = CommandType.Text,
             int commandTimeout = 30,
             string split = "Id",
             CommandFlagSetting flags = CommandFlagSetting.None,
             IsolationLevel isolationLevel = IsolationLevel.Serializable
-            )
+        )
         {
             Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionAlias), nameof(connectionAlias));
             Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(commandText), nameof(commandText));
@@ -67,5 +69,10 @@ namespace Drapper.Settings.Databases
             Flags = flags;
             IsolationLevel = isolationLevel == 0 ? IsolationLevel.Serializable : isolationLevel;
         }
+
+        /// <summary>
+        /// Used for aliasing connections
+        /// </summary>
+        public string ConnectionAlias { get; }
     }
 }

@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,9 +14,10 @@ using Dapper;
 
 namespace Drapper.Databases
 {
-    public partial class DatabaseCommander<TRepository> 
+    public partial class DatabaseCommander<TRepository>
     {
-        public async Task<bool> ExecuteAsync<TResult>(CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
+        public async Task<bool> ExecuteAsync<TResult>(CancellationToken cancellationToken = default(CancellationToken),
+            [CallerMemberName] string method = null)
         {
             var setting = _reader.GetCommand(typeof(TRepository), method);
             using (var connection = _connector.CreateConnection(setting))
@@ -19,7 +27,8 @@ namespace Drapper.Databases
                 {
                     try
                     {
-                        var command = GetCommandDefinition(setting, transaction: transaction, cancellationToken: cancellationToken);
+                        var command = GetCommandDefinition(setting, transaction: transaction,
+                            cancellationToken: cancellationToken);
                         var result = (await connection.ExecuteAsync(command) > 0);
                         transaction.Commit();
                         return result;
@@ -33,7 +42,8 @@ namespace Drapper.Databases
             }
         }
 
-        public async Task<bool> ExecuteAsync<TResult>(TResult model, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
+        public async Task<bool> ExecuteAsync<TResult>(TResult model,
+            CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
         {
             var setting = _reader.GetCommand(typeof(TRepository), method);
             using (var connection = _connector.CreateConnection(setting))
@@ -57,7 +67,7 @@ namespace Drapper.Databases
             }
         }
 
-        public async Task<TResult> ExecuteAsync<TResult>(Func<TResult> map, 
+        public async Task<TResult> ExecuteAsync<TResult>(Func<TResult> map,
             TransactionScopeOption scopeOption = TransactionScopeOption.Suppress,
             TransactionScopeAsyncFlowOption asyncFlowOption = TransactionScopeAsyncFlowOption.Enabled,
             CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)

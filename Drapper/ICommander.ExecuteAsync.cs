@@ -1,9 +1,9 @@
-﻿// ============================================================================================================================= 
-// author       : david sexton (@sextondjc | sextondjc.com)
-// date         : 2015.12.23 (23:44)
-// modified     : 2017-02-19 (22:11)
-// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
-// =============================================================================================================================
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
 
 #region
 
@@ -29,7 +29,8 @@ namespace Drapper
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        Task<bool> ExecuteAsync<T>(CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
+        Task<bool> ExecuteAsync<T>(CancellationToken cancellationToken = default(CancellationToken),
+            [CallerMemberName] string method = null);
 
         /// <summary>
         ///     Executes a potentially state changing operation asynchronously.
@@ -39,7 +40,8 @@ namespace Drapper
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="method">The method.</param>
         /// <returns></returns>
-        Task<bool> ExecuteAsync<T>(T model, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null);
+        Task<bool> ExecuteAsync<T>(T model, CancellationToken cancellationToken = default(CancellationToken),
+            [CallerMemberName] string method = null);
 
         /// <summary>
         ///     Wraps a Func with a TransactionScope object. Doesn't handle async very well at all. Use at your own peril.

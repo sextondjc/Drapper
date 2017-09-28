@@ -1,9 +1,9 @@
-﻿// ============================================================================================================================= 
-// author       : david sexton (@sextondjc | sextondjc.com)
-// date         : 2015.12.23 (23:44)
-// modified     : 2017-02-19 (22:58)
-// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
-// =============================================================================================================================
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
 
 using System;
 using Drapper.Validation;
@@ -13,7 +13,7 @@ namespace Drapper.Settings.Databases
     /// <summary>
     /// Used so that we don't have to store connection strings in .config files.
     /// </summary>
-    public class ConnectionStringSetting 
+    public class ConnectionStringSetting
     {
         /// <summary>
         /// Used to reference this ConnectionStringSetting
@@ -45,12 +45,13 @@ namespace Drapper.Settings.Databases
         /// <param name="connectionString">The connection string.</param>        
         public ConnectionStringSetting(
             string alias,
-            string providerName, 
+            string providerName,
             string connectionString)
         {
             Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(alias), nameof(alias));
             Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(providerName), nameof(providerName));
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString), nameof(connectionString));
+            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString),
+                nameof(connectionString));
 
             Alias = alias;
             ProviderName = providerName;

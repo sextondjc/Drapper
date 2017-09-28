@@ -1,4 +1,11 @@
-﻿using System;
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
+
+using System;
 using System.Collections.Generic;
 using Drapper.Settings.Databases;
 using Xunit;
@@ -7,12 +14,11 @@ namespace Drapper.Connectors.Databases.SqlServer.Unit.Tests.SqlServerDatabaseCon
 {
     public class Constructor
     {
-        private readonly IDatabaseCommanderSettings _settings;
-
         public Constructor()
         {
             _settings = new DatabaseCommanderSettings(
-                new List<DatabaseCommandNamespaceSetting> {
+                new List<DatabaseCommandNamespaceSetting>
+                {
                     new DatabaseCommandNamespaceSetting(
                         typeof(DatabaseCommandNamespaceSetting).Namespace,
                         new List<DatabaseCommandTypeSetting>
@@ -21,7 +27,8 @@ namespace Drapper.Connectors.Databases.SqlServer.Unit.Tests.SqlServerDatabaseCon
                                 typeof(DatabaseCommandTypeSetting).FullName,
                                 new Dictionary<string, DatabaseCommandSetting>
                                 {
-                                    ["Retrieve"] = new DatabaseCommandSetting("test.alias", "select 'Readers.Test.Settings'")
+                                    ["Retrieve"] =
+                                    new DatabaseCommandSetting("test.alias", "select 'Readers.Test.Settings'")
                                 })
                         })
                 }
@@ -30,6 +37,8 @@ namespace Drapper.Connectors.Databases.SqlServer.Unit.Tests.SqlServerDatabaseCon
                     new ConnectionStringSetting("test.alias", "providerName", "connectionString")
                 });
         }
+
+        private readonly IDatabaseCommanderSettings _settings;
 
         [Fact]
         public void NullSettingsThrowsArgumentNullException()

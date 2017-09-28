@@ -1,15 +1,13 @@
-﻿// ============================================================================================================================= 
-// author       : david sexton (@sextondjc | sextondjc.com)
-// date         : 2015.12.23 (23:44)
-// modified     : 2017-02-19 (22:52)
-// licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
-// =============================================================================================================================
+﻿//  ============================================================================================================================= 
+//  author       : david sexton (@sextondjc | sextondjc.com)
+//  date         : 2017.09.24 (19:47)
+//  modified     : 2017.09.28 (23:05)
+//  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
+//  =============================================================================================================================
 
 #region
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 #endregion
 
@@ -21,5 +19,5 @@ namespace Drapper
     /// </summary>
     public partial interface ICommander<TRepository> : IDisposable
     {
-    }    
+    }
 }
