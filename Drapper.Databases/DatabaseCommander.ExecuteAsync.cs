@@ -2,24 +2,78 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
+using Dapper;
 
 namespace Drapper.Databases
 {
-    public partial class DatabaseCommander : ICommander
+    public partial class DatabaseCommander<TRepository> 
     {
-        public Task<bool> ExecuteAsync<T>(Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
+        public async Task<bool> ExecuteAsync<TResult>(CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
         {
-            throw new NotImplementedException();
+            var setting = _reader.GetCommand(typeof(TRepository), method);
+            using (var connection = _connector.CreateConnection(setting))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
+                {
+                    try
+                    {
+                        var command = GetCommandDefinition(setting, transaction: transaction, cancellationToken: cancellationToken);
+                        var result = (await connection.ExecuteAsync(command) > 0);
+                        transaction.Commit();
+                        return result;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
 
-        public Task<bool> ExecuteAsync<T>(T model, Type type, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
+        public async Task<bool> ExecuteAsync<TResult>(TResult model, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
         {
-            throw new NotImplementedException();
+            var setting = _reader.GetCommand(typeof(TRepository), method);
+            using (var connection = _connector.CreateConnection(setting))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction(setting.IsolationLevel))
+                {
+                    try
+                    {
+                        var command = GetCommandDefinition(setting, model, transaction, cancellationToken);
+                        var result = (await connection.ExecuteAsync(command) > 0);
+                        transaction.Commit();
+                        return result;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
 
-        public Task<TResult> ExecuteAsync<TResult>(Func<TResult> map, CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
+        public async Task<TResult> ExecuteAsync<TResult>(Func<TResult> map, 
+            TransactionScopeOption scopeOption = TransactionScopeOption.Suppress,
+            TransactionScopeAsyncFlowOption asyncFlowOption = TransactionScopeAsyncFlowOption.Enabled,
+            CancellationToken cancellationToken = default(CancellationToken), [CallerMemberName] string method = null)
         {
-            throw new NotImplementedException();
+            // i'm honestly not lovin this method. looks like it could cause
+            // too many holes and could lead to some seriously, serious
+            // nasty, nasty.             
+            using (var scope = new TransactionScope(scopeOption, TransactionScopeAsyncFlowOption.Enabled))
+            {
+                // could also be abused as sync over async.
+                // todo: write tests to prove abuse and write about 
+                // why it's bad, bad, bad. 
+                var result = await Task.FromResult(map());
+                scope.Complete();
+                return result;
+            }
         }
     }
 }

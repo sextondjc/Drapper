@@ -1,4 +1,5 @@
 ﻿using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Settings.Databases.Unit.Tests.CommandFlagSettingTests
 {
@@ -6,7 +7,7 @@ namespace Drapper.Settings.Databases.Unit.Tests.CommandFlagSettingTests
     {
 
         [Theory]
-        [InlineData(CommandFlagSetting.None, 0)]
+        [InlineData(CommandFlagSetting.None, 0)]        
         [InlineData(CommandFlagSetting.Buffered, 1)]
         [InlineData(CommandFlagSetting.Pipelined, 2)]
         [InlineData(CommandFlagSetting.NoCache, 4)]
@@ -18,7 +19,7 @@ namespace Drapper.Settings.Databases.Unit.Tests.CommandFlagSettingTests
         [InlineData(CommandFlagSetting.Pipelined | CommandFlagSetting.NoCache, 6)]
         public void Successfully(CommandFlagSetting setting, int value)
         {            
-            Assert.Equal(value, (int) setting);
+            Equal(value, (int) setting);
         }
     }
 }

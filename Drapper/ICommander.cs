@@ -8,6 +8,8 @@
 #region
 
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 #endregion
 
@@ -17,7 +19,7 @@ namespace Drapper
     /// <summary>
     ///     Basically breaks down into two distinct operations for mutating data/retrieving data.
     /// </summary>
-    public partial interface ICommander : IDisposable
+    public partial interface ICommander<TRepository> : IDisposable
     {
-    }
+    }    
 }

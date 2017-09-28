@@ -2,7 +2,7 @@
 using System.Linq;
 using Drapper.Settings;
 using Drapper.Settings.Databases;
-using Drapper.Validation;
+using static Drapper.Validation.Contract;
 
 namespace Drapper.Readers.Databases
 {
@@ -12,29 +12,29 @@ namespace Drapper.Readers.Databases
 
         public DatabaseCommandReader(IDatabaseCommanderSettings settings)
         {
-            Contract.Require<ArgumentNullException>(settings != null, "{0}. No settings were passed to DatabaseCommandReader.",nameof(settings));
+            Require<ArgumentNullException>(settings != null, "{0}. No settings were passed to DatabaseCommandReader.",nameof(settings));
             _settings = settings;
         }
 
         public DatabaseCommandSetting GetCommand(Type type, string key)
         {
-            Contract.Require<ArgumentNullException>(type != null, nameof(type));
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(key), nameof(key));
+            Require<ArgumentNullException>(type != null, nameof(type));
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(key), nameof(key));
 
             var namespaceSetting = GetNamespaceSetting(type);
-            Contract.Require<NullReferenceException>(
+            Require<NullReferenceException>(
                 namespaceSetting != null, 
                 ErrorMessages.NoNamespaceSettingForType, 
                 type.FullName);
 
             var typeSetting = GetTypeSetting(namespaceSetting, type);
-            Contract.Require<NullReferenceException>(typeSetting != null, 
+            Require<NullReferenceException>(typeSetting != null, 
                 ErrorMessages.NoTypeSettingAndNoPathInNamespace,
                 type.FullName,
                 namespaceSetting.Namespace);
 
             var commandSetting = GetCommandSetting(namespaceSetting, typeSetting, key);
-            Contract.Require<NullReferenceException>(commandSetting != null, 
+            Require<NullReferenceException>(commandSetting != null, 
                 ErrorMessages.NoCommandSetting,
                 key,
                 typeSetting.Name);
@@ -44,32 +44,32 @@ namespace Drapper.Readers.Databases
 
         private INamespaceSetting<DatabaseCommandSetting> GetNamespaceSetting(Type type)
         {            
-            return _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
-            //var result = _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
-         
-            //if (result != null)
-            //{
-            //    return result;
-            //}
+            //return _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
+            var result = _settings.Namespaces.SingleOrDefault(x => x.Namespace == type.Namespace);
 
-            //// loop backwards till we find a match
-            //foreach (var setting in _settings.Namespaces)
-            //{
-            //    var typeNamespace = type.Namespace;
-            //    var periods = typeNamespace.Count(x => x == '.');
+            if (result != null)
+            {
+                return result;
+            }
 
-            //    for (var i = periods; i > 0; i--)
-            //    {
-            //        if (setting.Namespace == typeNamespace)
-            //        {
-            //            return setting;
-            //        }
-            //        typeNamespace = typeNamespace.Substring(0, typeNamespace.LastIndexOf('.'));
-            //    }
-            //}
+            // loop backwards till we find a match
+            foreach (var setting in _settings.Namespaces)
+            {
+                var typeNamespace = type.Namespace;
+                var periods = typeNamespace.Count(x => x == '.');
 
-            //// if we reach here, we've got nothing.
-            //return null;
+                for (var i = periods; i > 0; i--)
+                {
+                    if (setting.Namespace == typeNamespace)
+                    {
+                        return setting;
+                    }
+                    typeNamespace = typeNamespace.Substring(0, typeNamespace.LastIndexOf('.'));
+                }
+            }
+
+            // if we reach here, we've got nothing.
+            return null;
         }
 
         private ITypeSetting<DatabaseCommandSetting> GetTypeSetting(

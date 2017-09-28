@@ -9,6 +9,7 @@ namespace Drapper.Settings.Databases
     {
         public IEnumerable<INamespaceSetting<DatabaseCommandSetting>> Namespaces { get; }        
         public IEnumerable<ConnectionStringSetting> Connections { get; }
+        public IEnumerable<Type> Types { get; set; }
 
         public DatabaseCommanderSettings(            
             IEnumerable<DatabaseCommandNamespaceSetting> namespaces,

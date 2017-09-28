@@ -1,0 +1,992 @@
+﻿{
+  "Namespaces": [
+    {
+      "Namespace": "Drapper.Tests",
+      "Types": [
+        {
+          "Name": "Drapper.Tests.Query",
+          "Commands": {
+            "OneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select [Id][PocoA_Id],[Name],[Value],[Modified] from [dbo].[Poco] with (nolock);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "OneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select [Id][PocoA_Id],'A1' + [Name][Name],[Value],[Modified] from [dbo].[Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "MultimapTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 b.Id,'Multimap: '+b.name[Name],b.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified from [Poco] a JOIN [Poco] b on b.Id=a.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 b.Id,'Multimap: '+b.name[Name],b.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 c.Id,'Multimap: '+c.name[Name],c.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 c.Id,'Multimap: '+c.name[Name],c.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 d.Id,'Multimap: '+d.name[Name],d.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5JOIN [Poco] d on d.Id=c.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 d.Id,'Multimap: '+d.name[Name],d.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 e.Id,'Multimap: '+e.name[Name],e.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5JOIN [Poco] d on d.Id=c.Id+5JOIN [Poco] e on e.Id=d.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 e.Id,'Multimap: '+e.name[Name],e.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 f.Id,'Multimap: '+f.name[Name],f.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 f.Id,'Multimap: '+f.name[Name],f.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 g.Id,'Multimap: '+g.name[Name],g.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified],f.Id[PocoF_Id],'POCO F: '+f.name[Name],f.Value,f.Modified+5[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 JOIN [Poco] g on g.Id=f.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultimapSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 g.Id,'Multimap: '+g.name[Name],g.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified],f.Id[PocoF_Id],'POCO F: '+f.name[Name],f.Value,f.Modified+5[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 JOIN [Poco] g on g.Id=f.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultipleOneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A1'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A2'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B2'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A3'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A4'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C5'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 29 and 36;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 37 and 45;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;;select Id[PocoK_Id],'K11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;select Id[PocoP_Id],'P16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 121 and 136;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleOneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A1'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A2'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B2'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A3'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A4'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C5'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;;select Id[PocoK_Id],'K11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;select Id[PocoP_Id],'P16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select 1/0;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Tests.QueryAsync",
+          "Commands": {
+            "OneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select [Id][PocoA_Id],[Name],[Value],[Modified] from [dbo].[Poco] with (nolock);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "OneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select [Id][PocoA_Id],'A1' + [Name][Name],[Value],[Modified] from [dbo].[Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "MultimapTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 b.Id,'Multimap: '+b.name[Name],b.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified from [Poco] a JOIN [Poco] b on b.Id=a.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 b.Id,'Multimap: '+b.name[Name],b.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 c.Id,'Multimap: '+c.name[Name],c.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 c.Id,'Multimap: '+c.name[Name],c.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 d.Id,'Multimap: '+d.name[Name],d.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5JOIN [Poco] d on d.Id=c.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 d.Id,'Multimap: '+d.name[Name],d.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 e.Id,'Multimap: '+e.name[Name],e.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5JOIN [Poco] d on d.Id=c.Id+5JOIN [Poco] e on e.Id=d.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 e.Id,'Multimap: '+e.name[Name],e.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 f.Id,'Multimap: '+f.name[Name],f.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 f.Id,'Multimap: '+f.name[Name],f.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified]from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 g.Id,'Multimap: '+g.name[Name],g.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified],f.Id[PocoF_Id],'POCO F: '+f.name[Name],f.Value,f.Modified+5[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 JOIN [Poco] g on g.Id=f.Id+5;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultimapSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select top 3 g.Id,'Multimap: '+g.name[Name],g.Value,a.Id[PocoA_Id],'POCO A: '+a.name[Name],a.Value,a.Modified,b.Id[PocoB_Id],'POCO B: '+b.name [Name],b.Value,b.Modified+1[Modified],c.Id[PocoC_Id],'POCO C: '+c.name[Name],c.Value,c.Modified+2[Modified],d.Id[PocoD_Id],'POCO D: '+d.name[Name],d.Value,d.Modified+3[Modified],e.Id[PocoE_Id],'POCO E: '+e.name[Name],e.Value,e.Modified+4[Modified],f.Id[PocoF_Id],'POCO F: '+f.name[Name],f.Value,f.Modified+5[Modified] from [Poco] a JOIN [Poco] b on b.Id=a.Id+5 JOIN [Poco] c on c.Id=b.Id+5 JOIN [Poco] d on d.Id=c.Id+5 JOIN [Poco] e on e.Id=d.Id+5 JOIN [Poco] f on f.Id=e.Id+5 JOIN [Poco] g on g.Id=f.Id+5 where a.Id=@Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultipleOneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A1'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A2'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B2'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A3'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A4'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C5'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 29 and 36;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 37 and 45;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;;select Id[PocoK_Id],'K11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;select Id[PocoP_Id],'P16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 121 and 136;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleOneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A1'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A2'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B2'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A3'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C3'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A4'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D4'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C5'+[Name][Name],[Value] ,[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E5'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F6'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G7'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H8'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I9'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J10'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;;select Id[PocoK_Id],'K11'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L12'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M13'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N14'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O15'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id[PocoA_Id],'A16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = 1; select Id[PocoB_Id],'B16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 2 and 3;select Id[PocoC_Id],'C16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 4 and 6;select Id[PocoD_Id],'D16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 7 and 10;select Id[PocoE_Id],'E16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 11 and 15;select Id[PocoF_Id],'F16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 16 and 21;select Id[PocoG_Id],'G16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 22 and 28;select Id[PocoH_Id],'H16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock)  where [Id] between 29 and 36;select Id[PocoI_Id],'I16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 37 and 45;select Id[PocoJ_Id],'J16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 46 and 55;select Id[PocoK_Id],'K16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 56 and 66;select Id[PocoL_Id],'L16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 67 and 78;select Id[PocoM_Id],'M16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 79 and 91;select Id[PocoN_Id],'N16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 92 and 105;select Id[PocoO_Id],'O16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] between 106 and 120;select Id[PocoP_Id],'P16'+[Name][Name],[Value],[Modified] from [Poco] with (nolock) where [Id] = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsCancellationToken": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "waitfor delay '00:00:05';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select 1/0;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Tests.Execute",
+          "Commands": {
+            "SupportParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "delete from [dbo].[Poco]; select 1 / 0;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls.Count": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1)[Result] from [dbo].[Poco]",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select @value + (1/0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [Poco]([Name], [Value])select @Name,  @Value * POWER(@Value, @Value);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback.Query": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select * from [Poco] where [Name] = @Name;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsSuppressedDistributedTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "EnlistingInAmbientTransactionsWithRequiredOptionNotSupported": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "EnlistingInAmbientTransactionsWithRequiresNewOptionNotSupported": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Tests.ExecuteAsync",
+          "Commands": {
+            "SupportParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "delete from [dbo].[Poco]; select 1 / 0;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls.Count": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1)[Result] from [dbo].[Poco]",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "declare @result table([Value] int) insert into @result([Value])select @value + (1/0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [Poco]([Name], [Value])select @Name,  @Value * POWER(@Value, @Value);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback.Query": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select * from [Poco] where [Name] = @Name;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsSuppressedDistributedTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "EnlistingInAmbientTransactionsWithRequiredOptionNotSupported": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "EnlistingInAmbientTransactionsWithRequiresNewOptionNotSupported": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Namespace": "Drapper.SqlServer",
+      "Types": [
+        {
+          "Name": "Drapper.SqlServer.Tests.Setup.DatabaseSetup",
+          "Commands": {
+            "DatabaseExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from master.sys.databases where [name] = @name) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateDatabase": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create database Drapper;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "TableExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from information_schema.tables where table_name = @name) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreatePocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create table [dbo].[Poco]([Id] [int] identity(1,1) not null,[Name] [varchar](50) null,[Value] [decimal](18, 2) null,[Modified] [datetime] null);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create table [dbo].[BulkInsert]([Id] int,[FirstName] varchar(50),[LastName] varchar(50));",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsStale": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select case when Modified is null then convert(datetime, 0) else Modified end [Modified] from (select max (modified) [Modified] from Poco) a",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsConsistent": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1) [Result] from Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ClearPocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "truncate table Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "PopulatePocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into Poco([Name], [Value], [Modified]) select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IdentityTesterExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_IdentityTester]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateIdentityTesterProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create procedure [dbo].[usp_IdentityTester] @name varchar(50),@value decimal(18, 2) as begin insert into [IdentityTest]([Name],[Value],[Modified])select @name,@value,getutcdate() select scope_identity() end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "dbo.usp_CreateTable",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5,
+              "IsolationLevel": 65536
+            },
+            "TableCreatorExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_CreateTable]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateTableCreatorProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create procedure [dbo].[usp_CreateTable](@tableName varchar(max)) as begin declare  @template nvarchar(max),@sql nvarchar(max) select @template = N'if exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'')and type in (N''U'')) begin drop table [dbo].[%tableName];end if not exists (select * from sys.objects where object_id = OBJECT_ID(N''[dbo].[%tableName]'') and type in (N''U'')) begin create table [dbo].[%tableName] ([Id] [int] IDENTITY(1, 1) not null,[Name] [varchar](50) null,[Value] [decimal](18, 2) null,[Modified] [datetime] null); end;' select @sql = REPLACE(@template, '%tableName', @tableName); exec sp_executesql @sql end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "BulkInsertProcedureExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_BulkInsert]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create procedure [dbo].[usp_BulkInsert](@path varchar(max)) as begin set nocount on; declare  @command nvarchar(max),@template nvarchar(max) = N'bulk insert [dbo].[BulkInsert] from ''%path'' with (fieldterminator = '','', rowterminator = ''\n'')' select @command = replace(@template, '%path', @path);exec sp_executesql @command; end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "BulkInsertAndReturnProcedureExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "if exists (select * from sys.objects where object_id = object_id(N'[dbo].[usp_BulkInsertAndReturn]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertAndReturnProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create procedure [dbo].[usp_BulkInsertAndReturn](@path varchar(max)) as begin set nocount on; declare  @command nvarchar(max),@template nvarchar(max) = N'bulk insert [dbo].[BulkInsert]from ''%path'' with (fieldterminator = '','', rowterminator = ''\n'')' select @command = replace(@template, '%path', @path);exec sp_executesql @command; select * from [dbo].[BulkInsert]; end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "Connections": [
+    {
+      "Alias": "Drapper.Sql",
+      "ProviderName": "System.Data.SqlClient",
+      "ConnectionString": "Data Source=(LocalDb)\\mssqllocaldb;Initial Catalog=Drapper;Integrated Security=true;"
+    }
+  ]
+}

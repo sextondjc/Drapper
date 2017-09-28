@@ -13,9 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Drapper.Tests.Common\Drapper.Tests.Common.csproj" />
-    <ProjectReference Include="..\Drapper.Tests.Models\Drapper.Tests.Models.csproj" />
-    <ProjectReference Include="..\Drapper.Tests.Setup\Drapper.Tests.Setup.csproj" />
     <ProjectReference Include="..\Drapper\Drapper.csproj" />
   </ItemGroup>
 

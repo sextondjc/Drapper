@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using Drapper.Validation;
+using static Drapper.Validation.Contract;
 
 namespace Drapper.Settings.Databases
 {
@@ -44,7 +44,7 @@ namespace Drapper.Settings.Databases
         /// Gets or sets the isolation level used by a transaction. 
         /// Defaults to <see><cref>IsolationLevel.Serializable</cref></see>
         /// </summary>        
-        public IsolationLevel IsolationLevel { get; }
+        public IsolationLevel IsolationLevel { get; } 
 
         public DatabaseCommandSetting(
             string connectionAlias,
@@ -56,8 +56,8 @@ namespace Drapper.Settings.Databases
             IsolationLevel isolationLevel = IsolationLevel.Serializable
             )
         {
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionAlias), nameof(connectionAlias));
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(commandText), nameof(commandText));
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionAlias), nameof(connectionAlias));
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(commandText), nameof(commandText));
 
             ConnectionAlias = connectionAlias;
             CommandText = commandText;
@@ -65,7 +65,7 @@ namespace Drapper.Settings.Databases
             CommandTimeout = commandTimeout;
             Split = split;
             Flags = flags;
-            IsolationLevel = isolationLevel;
+            IsolationLevel = isolationLevel == 0 ? IsolationLevel.Serializable : isolationLevel;
         }
     }
 }

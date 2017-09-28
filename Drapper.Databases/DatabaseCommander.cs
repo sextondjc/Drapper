@@ -8,7 +8,7 @@ using Drapper.Settings.Databases;
 
 namespace Drapper.Databases
 {
-    public partial class DatabaseCommander : ICommander
+    public partial class DatabaseCommander<TRepository> : ICommander<TRepository>
     {
         private readonly IDatabaseCommandReader _reader;
         private readonly IDatabaseConnector _connector;

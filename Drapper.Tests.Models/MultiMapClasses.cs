@@ -127,15 +127,6 @@ namespace Drapper.Tests.Models
 
     #region / multimap /
 
-    public class MultiMapPocoA
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Value { get; set; }
-
-        public PocoA PocoA { get; set; }        
-    }
-
     public class MultiMapPocoB
     {
         public int Id { get; set; }

@@ -6,19 +6,16 @@ using Drapper.Connectors.Databases.SqlServer;
 using Drapper.Databases;
 using Drapper.Readers.Databases;
 using Drapper.Settings.Databases;
-using Newtonsoft.Json;
 
-
-namespace Drapper.Tests.Common
+namespace Drapper.SqlServer
 {
-    public static class CommanderHelper
+    public static class Extensions
     {
-        public static ICommander<T> UseSqlServer<T>(string settingsFile = "Drapper.Databases.Tests.SqlServer.json")
+        public static ICommander<T> UseSqlServer<T>(IDatabaseCommanderSettings settings)
         {            
-            var settings = JsonConvert.DeserializeObject<DatabaseCommanderSettings>(File.ReadAllText(settingsFile));
             var reader = new DatabaseCommandReader(settings);
             var connector = new SqlServerDatabaseConnector(settings);
             return new DatabaseCommander<T>(reader, connector);
-        }        
+        }
     }
 }
