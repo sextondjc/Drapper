@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Common\Drapper\Drapper.csproj" />
+    <ProjectReference Include="..\..\Core\Databases\Drapper.Databases\Drapper.Databases.csproj" />
+    <ProjectReference Include="..\..\Core\Databases\Drapper.Readers.Databases\Drapper.Readers.Databases.csproj" />
+    <ProjectReference Include="..\..\Core\Databases\Drapper.Settings.Databases\Drapper.Settings.Databases.csproj" />
+    <ProjectReference Include="..\Drapper.Connectors.Databases.MySql\Drapper.Connectors.Databases.MySql.csproj" />
+  </ItemGroup>
+
+</Project>
