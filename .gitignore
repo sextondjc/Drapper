@@ -113,3 +113,12 @@ Temporary Items
 /Drapper.Tests/bin/Release/netcoreapp2.0
 /Drapper.Tests.Common/bin/Release/netstandard2.0
 /Drapper.Tests.Models/bin/Release/netstandard2.0
+/Drapper.Connectors/bin/Debug
+/Drapper.Connectors.Databases/bin/Debug
+/Drapper.Connectors.Databases.SqlServer/bin/Debug
+/Drapper.Databases/bin/Debug
+/Drapper.Readers/bin/Debug
+/Drapper.Readers.Databases/bin/Debug
+/Drapper.Settings/bin/Debug
+/Drapper.SqlServer/bin/Debug
+/Drapper.Settings.Databases/bin/Debug
