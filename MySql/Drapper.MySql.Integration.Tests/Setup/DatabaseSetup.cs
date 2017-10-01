@@ -1,12 +1,11 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.28 (19:23)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.30 (00:09)
+//  modified     : 2017.10.01 (20:41)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
 using System;
-using System.Data.SqlClient;
 using System.Linq;
 using Drapper.Tests.Common;
 
@@ -19,7 +18,7 @@ namespace Drapper.MySql.Integration.Tests.Setup
 
         public DatabaseSetup()
         {
-            _commander = CommanderHelper.CreateCommander<DatabaseSetup>(() => SqlClientFactory.Instance, "Drapper.Databases.Tests.MySql.json");
+            _commander = CommanderHelper.UseMySql<DatabaseSetup>();
         }
 
         public void Setup(string name = "drapper_my_sql")
@@ -37,11 +36,11 @@ namespace Drapper.MySql.Integration.Tests.Setup
                 CreatePocoTable();
             }
 
-            if (!TableExists("BulkInsert"))
-            {
-                Console.WriteLine("BulkInsert table doesn't exist. Attempting to create.");
-                CreateBulkInsertTable();
-            }
+            //if (!TableExists("BulkInsert"))
+            //{
+            //    Console.WriteLine("BulkInsert table doesn't exist. Attempting to create.");
+            //    CreateBulkInsertTable();
+            //}
 
             if (!TableCreatorExists())
             {
@@ -49,23 +48,23 @@ namespace Drapper.MySql.Integration.Tests.Setup
                 CreateTableCreatorProcedure();
             }
 
-            if (!IdentityTesterExists())
-            {
-                Console.WriteLine("Identity tester procedure doesn't exist. Attempting to create.");
-                CreateIdentityTesterProcedure();
-            }
+            //if (!IdentityTesterExists())
+            //{
+            //    Console.WriteLine("Identity tester procedure doesn't exist. Attempting to create.");
+            //    CreateIdentityTesterProcedure();
+            //}
 
-            if (!BulkInsertProcedureExists())
-            {
-                Console.WriteLine("Bulk insert tester procedure doesn't exist. Attempting to create.");
-                CreateBulkInsertProcedure();
-            }
+            //if (!BulkInsertProcedureExists())
+            //{
+            //    Console.WriteLine("Bulk insert tester procedure doesn't exist. Attempting to create.");
+            //    CreateBulkInsertProcedure();
+            //}
 
-            if (!BulkInsertAndReturnProcedureExists())
-            {
-                Console.WriteLine("Bulk insert and return tester procedure doesn't exist. Attempting to create.");
-                CreateBulkInsertAndReturnProcedure();
-            }
+            //if (!BulkInsertAndReturnProcedureExists())
+            //{
+            //    Console.WriteLine("Bulk insert and return tester procedure doesn't exist. Attempting to create.");
+            //    CreateBulkInsertAndReturnProcedure();
+            //}
 
             if (IsStale())
             {
@@ -174,6 +173,7 @@ namespace Drapper.MySql.Integration.Tests.Setup
             {
                 var entry = new
                 {
+                    Id = i,
                     Name = i,
                     Value = i + 14,
                     Modified = DateTime.UtcNow

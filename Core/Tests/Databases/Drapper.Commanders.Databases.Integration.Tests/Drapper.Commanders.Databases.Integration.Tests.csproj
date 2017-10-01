@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Drapper\Drapper.csproj" />
-    <ProjectReference Include="..\..\..\Databases\Drapper.Databases\Drapper.Databases.csproj" />
+    <ProjectReference Include="..\..\..\Databases\Drapper.Commanders.Databases\Drapper.Commanders.Databases.csproj" />
     <ProjectReference Include="..\..\Common\Drapper.Tests.Models\Drapper.Tests.Models.csproj" />
   </ItemGroup>
 

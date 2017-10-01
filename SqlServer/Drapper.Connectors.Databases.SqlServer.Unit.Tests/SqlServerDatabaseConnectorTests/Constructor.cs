@@ -1,7 +1,7 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.24 (19:47)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:41)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Drapper.Settings.Databases;
 using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Connectors.Databases.SqlServer.Unit.Tests.SqlServerDatabaseConnectorTests
 {
@@ -43,15 +44,15 @@ namespace Drapper.Connectors.Databases.SqlServer.Unit.Tests.SqlServerDatabaseCon
         [Fact]
         public void NullSettingsThrowsArgumentNullException()
         {
-            var result = Assert.Throws<ArgumentNullException>(() => new SqlServerDatabaseConnector(null));
-            Assert.Equal("Value cannot be null.\r\nParameter name: settings", result.Message);
+            var result = Throws<ArgumentNullException>(() => new SqlServerDatabaseConnector(null));
+            Equal("Value cannot be null.\r\nParameter name: settings", result.Message);
         }
 
         [Fact]
         public void Successfully()
         {
             var result = new SqlServerDatabaseConnector(_settings);
-            Assert.NotNull(result);
+            NotNull(result);
         }
     }
 }

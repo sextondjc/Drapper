@@ -1,10 +1,10 @@
 ﻿{
   "Namespaces": [
     {
-      "Namespace": "Drapper.Databases.Integration.Tests",
+      "Namespace": "Drapper.Commanders.Databases.Integration.Tests",
       "Types": [
         {
-          "Name": "Drapper.Databases.Integration.Tests.Query",
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.Query",
           "Commands": {
             "OneTypeWithNoParameters": {
               "ConnectionAlias": "Drapper.Sql",
@@ -397,7 +397,7 @@
           }
         },
         {
-          "Name": "Drapper.Databases.Integration.Tests.QueryAsync",
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.QueryAsync",
           "Commands": {
             "OneTypeWithNoParameters": {
               "ConnectionAlias": "Drapper.Sql",
@@ -797,7 +797,7 @@
           }
         },
         {
-          "Name": "Drapper.Databases.Integration.Tests.Execute",
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.Execute",
           "Commands": {
             "SupportParameterlessCalls": {
               "ConnectionAlias": "Drapper.Sql",
@@ -843,14 +843,16 @@
             },
             "SupportsSuppressedDistributedTransactions": {
               "ConnectionAlias": "Drapper.Sql",
-              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandText":
+                "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
             },
             "SupportsEnlistingInAmbientTransactions": {
               "ConnectionAlias": "Drapper.Sql",
-              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandText":
+                "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
@@ -858,7 +860,7 @@
           }
         },
         {
-          "Name": "Drapper.Databases.Integration.Tests.ExecuteAsync",
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.ExecuteAsync",
           "Commands": {
             "SupportParameterlessCalls": {
               "ConnectionAlias": "Drapper.Sql",
@@ -904,14 +906,16 @@
             },
             "SupportsSuppressedDistributedTransactions": {
               "ConnectionAlias": "Drapper.Sql",
-              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandText":
+                "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5
             },
             "SupportsEnlistingInAmbientTransactions": {
               "ConnectionAlias": "Drapper.Sql",
-              "CommandText": "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
+              "CommandText":
+                "insert into [dbo].[DistributedTransaction]([Name], [Value],[Modified])select @Name, @Value, @Modified;",
               "CommandTimeout": 30,
               "CommandType": 1,
               "Flags": 5

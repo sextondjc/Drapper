@@ -1,0 +1,1085 @@
+{
+  "Namespaces": [
+    {
+      "Namespace": "Drapper.Commanders.Databases.Integration.Tests",
+      "Types": [
+        {
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.Query",
+          "Commands": {
+            "OneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,Name,Value,Modified from Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "OneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id, concat('A1', Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "MultimapTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select b.Id,concat('Multimap: ',b.name) as Name,b.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select b.Id,concat('Multimap: ',b.name) as Name,b.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 where a.Id = @Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select c.Id,concat('Multimap: ',c.name) as Name,c.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified as Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select c.Id,concat('Multimap: ',c.name) as Name,c.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified as Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 where a.Id = @Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select d.Id,concat('Multimap: ',d.name) as Name,d.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select d.Id,concat('Multimap: ',d.name) as Name,d.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 where a.Id = @Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select e.Id,concat('Multimap: ',e.name) as Name,e.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select e.Id,concat('Multimap: ',e.name) as Name,e.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 where a.Id = @Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select f.Id,concat('Multimap: ',f.name) as Name,f.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select f.Id,concat('Multimap: ',f.name) as Name,f.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select g.Id,concat('Multimap: ',g.name) as Name,g.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified,f.Id as PocoF_Id,concat('POCO F: ', f.name) as Name,f.Value,f.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 JOIN Poco g on g.Id=f.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultimapSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select g.Id,concat('Multimap: ',g.name) as Name,g.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified,f.Id as PocoF_Id,concat('POCO F: ', f.name) as Name,f.Value,f.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 JOIN Poco g on g.Id=f.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultipleOneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,concat('A1',Name) as Name,Value,Modified from Poco where Id = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A2',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B2',Name) as Name,Value ,Modified from Poco where Id in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A3',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B3',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C3',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A4',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B4',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C4',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D4',Name) as Name,Value ,Modified from Poco where Id between 7 and 10;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A5',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B5',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C5',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D5',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E5',Name) as Name,Value,Modified from Poco where Id between 11 and 15;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A6',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B6',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C6',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D6',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E6',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F6',Name) as Name,Value,Modified from Poco where Id between 16 and 21;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A7',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B7',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C7',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D7',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E7',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F7',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G7',Name) as Name,Value,Modified from Poco where Id between 22 and 28;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A8',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B8',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C8',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D8',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E8',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F8',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G8',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H8',Name) as Name,Value,Modified from Poco where Id between 29 and 36;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A9',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B9',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C9',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D9',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E9',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F9',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G9',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H9',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I9',Name) as Name,Value,Modified from Poco  where Id between 37 and 45;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A10',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B10',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C10',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D10',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E10',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F10',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G10',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H10',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I10',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J10',Name) as Name,Value,Modified from Poco where Id between 46 and 55;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A11',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B11',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C11',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D11',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E11',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F11',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G11',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H11',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I11',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J11',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K11',Name) as Name,Value,Modified from Poco where Id between 56 and 66;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A12',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B12',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C12',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D12',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E12',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F12',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G12',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H12',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I12',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J12',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K12',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L12',Name) as Name,Value,Modified from Poco where Id between 67 and 78;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A13',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B13',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C13',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D13',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E13',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F13',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G13',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H13',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I13',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J13',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K13',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L13',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M13',Name) as Name,Value,Modified from Poco where Id between 79 and 91;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A14',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B14',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C14',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D14',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E14',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F14',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G14',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H14',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I14',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J14',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K14',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L14',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M14',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N14',Name) as Name,Value,Modified from Poco where Id between 92 and 105;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A15',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B15',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C15',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D15',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E15',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F15',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G15',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H15',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I15',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J15',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K15',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L15',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M15',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N15',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O15',Name) as Name,Value,Modified from Poco where Id between 106 and 120;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A16',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B16',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C16',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D16',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E16',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F16',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G16',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H16',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I16',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J16',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K16',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L16',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M16',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N16',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O16',Name) as Name,Value,Modified from Poco where Id between 106 and 120;select Id as PocoP_Id,concat('P16',Name) as Name,Value,Modified from Poco where Id between 121 and 136;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleOneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,concat('A1',Name) as Name,Value,Modified from Poco where Id = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A2',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B2',Name) as Name,Value ,Modified from Poco where Id in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A3',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B3',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C3',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A4',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B4',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C4',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D4',Name) as Name,Value ,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A5',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B5',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C5',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D5',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E5',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A6',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B6',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C6',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D6',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E6',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F6',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A7',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B7',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C7',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D7',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E7',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F7',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G7',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A8',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B8',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C8',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D8',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E8',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F8',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G8',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H8',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A9',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B9',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C9',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D9',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E9',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F9',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G9',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H9',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I9',Name) as Name,Value,Modified from Poco  where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A10',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B10',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C10',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D10',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E10',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F10',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G10',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H10',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I10',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J10',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A11',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B11',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C11',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D11',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E11',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F11',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G11',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H11',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I11',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J11',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K11',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A12',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B12',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C12',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D12',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E12',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F12',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G12',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H12',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I12',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J12',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K12',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L12',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A13',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B13',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C13',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D13',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E13',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F13',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G13',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H13',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I13',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J13',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K13',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L13',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M13',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A14',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B14',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C14',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D14',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E14',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F14',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G14',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H14',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I14',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J14',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K14',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L14',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M14',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N14',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A15',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B15',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C15',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D15',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E15',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F15',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G15',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H15',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I15',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J15',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K15',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L15',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M15',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N15',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O15',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A16',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B16',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C16',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D16',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E16',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F16',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G16',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H16',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I16',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J16',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K16',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L16',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M16',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N16',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O16',Name) as Name,Value,Modified from Poco where Id between 106 and 120;select Id as PocoP_Id,concat('P16',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.QueryAsync",
+          "Commands": {
+            "OneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,Name,Value,Modified from Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "OneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,concat('A1' ,name)as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1
+            },
+            "MultimapTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select b.Id,concat('Multimap: ',b.name) as Name,b.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select b.Id,concat('Multimap: ',b.name) as Name,b.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id"
+            },
+            "MultimapThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select c.Id,concat('Multimap: ',c.name) as Name,c.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 join Poco c on c.Id=b.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select c.Id,concat('Multimap: ',c.name) as Name,c.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "PocoA_Id,PocoB_Id"
+            },
+            "MultimapFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select d.Id,concat('Multimap: ',d.name) as Name,d.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 join Poco c on c.Id=b.Id+5 join Poco d on d.Id=c.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select d.Id,concat('Multimap: ',d.name) as Name,d.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id"
+            },
+            "MultimapFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select e.Id,concat('Multimap: ',e.name) as Name,e.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 join Poco c on c.Id=b.Id+5 join Poco d on d.Id=c.Id+5 join Poco e on e.Id=d.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select e.Id,concat('Multimap: ',e.name) as Name,e.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 join Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 1,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id"
+            },
+            "MultimapSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select f.Id,concat('Multimap: ',f.name) as Name,f.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select f.Id,concat('Multimap: ',f.name) as Name,f.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id"
+            },
+            "MultimapSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select g.Id,concat('Multimap: ',g.name) as Name,g.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified,f.Id as PocoF_Id,concat('POCO F: ', f.name) as Name,f.Value,f.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 JOIN Poco g on g.Id=f.Id+5 limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultimapSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select g.Id,concat('Multimap: ',g.name) as Name,g.Value,a.Id as PocoA_Id,concat('POCO A: ',a.name) as Name,a.Value,a.Modified,b.Id as PocoB_Id,concat('POCO B: ',b.name) as Name,b.Value,b.Modified,c.Id as PocoC_Id,concat('POCO C: ',c.name) as Name,c.Value,c.Modified,d.Id as PocoD_Id,concat('POCO D: ',d.name) as Name,d.Value,d.Modified,e.Id as PocoE_Id,concat('POCO E: ',e.name) as Name,e.Value,e.Modified,f.Id as PocoF_Id,concat('POCO F: ', f.name) as Name,f.Value,f.Modified from Poco a JOIN Poco b on b.Id=a.Id+5 JOIN Poco c on c.Id=b.Id+5 JOIN Poco d on d.Id=c.Id+5 JOIN Poco e on e.Id=d.Id+5 JOIN Poco f on f.Id=e.Id+5 JOIN Poco g on g.Id=f.Id+5 where a.Id=@Id limit 3;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "Id,PocoA_Id,PocoB_Id,PocoC_Id,PocoD_Id,PocoE_Id,PocoF_Id"
+            },
+            "MultipleOneTypeWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,concat('A1',Name) as Name,Value,Modified from Poco where Id = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A2',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B2',Name) as Name,Value ,Modified from Poco where Id in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A3',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B3',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C3',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A4',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B4',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C4',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D4',Name) as Name,Value ,Modified from Poco where Id between 7 and 10;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A5',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B5',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C5',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D5',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E5',Name) as Name,Value,Modified from Poco where Id between 11 and 15;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A6',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B6',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C6',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D6',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E6',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F6',Name) as Name,Value,Modified from Poco where Id between 16 and 21;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A7',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B7',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C7',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D7',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E7',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F7',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G7',Name) as Name,Value,Modified from Poco where Id between 22 and 28;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A8',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B8',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C8',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D8',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E8',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F8',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G8',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H8',Name) as Name,Value,Modified from Poco where Id between 29 and 36;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A9',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B9',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C9',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D9',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E9',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F9',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G9',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H9',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I9',Name) as Name,Value,Modified from Poco  where Id between 37 and 45;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A10',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B10',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C10',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D10',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E10',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F10',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G10',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H10',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I10',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J10',Name) as Name,Value,Modified from Poco where Id between 46 and 55;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A11',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B11',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C11',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D11',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E11',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F11',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G11',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H11',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I11',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J11',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K11',Name) as Name,Value,Modified from Poco where Id between 56 and 66;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A12',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B12',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C12',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D12',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E12',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F12',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G12',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H12',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I12',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J12',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K12',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L12',Name) as Name,Value,Modified from Poco where Id between 67 and 78;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A13',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B13',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C13',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D13',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E13',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F13',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G13',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H13',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I13',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J13',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K13',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L13',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M13',Name) as Name,Value,Modified from Poco where Id between 79 and 91;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A14',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B14',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C14',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D14',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E14',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F14',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G14',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H14',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I14',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J14',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K14',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L14',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M14',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N14',Name) as Name,Value,Modified from Poco where Id between 92 and 105;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A15',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B15',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C15',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D15',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E15',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F15',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G15',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H15',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I15',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J15',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K15',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L15',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M15',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N15',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O15',Name) as Name,Value,Modified from Poco where Id between 106 and 120;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithNoParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A16',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B16',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C16',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D16',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E16',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F16',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G16',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H16',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I16',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J16',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K16',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L16',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M16',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N16',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O16',Name) as Name,Value,Modified from Poco where Id between 106 and 120;select Id as PocoP_Id,concat('P16',Name) as Name,Value,Modified from Poco where Id between 121 and 136;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleOneTypeWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select Id as PocoA_Id,concat('A1',Name) as Name,Value,Modified from Poco where Id = 1;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwoTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A2',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B2',Name) as Name,Value ,Modified from Poco where Id in (2,3);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5,
+              "Split": "PocoA_Id"
+            },
+            "MultipleThreeTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A3',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B3',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C3',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A4',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B4',Name) as Name,Value ,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C4',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D4',Name) as Name,Value ,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFiveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A5',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B5',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C5',Name) as Name,Value ,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D5',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E5',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A6',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B6',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C6',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D6',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E6',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F6',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A7',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B7',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C7',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D7',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E7',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F7',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G7',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleEightTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A8',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B8',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C8',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D8',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E8',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F8',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G8',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H8',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleNineTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A9',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B9',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C9',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D9',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E9',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F9',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G9',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H9',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I9',Name) as Name,Value,Modified from Poco  where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A10',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B10',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C10',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D10',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E10',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F10',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G10',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H10',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I10',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J10',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleElevenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A11',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B11',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C11',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D11',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E11',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F11',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G11',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H11',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I11',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J11',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K11',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleTwelveTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A12',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B12',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C12',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D12',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E12',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F12',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G12',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H12',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I12',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J12',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K12',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L12',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleThirteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A13',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B13',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C13',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D13',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E13',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F13',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G13',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H13',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I13',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J13',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K13',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L13',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M13',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFourteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A14',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B14',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C14',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D14',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E14',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F14',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G14',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H14',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I14',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J14',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K14',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L14',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M14',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N14',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleFifteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A15',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B15',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C15',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D15',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E15',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F15',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G15',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H15',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I15',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J15',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K15',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L15',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M15',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N15',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O15',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "MultipleSixteenTypesWithParameters": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select Id as PocoA_Id,concat('A16',Name) as Name,Value,Modified from Poco where Id = 1; select Id as PocoB_Id,concat('B16',Name) as Name,Value,Modified from Poco where Id between 2 and 3;select Id as PocoC_Id,concat('C16',Name) as Name,Value,Modified from Poco where Id between 4 and 6;select Id as PocoD_Id,concat('D16',Name) as Name,Value,Modified from Poco where Id between 7 and 10;select Id as PocoE_Id,concat('E16',Name) as Name,Value,Modified from Poco where Id between 11 and 15;select Id as PocoF_Id,concat('F16',Name) as Name,Value,Modified from Poco where Id between 16 and 21;select Id as PocoG_Id,concat('G16',Name) as Name,Value,Modified from Poco where Id between 22 and 28;select Id as PocoH_Id,concat('H16',Name) as Name,Value,Modified from Poco  where Id between 29 and 36;select Id as PocoI_Id,concat('I16',Name) as Name,Value,Modified from Poco where Id between 37 and 45;select Id as PocoJ_Id,concat('J16',Name) as Name,Value,Modified from Poco where Id between 46 and 55;select Id as PocoK_Id,concat('K16',Name) as Name,Value,Modified from Poco where Id between 56 and 66;select Id as PocoL_Id,concat('L16',Name) as Name,Value,Modified from Poco where Id between 67 and 78;select Id as PocoM_Id,concat('M16',Name) as Name,Value,Modified from Poco where Id between 79 and 91;select Id as PocoN_Id,concat('N16',Name) as Name,Value,Modified from Poco where Id between 92 and 105;select Id as PocoO_Id,concat('O16',Name) as Name,Value,Modified from Poco where Id between 106 and 120;select Id as PocoP_Id,concat('P16',Name) as Name,Value,Modified from Poco where Id = @Id;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsCancellationToken": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "waitfor delay '00:00:05';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.Execute",
+          "Commands": {
+            "SupportParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create temporary table Result (Value int);insert into Result(`Value`) select 1;drop table Result",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "delete from Poco; SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls.Count": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1) as Result from Poco",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.\r\nThe statement has been terminated.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into Poco(Name, Value)select @Name,  @Value * POWER(@Value, @Value);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback.Query": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select * from Poco where Name = @Name;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsSuppressedDistributedTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "insert into DistributedTransaction (Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsEnlistingInAmbientTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into DistributedTransaction(Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        },
+        {
+          "Name": "Drapper.Commanders.Databases.Integration.Tests.ExecuteAsync",
+          "Commands": {
+            "SupportParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create temporary table Result (Value int);insert into Result(`Value`) select 1;drop table Result",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "delete from Poco; SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsRollbackOnParameterlessCalls.Count": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1) as Result from Poco",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ExceptionsAreReturnedToCaller": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Divide by zero error encountered.\r\nThe statement has been terminated.';",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into Poco(Name, Value)select @Name,  @Value * POWER(@Value, @Value);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsTransactionRollback.Query": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select * from Poco where Name = @Name;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsSuppressedDistributedTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into DistributedTransaction(Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "SupportsEnlistingInAmbientTransactions": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "insert into DistributedTransaction(Name, Value,Modified)select @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Namespace": "Drapper.MySql",
+      "Types": [
+        {
+          "Name": "Drapper.MySql.Integration.Tests.Setup.DatabaseSetup",
+          "Commands": {
+            "DatabaseExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select if(exists(select schema_name from information_schema.schemata where schema_name = @name), 1, 0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateDatabase": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "create database drapper_my_sql if not exists;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "TableExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select if(exists(select table_name from information_schema.tables where table_name = @name), 1, 0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreatePocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create table if not exists `Poco` (`Id` int not null auto_increment primary key,`Name` varchar(50) not null,`Value` decimal(18) not null,`Modified` timestamp default current_timestamp) default charset=utf8;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create table if not exists BulkInsert(`Id` int,`FirstName` varchar(50),`LastName` varchar(50));",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsStale": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select case when Modified is null then '1984-12-23' else Modified end as Modified from (select max(modified) as Modified from Poco) as Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IsConsistent": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "select count(1) as Result from Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "ClearPocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "truncate table Poco;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "PopulatePocoTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "insert into `Poco` (`Id`, `Name`, `Value`,`Modified`) select @Id, @Name, @Value, @Modified;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "IdentityTesterExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select if(exists(select routine_name from information_schema.routines where routine_name = 'usp_IdentityTester'), 1, 0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateIdentityTesterProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create procedure [usp_IdentityTester] @name varchar(50),@value decimal(18, 2) as begin insert into [IdentityTest](Name,Value,Modified)select @name,@value,getutcdate() select scope_identity() end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateTable": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText": "drapper_my_sql.usp_CreateTable",
+              "CommandTimeout": 30,
+              "CommandType": 4,
+              "Flags": 5,
+              "IsolationLevel": 65536
+            },
+            "TableCreatorExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "select if(exists(select routine_name from information_schema.routines where routine_name = 'usp_CreateTable'), 1, 0);",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateTableCreatorProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "use `drapper_my_sql`; drop procedure if exists `usp_CreateTable`; delimiter $$ use `drapper_my_sql`$$ create procedure `usp_CreateTable` (int tableName varchar(255))begin set @drop_template = concat(\"drop table if exists `\", tableName, \"`;\"); prepare drop_stmt from @drop_template; execute drop_stmt; deallocate prepare drop_stmt; set @create_template = concat(\"create table if not exists `\", tableName, \"` (`Id` int not null auto_increment primary key,`Name` varchar(50) not null,`Value` decimal(18) not null,`Modified` timestamp default current_timestamp) default charset=utf8;\"); prepare create_stmt from @create_template; execute create_stmt; deallocate prepare create_stmt;end$$ delimiter;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "BulkInsertProcedureExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "if exists (select * from sys.objects where object_id = object_id(N'[usp_BulkInsert]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create procedure [usp_BulkInsert](@path varchar(max)) as begin set nocount on; declare  @command nvarchar(max),@template nvarchar(max) = N'bulk insert [BulkInsert] from ''%path'' with (fieldterminator = '','', rowterminator = ''\n'')' select @command = replace(@template, '%path', @path);exec sp_executesql @command; end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "BulkInsertAndReturnProcedureExists": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "if exists (select * from sys.objects where object_id = object_id(N'[usp_BulkInsertAndReturn]') and type in (N'P', N'PC')) select 1 [Result];",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            },
+            "CreateBulkInsertAndReturnProcedure": {
+              "ConnectionAlias": "Drapper.Sql",
+              "CommandText":
+                "create procedure [usp_BulkInsertAndReturn](@path varchar(max)) as begin set nocount on; declare  @command nvarchar(max),@template nvarchar(max) = N'bulk insert [BulkInsert]from ''%path'' with (fieldterminator = '','', rowterminator = ''\n'')' select @command = replace(@template, '%path', @path);exec sp_executesql @command; select * from [BulkInsert]; end;",
+              "CommandTimeout": 30,
+              "CommandType": 1,
+              "Flags": 5
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "Connections": [
+    {
+      "Alias": "Drapper.Sql",
+      "ProviderName": "MySql.Data.MySqlClient",
+      "ConnectionString":
+        "Server=eu-cdbr-azure-west-b.cloudapp.net;Database=drapper_my_sql;Uid=b4012233b26ad2;Pwd=9bc0a39a;"
+    }
+  ]
+}

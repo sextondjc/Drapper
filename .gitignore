@@ -65,8 +65,8 @@ Temporary Items
 /Core/Common/Drapper.Settings/obj
 /Core/Databases/Drapper.Connectors.Databases/bin/Debug
 /Core/Databases/Drapper.Connectors.Databases/obj
-/Core/Databases/Drapper.Databases/bin/Debug
-/Core/Databases/Drapper.Databases/obj
+/Core/Databases/Drapper.Commanders.Databases/bin/Debug
+/Core/Databases/Drapper.Commanders.Databases/obj
 /Core/Databases/Drapper.Readers.Databases/bin/Debug
 /Core/Databases/Drapper.Readers.Databases/obj
 /Core/Databases/Drapper.Settings.Databases/bin/Debug
@@ -77,8 +77,8 @@ Temporary Items
 /Core/Tests/Common/Drapper.Tests.Models/obj
 /Core/Tests/Databases/Drapper.Connectors.Databases.Unit.Tests/bin/Debug/netcoreapp2.0
 /Core/Tests/Databases/Drapper.Connectors.Databases.Unit.Tests/obj
-/Core/Tests/Databases/Drapper.Databases.Integration.Tests/bin/Debug/netcoreapp2.0
-/Core/Tests/Databases/Drapper.Databases.Integration.Tests/obj
+/Core/Tests/Databases/Drapper.Commanders.Databases.Integration.Tests/bin/Debug/netcoreapp2.0
+/Core/Tests/Databases/Drapper.Commanders.Databases.Integration.Tests/obj
 /Core/Tests/Databases/Drapper.Readers.Databases.Unit.Tests/bin/Debug/netcoreapp2.0
 /Core/Tests/Databases/Drapper.Readers.Databases.Unit.Tests/obj
 /Core/Tests/Databases/Drapper.Settings.Databases.Unit.Tests/bin/Debug/netcoreapp2.0

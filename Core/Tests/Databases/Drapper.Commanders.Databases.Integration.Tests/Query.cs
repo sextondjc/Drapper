@@ -1,17 +1,18 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.28 (00:35)
-//  modified     : 2017.09.28 (23:06)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:40)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
-using System.Data.SqlClient;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Drapper.Tests.Models;
 using Xunit;
+using static Xunit.Assert;
 
-namespace Drapper.Databases.Integration.Tests
+namespace Drapper.Commanders.Databases.Integration.Tests
 {
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public abstract partial class Query
@@ -26,32 +27,32 @@ namespace Drapper.Databases.Integration.Tests
         [Fact]
         public void ExceptionsAreReturnedToCaller()
         {
-            var result = Assert.Throws<SqlException>(() => _commander.Query<int>());
+            var result = ThrowsAny<Exception>(() => _commander.Query<int>());
             const string expected = "Divide by zero error encountered.";
-            Assert.Equal(expected, result.Message);
+            Equal(expected, result.Message);
         }
 
         [Fact]
         public void OneTypeWithNoParameters()
         {
             var result = _commander.Query<PocoA>().ToList();
-            Assert.NotNull(result);
-            Assert.True(result.Any());
+            NotNull(result);
+            True(result.Any());
         }
 
         [Fact]
         public void OneTypeWithParameters()
         {
             var result = _commander.Query<PocoA>(new {Id = 3}).ToList();
-            Assert.NotNull(result);
-            Assert.True(result.Any());
-            Assert.Equal(1, result.Count());
+            NotNull(result);
+            True(result.Any());
+            Equal(1, result.Count());
 
             // check values 
             var first = result.First();
-            Assert.Equal(3, first.PocoA_Id);
-            Assert.Equal("A13", first.Name);
-            Assert.Equal(17, first.Value);
+            Equal(3, first.PocoA_Id);
+            Equal("A13", first.Name);
+            Equal(17, first.Value);
         }
     }
 }

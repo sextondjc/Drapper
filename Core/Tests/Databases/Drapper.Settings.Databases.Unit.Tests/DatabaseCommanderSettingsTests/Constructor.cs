@@ -1,13 +1,14 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.24 (19:47)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:40)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
 using System;
 using System.Collections.Generic;
 using Xunit;
+using static Xunit.Assert;
 
 namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommanderSettingsTests
 {
@@ -38,17 +39,17 @@ namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommanderSettingsTests
         [Fact]
         public void EmptyConnectionStringSettingListThrowsArgumentException()
         {
-            var result = Assert.Throws<ArgumentException>(() =>
+            var result = Throws<ArgumentException>(() =>
                 new DatabaseCommanderSettings(_namespaceSettings, new List<ConnectionStringSetting>()));
-            Assert.Equal("At least 1 ConnectionStringSetting was expected.", result.Message);
+            Equal("At least 1 ConnectionStringSetting was expected.", result.Message);
         }
 
         [Fact]
         public void EmptyNamespaceSettingListThrowsArgumentException()
         {
-            var result = Assert.Throws<ArgumentException>(() =>
+            var result = Throws<ArgumentException>(() =>
                 new DatabaseCommanderSettings(new List<DatabaseCommandNamespaceSetting>(), _connectionStringSettings));
-            Assert.Equal(
+            Equal(
                 "At least 1 DatabaseCommandNamespaceSetting was expected to be passed to the DatabaseCommanderSettings constructor.",
                 result.Message);
         }
@@ -57,25 +58,25 @@ namespace Drapper.Settings.Databases.Unit.Tests.DatabaseCommanderSettingsTests
         public void NullConnectionStringSettingsThrowsArgumentNullException()
         {
             var result =
-                Assert.Throws<ArgumentNullException>(() => new DatabaseCommanderSettings(_namespaceSettings, null));
-            Assert.Equal("Value cannot be null.\r\nParameter name: connections", result.Message);
+                Throws<ArgumentNullException>(() => new DatabaseCommanderSettings(_namespaceSettings, null));
+            Equal("Value cannot be null.\r\nParameter name: connections", result.Message);
         }
 
         [Fact]
         public void NullNamespacesSettingThrowsArgumentNullException()
         {
             var result =
-                Assert.Throws<ArgumentNullException>(() =>
+                Throws<ArgumentNullException>(() =>
                     new DatabaseCommanderSettings(null, _connectionStringSettings));
-            Assert.Equal("Value cannot be null.\r\nParameter name: namespaces", result.Message);
+            Equal("Value cannot be null.\r\nParameter name: namespaces", result.Message);
         }
 
         [Fact]
         public void Successfully()
         {
             var result = new DatabaseCommanderSettings(_namespaceSettings, _connectionStringSettings);
-            Assert.Equal(_connectionStringSettings, result.Connections);
-            Assert.Equal(_namespaceSettings, result.Namespaces);
+            Equal(_connectionStringSettings, result.Connections);
+            Equal(_namespaceSettings, result.Namespaces);
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.28 (21:36)
-//  modified     : 2017.09.28 (23:06)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:40)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
-namespace Drapper.Databases.Integration.Tests
+namespace Drapper.Commanders.Databases.Integration.Tests
 {
     public class ExecuteAsyncFixture
     {

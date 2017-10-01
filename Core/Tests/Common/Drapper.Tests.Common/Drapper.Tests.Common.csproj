@@ -9,8 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\MySql\Drapper.Connectors.Databases.MySql\Drapper.Connectors.Databases.MySql.csproj" />
+    <ProjectReference Include="..\..\..\..\SqlServer\Drapper.Connectors.Databases.SqlServer\Drapper.Connectors.Databases.SqlServer.csproj" />
+    <ProjectReference Include="..\..\..\Databases\Drapper.Commanders.Databases\Drapper.Commanders.Databases.csproj" />
     <ProjectReference Include="..\..\..\Databases\Drapper.Connectors.Databases\Drapper.Connectors.Databases.csproj" />
-    <ProjectReference Include="..\..\..\Databases\Drapper.Databases\Drapper.Databases.csproj" />
     <ProjectReference Include="..\..\..\Databases\Drapper.Readers.Databases\Drapper.Readers.Databases.csproj" />
     <ProjectReference Include="..\..\..\Databases\Drapper.Settings.Databases\Drapper.Settings.Databases.csproj" />
   </ItemGroup>

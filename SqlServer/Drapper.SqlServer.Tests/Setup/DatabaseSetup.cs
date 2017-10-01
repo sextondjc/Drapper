@@ -1,16 +1,13 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.28 (19:23)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:41)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using Drapper.Tests.Common;
+using System;
+using System.Linq;
 using static System.Console;
 
 namespace Drapper.SqlServer.Tests.Setup
@@ -22,7 +19,7 @@ namespace Drapper.SqlServer.Tests.Setup
 
         public DatabaseSetup()
         {
-            _commander = CommanderHelper.CreateCommander<DatabaseSetup>(() => SqlClientFactory.Instance, "Drapper.Databases.Tests.SqlServer.json");
+            _commander = CommanderHelper.UseSqlServer<DatabaseSetup>();
         }
 
         public void Setup(string name = "Drapper")

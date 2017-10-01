@@ -5,11 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.9-dmr" />
     <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Common\Drapper.Connectors\Drapper.Connectors.csproj" />
+    <ProjectReference Include="..\..\Core\Common\Drapper.Settings\Drapper.Settings.csproj" />
     <ProjectReference Include="..\..\Core\Databases\Drapper.Connectors.Databases\Drapper.Connectors.Databases.csproj" />
+    <ProjectReference Include="..\..\Core\Databases\Drapper.Settings.Databases\Drapper.Settings.Databases.csproj" />
   </ItemGroup>
 
   </Project>

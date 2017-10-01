@@ -14,11 +14,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Tests\Common\Drapper.Tests.Common\Drapper.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\Core\Tests\Databases\Drapper.Databases.Integration.Tests\Drapper.Databases.Integration.Tests.csproj" />
+    <ProjectReference Include="..\..\Core\Tests\Databases\Drapper.Commanders.Databases.Integration.Tests\Drapper.Commanders.Databases.Integration.Tests.csproj" />
+    <ProjectReference Include="..\Drapper.Connectors.Databases.MySql\Drapper.Connectors.Databases.MySql.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Drapper.Databases.Tests.MySql.json">
+    <None Update="Drapper.MySql.Integration.Tests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

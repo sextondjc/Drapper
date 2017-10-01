@@ -15,11 +15,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Common\Drapper\Drapper.csproj" />
     <ProjectReference Include="..\..\Core\Tests\Common\Drapper.Tests.Common\Drapper.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\Core\Tests\Databases\Drapper.Databases.Integration.Tests\Drapper.Databases.Integration.Tests.csproj" />
+    <ProjectReference Include="..\..\Core\Tests\Databases\Drapper.Commanders.Databases.Integration.Tests\Drapper.Commanders.Databases.Integration.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Drapper.Databases.Tests.SqlServer.json">
+    <None Update="Drapper.SqlServer.Integration.Tests.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

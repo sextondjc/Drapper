@@ -1,12 +1,12 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.24 (19:47)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:40)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
 using System;
-using Drapper.Validation;
+using static Drapper.Validation.Contract;
 
 namespace Drapper.Settings.Databases
 {
@@ -48,9 +48,9 @@ namespace Drapper.Settings.Databases
             string providerName,
             string connectionString)
         {
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(alias), nameof(alias));
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(providerName), nameof(providerName));
-            Contract.Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString),
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(alias), nameof(alias));
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(providerName), nameof(providerName));
+            Require<ArgumentNullException>(!string.IsNullOrWhiteSpace(connectionString),
                 nameof(connectionString));
 
             Alias = alias;

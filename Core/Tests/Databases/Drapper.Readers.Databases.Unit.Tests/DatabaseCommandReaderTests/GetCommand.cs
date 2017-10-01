@@ -1,7 +1,7 @@
 ﻿//  ============================================================================================================================= 
 //  author       : david sexton (@sextondjc | sextondjc.com)
-//  date         : 2017.09.24 (19:47)
-//  modified     : 2017.09.28 (23:05)
+//  date         : 2017.09.29 (21:39)
+//  modified     : 2017.10.01 (20:40)
 //  licence      : This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 //  =============================================================================================================================
 
@@ -9,7 +9,8 @@ using System;
 using System.Collections.Generic;
 using Drapper.Settings.Databases;
 using Xunit;
-using Drapper.Databases.Readers;
+using Drapper.Commanders.Databases.Readers;
+using static Xunit.Assert;
 
 namespace Drapper.Readers.Databases.Unit.Tests.DatabaseCommandReaderTests
 {
@@ -58,18 +59,18 @@ namespace Drapper.Readers.Databases.Unit.Tests.DatabaseCommandReaderTests
         public void NoCommandSettingThrowsNullReferenceException()
         {
             var result =
-                Assert.Throws<NullReferenceException>(() => _reader.GetCommand(typeof(GetCommand), "DoesNotExist"));
+                Throws<NullReferenceException>(() => _reader.GetCommand(typeof(GetCommand), "DoesNotExist"));
             var expect =
                 $"The command setting 'DoesNotExist' has no entry for the type setting '{typeof(GetCommand).FullName}'. Please add a command setting entry to the type setting.";
-            Assert.Equal(expect, result.Message);
+            Equal(expect, result.Message);
         }
 
         [Fact]
         public void NoNamespaceSettingThrowsNullReferenceException()
         {
-            var result = Assert.Throws<NullReferenceException>(() =>
+            var result = Throws<NullReferenceException>(() =>
                 _reader.GetCommand(typeof(NoNamespaceType), "NoNamespaceSettingThrowsNullReferenceException"));
-            Assert.Equal(
+            Equal(
                 $"'{typeof(NoNamespaceType).FullName}' does not belong to any NamespaceSetting.\r\nPlease check settings.",
                 result.Message);
         }
@@ -77,46 +78,46 @@ namespace Drapper.Readers.Databases.Unit.Tests.DatabaseCommandReaderTests
         [Fact]
         public void NoTypeSettingThrowsNullReferenceException()
         {
-            var result = Assert.Throws<NullReferenceException>(() =>
+            var result = Throws<NullReferenceException>(() =>
                 _reader.GetCommand(typeof(InternalTest), "NoTypeSettingThrowsNullReferenceException"));
             var expect =
                 $"The type '{typeof(InternalTest).FullName}' has no entry in the type settings of namespace '{typeof(InternalTest).Namespace}'. Please add a type setting entry to the namespace setting.";
-            Assert.Equal(expect, result.Message);
+            Equal(expect, result.Message);
         }
 
         [Fact]
         public void NullEmptyWhitespaceKeyThrowsArgumentNullException()
         {
-            var nulled = Assert.Throws<ArgumentNullException>(() => _reader.GetCommand(typeof(GetCommand), null));
-            var empty = Assert.Throws<ArgumentNullException>(() =>
+            var nulled = Throws<ArgumentNullException>(() => _reader.GetCommand(typeof(GetCommand), null));
+            var empty = Throws<ArgumentNullException>(() =>
                 _reader.GetCommand(typeof(GetCommand), string.Empty));
-            var whitespace = Assert.Throws<ArgumentNullException>(() => _reader.GetCommand(typeof(GetCommand), ""));
+            var whitespace = Throws<ArgumentNullException>(() => _reader.GetCommand(typeof(GetCommand), ""));
 
             const string expect = "Value cannot be null.\r\nParameter name: key";
-            Assert.Equal(expect, nulled.Message);
-            Assert.Equal(expect, empty.Message);
-            Assert.Equal(expect, whitespace.Message);
+            Equal(expect, nulled.Message);
+            Equal(expect, empty.Message);
+            Equal(expect, whitespace.Message);
         }
 
         [Fact]
         public void NullTypePassedThrowsArgumentNullException()
         {
-            var result = Assert.Throws<ArgumentNullException>(() => _reader.GetCommand(null, "test"));
-            Assert.Equal("Value cannot be null.\r\nParameter name: type", result.Message);
+            var result = Throws<ArgumentNullException>(() => _reader.GetCommand(null, "test"));
+            Equal("Value cannot be null.\r\nParameter name: type", result.Message);
         }
 
         [Fact]
         public void Successfully()
         {
             var result = _reader.GetCommand(typeof(GetCommand), "Retrieve");
-            Assert.NotNull(result);
-            Assert.Equal("test.alias", result.ConnectionAlias);
-            Assert.Equal("select 'Readers.Test.Settings.GetCommand'[Result];", result.CommandText);
+            NotNull(result);
+            Equal("test.alias", result.ConnectionAlias);
+            Equal("select 'Readers.Test.Settings.GetCommand'[Result];", result.CommandText);
         }
     }
 }
 
-namespace Drapper.Databases.Readers
+namespace Drapper.Commanders.Databases.Readers
 {
     internal class NoNamespaceType
     {
